@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import sampleReducer from 'src/modules/sample/reducer';
+import authReducer from 'src/modules/auth/reducer';
+import alertReducer from 'src/modules/alert/reducer';
 
 export default combineReducers({
-  sampleReducer,
+  authReducer,
+  alertReducer,
 });

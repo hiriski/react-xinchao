@@ -7,27 +7,15 @@ export default {
     paper: colors.common.white,
   },
   primary: {
-    light: '#c0ceff',
-    main: '#4d73ff',
-    dark: '#253d92',
+    light: '#ff7e94',
+    main: '#FF4564',
+    dark: '#f10930',
     contrastText: '#fff',
   },
   secondary: {
     main: '#28272f',
     dark: '#111113',
     light: '#111113',
-  },
-  blue: {
-    light: '#c0ceff',
-    main: '#4d73ff',
-    dark: '#253d92',
-    contrastText: '#fff',
-  },
-  green: {
-    light: '#51ef89',
-    main: '#00b13f',
-    dark: '#008630',
-    contrastText: '#fff',
   },
   text: {
     primary: colors.blueGrey[900],

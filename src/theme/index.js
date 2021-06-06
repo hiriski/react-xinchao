@@ -4,7 +4,6 @@ import breakpoints from './breakpoint';
 import palette from './palette';
 import shadows from './shadows';
 import typography from './typography';
-import spacing from './spacing';
 import custom from './custom';
 
 export default createMuiTheme({
@@ -12,6 +11,5 @@ export default createMuiTheme({
   palette,
   shadows,
   typography,
-  spacing,
   custom,
 });
