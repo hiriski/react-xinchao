@@ -1,4 +1,5 @@
 import React from 'react';
+import { ROUTES } from 'src/config';
 import { Navigate } from 'react-router-dom';
 import AuthLayout from './layouts/auth-layout';
 import LoginPage from './pages/auth/login';
@@ -10,14 +11,25 @@ import ProfilePage from './pages/account/profile';
 import ChatPage from './pages/chat';
 import PhrasebookListPage from './pages/phrasebook/phrasebook-list';
 
-const routes = () => [
+const routes = (isLoggedIn) => [
   {
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: 'login', element: <LoginPage /> },
-      { path: 'register', element: <RegisterPage /> },
-      { path: 'profile', element: <ProfilePage /> },
+      {
+        path: 'signin',
+        element: <AuthLayout />,
+        children: [{ path: '/', element: <LoginPage /> }],
+      },
+      {
+        path: 'signup',
+        element: <AuthLayout />,
+        children: [{ path: '/', element: <RegisterPage /> }],
+      },
+      {
+        path: 'profile',
+        element: isLoggedIn ? <ProfilePage /> : <Navigate to={ROUTES.SIGNIN} />,
+      },
       { path: 'chat', element: <ChatPage /> },
       { path: 'phrasebook', element: <PhrasebookListPage /> },
       { path: '404', element: <NotMatchPage /> },

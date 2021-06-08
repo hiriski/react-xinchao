@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-
-import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
 import { CSSTransition } from 'react-transition-group';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import tabs from 'src/config/tabs';
 
 const FloatingTab = () => {
@@ -72,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     borderRadius: 40,
     padding: theme.spacing(1.4, 2),
+    backgroundColor: theme.palette.background.paper,
     boxShadow: '0px 31px 65px -6px rgba(0,0,0,0.20)',
     '-webkit-box-shadow': '0px 31px 65px -6px rgba(0,0,0,0.20)',
     '-moz-box-shadow': '0px 31px 65px -6px rgba(0,0,0,0.20)',
@@ -83,8 +83,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     borderRadius: 40,
     textDecoration: 'none',
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(1, 1.6),
     color: theme.palette.primary.main,
+    margin: theme.spacing(0, 0.5),
     '& svg': {
       fontSize: '1.2rem',
       marginRight: theme.spacing(1),
