@@ -27,21 +27,21 @@ export const loginFailure = (errorMessage) => ({
   payload: errorMessage,
 });
 
-export const loginSuccess = (data) => ({
+export const loginSuccess = (token, user) => ({
   type: Actions.LOGIN_SUCCESS,
-  payload: data,
+  payload: { token, user },
 });
 
-export const login = (credentials) => {
+export const login = (data) => {
   return async (dispatch) => {
     let errMessage = 'Login failed';
     dispatch(loginRequest());
     try {
-      const response = await axios.post(API_URL + '/login', credentials);
+      const response = await AuthService.login(data);
       if (response.status === 200) {
-        let { token } = response.data;
-        LocalStorageService.setItem(USER_TOKEN_KEY, token);
-        dispatch(loginSuccess(response.data));
+        let { token, user } = response.data;
+        localStorage.setItem(USER_TOKEN_KEY, token);
+        dispatch(loginSuccess(token, user));
       }
     } catch (e) {
       if (e.response !== undefined) {
@@ -56,11 +56,17 @@ export const login = (credentials) => {
               }),
             );
           });
-        } else {
-          dispatch(loginFailure(errMessage));
         }
       } else {
-        dispatch(loginFailure(errMessage));
+        batch(() => {
+          dispatch(loginFailure(errMessage));
+          dispatch(
+            showAlert({
+              message: errMessage,
+              severity: 'error',
+            }),
+          );
+        });
       }
     }
   };
@@ -81,23 +87,24 @@ export const registerFailure = (errorMessage) => ({
   payload: errorMessage,
 });
 
-export const registerSuccess = (data) => ({
+export const registerSuccess = (token, user) => ({
   type: Actions.REGISTER_SUCCESS,
-  payload: data,
+  payload: {
+    token,
+    user,
+  },
 });
 
-export const register = (userData) => {
+export const register = (data) => {
   return async (dispatch) => {
     let errMessage = 'Register failed';
     dispatch(registerRequest());
     try {
-      const response = await axios.post(API_URL + '/register', userData);
+      const response = await AuthService.register(data);
       if (response.status === 201) {
-        LocalStorageService.setItem(
-          USER_TOKEN_KEY,
-          JSON.stringify(response.data),
-        );
-        dispatch(registerSuccess(response.data));
+        const { token, user } = response.data.data;
+        localStorage.setItem(USER_TOKEN_KEY, token);
+        dispatch(registerSuccess(token, user));
       }
     } catch (e) {
       if (e.response !== undefined) {

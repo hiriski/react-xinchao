@@ -14,7 +14,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from 'src/modules/auth/actions';
+import { register } from 'src/modules/auth/actions';
 
 const registerShcema = yup.object().shape({
   name: yup.string().required('Nama harus di isi.'),
@@ -33,28 +33,21 @@ const RegisterFormContainer = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
-    watch,
     control,
-    setValue,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(registerShcema),
   });
 
   const onSubmit = (data) => {
-    dispatch(login(data));
-    // console.log(data);
+    dispatch(register(data));
   };
 
-  const { isLoading, isError, token, user } = useSelector(
-    (state) => state.authReducer,
-  );
+  const { token, user } = useSelector((state) => state.authReducer);
 
   React.useEffect(() => {
     if (token) {
@@ -177,7 +170,7 @@ const RegisterFormContainer = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary">
+          <Button fullWidth type="submit" variant="contained" color="primary">
             Register Now
           </Button>
         </Grid>

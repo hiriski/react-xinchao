@@ -5,18 +5,8 @@ const initialState = {
   token: null,
   isLoading: false,
   isError: false,
-  // login: {
-  //   isLoading: false,
-  //   isSuccess: false,
-  //   isError: false,
-  //   errorMessage: '',
-  // },
-  // register: {
-  //   isLoading: false,
-  //   isSuccess: false,
-  //   isError: false,
-  //   errorMessage: '',
-  // },
+  isRegisterSuccess: false,
+  isLoginSuccess: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -26,24 +16,12 @@ export default function authReducer(state = initialState, action) {
         ...state,
         isLoading: true,
         isError: false,
-        // login: {
-        //   isLoading: true,
-        //   isSuccess: false,
-        //   isError: false,
-        //   errorMessage: null,
-        // },
       };
     case Actions.LOGIN_FAILURE:
       return {
         ...state,
         isLoading: false,
         isError: true,
-        // login: {
-        //   isLoading: false,
-        //   isSuccess: false,
-        //   isError: true,
-        //   errorMessage: action.payload,
-        // },
       };
     case Actions.LOGIN_SUCCESS:
       let { token, user } = action.payload;
@@ -51,50 +29,30 @@ export default function authReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         isError: false,
-        token,
-        user,
-        // login: {
-        //   isLoading: false,
-        //   isSuccess: true,
-        //   isError: false,
-        //   errorMessage: null,
-        // },
+        isLoginSuccess: true,
+        token: action.payload.token,
+        user: action.payload.user,
       };
     case Actions.REGISTER_REQUEST:
       return {
         ...state,
         isLoading: true,
         isError: false,
-        // register: {
-        //   isLoading: true,
-        //   isSuccess: false,
-        //   isError: false,
-        //   errorMessage: null,
-        // },
       };
     case Actions.REGISTER_FAILURE:
       return {
         ...state,
         isLoading: false,
         isError: true,
-        // register: {
-        //   isLoading: false,
-        //   isSuccess: false,
-        //   isError: true,
-        //   errorMessage: action.payload,
-        // },
       };
     case Actions.REGISTER_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
-        // register: {
-        //   isLoading: false,
-        //   isSuccess: true,
-        //   isError: false,
-        //   errorMessage: null,
-        // },
+        isRegisterSuccess: true,
+        token: action.payload.token,
+        user: action.payload.user,
       };
 
     default:

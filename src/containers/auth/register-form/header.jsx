@@ -3,8 +3,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { ROUTES } from 'src/config';
 
-const RegisterHeader = () => {
+const RegisterFormHeader = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -13,9 +14,13 @@ const RegisterHeader = () => {
       </Typography>
       <Typography>
         Already have an account ?{' '}
-        <RouterLink component={Link} to="/login">
+        <Link
+          component={RouterLink}
+          className={classes.link}
+          to={ROUTES.SIGNIN}
+        >
           Sign In
-        </RouterLink>
+        </Link>
       </Typography>
     </div>
   );
@@ -23,12 +28,13 @@ const RegisterHeader = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(3),
     textAlign: 'center',
   },
   title: {
     fontWeight: theme.typography.fontWeightBold,
   },
+  link: theme.typography.fontWeightBold,
 }));
 
-export default RegisterHeader;
+export default RegisterFormHeader;

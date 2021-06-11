@@ -4,15 +4,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import ReduxProvider from './providers/redux-provider';
-import ThemeProvider from './providers/theme-provider';
 import './assets/fonts/hk-grotesk/style.css';
 
 render(
   <BrowserRouter>
     <ReduxProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <App />
     </ReduxProvider>
   </BrowserRouter>,
   document.getElementById('XinChaoApp'),

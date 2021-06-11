@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Page from 'src/components/common/Page';
+import Page from 'src/components/common/page';
+import RegisterFormHeader from 'src/containers/auth/register-form/header';
 import RegisterFormContainer from 'src/containers/auth/register-form';
-import RegisterHeader from 'src/containers/auth/register-form/header';
+import AuthHeader from 'src/containers/auth/header';
 
 const RegisterPage = () => {
   const classes = useStyles();
@@ -24,7 +25,8 @@ const RegisterPage = () => {
   return (
     <Page className={classes.root} title="Login">
       <Container>
-        <RegisterHeader />
+        <AuthHeader />
+        <RegisterFormHeader />
         <RegisterFormContainer />
       </Container>
     </Page>

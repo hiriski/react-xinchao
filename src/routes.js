@@ -17,12 +17,12 @@ const routes = (isLoggedIn) => [
     element: <MainLayout />,
     children: [
       {
-        path: 'signin',
+        path: ROUTES.SIGNIN,
         element: <AuthLayout />,
         children: [{ path: '/', element: <LoginPage /> }],
       },
       {
-        path: 'signup',
+        path: ROUTES.SIGNUP,
         element: <AuthLayout />,
         children: [{ path: '/', element: <RegisterPage /> }],
       },

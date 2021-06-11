@@ -17,15 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'src/modules/auth/actions';
 
 const loginSchema = yup.object().shape({
-  name: yup.string().required('Nama harus di isi.'),
-  email: yup
-    .string()
-    .email('Opss.. sepertinya email yang kamu masukan salah.')
-    .required('Email harus di isi.'),
-  password: yup.string().required('Password harus diisi.'),
-  password_confirmation: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Password konfirmasi harus sama'),
+  username: yup.string().required('Username or email is required'),
+  password: yup.string().required('Password is required.'),
 });
 
 const LoginFormContainer = () => {
@@ -38,11 +31,8 @@ const LoginFormContainer = () => {
   const navigate = useNavigate();
   const {
     handleSubmit,
-    watch,
     control,
-    setValue,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
@@ -68,34 +58,15 @@ const LoginFormContainer = () => {
         <Grid item xs={12} md={12}>
           <FormControl fullWidth className={classes.margin} variant="outlined">
             <Controller
-              name="name"
+              name="username"
               control={control}
               render={({ field }) => (
                 <TextField
                   size="small"
-                  helperText={'What your name'}
+                  helperText={'Username or email'}
                   variant="outlined"
-                  label="What your name"
-                  error={errors.name}
-                  {...field}
-                />
-              )}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <FormControl fullWidth className={classes.margin} variant="outlined">
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  id="email"
-                  size="small"
-                  helperText={'Email address'}
-                  variant="outlined"
-                  label="Email address"
-                  error={errors.email}
+                  label="Username or email"
+                  error={errors.username}
                   {...field}
                 />
               )}
@@ -139,46 +110,9 @@ const LoginFormContainer = () => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={12}>
-          <FormControl fullWidth className={classes.margin} variant="outlined">
-            <Controller
-              name="password_confirmation"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  type={showPassword ? 'text' : 'password'}
-                  size="small"
-                  helperText={'Confirm password'}
-                  variant="outlined"
-                  label="Confirm password"
-                  error={errors.password_confirmation}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          size="small"
-                          aria-label="toggle password_confirmation visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? (
-                            <VisibilityIcon />
-                          ) : (
-                            <VisibilityOffIcon />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  {...field}
-                />
-              )}
-            />
-          </FormControl>
-        </Grid>
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary">
-            Register Now
+          <Button fullWidth type="submit" variant="contained" color="primary">
+            Sign In Now
           </Button>
         </Grid>
       </Grid>
