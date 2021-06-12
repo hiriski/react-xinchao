@@ -5,6 +5,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FloatingTab from 'src/containers/floating-tab';
 import Container from '@material-ui/core/Container';
 
+import AppBar from 'src/containers/appbar';
+
 const MainLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
@@ -13,6 +15,7 @@ const MainLayout = () => {
     <Container maxWidth="md">
       <div className={classes.root}>
         <FloatingTab />
+        <AppBar />
         <Outlet />
       </div>
     </Container>
@@ -27,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     overflow: 'hidden',
     width: '100%',
+    paddingTop: theme.custom.appBarHeight,
   },
 }));
 

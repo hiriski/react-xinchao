@@ -10,6 +10,7 @@ import HomePage from './pages/home';
 import ProfilePage from './pages/account/profile';
 import ChatPage from './pages/chat';
 import PhrasebookListPage from './pages/phrasebook/phrasebook-list';
+import LoggedOutPage from './pages/auth/logged-out';
 
 const routes = (isLoggedIn) => [
   {
@@ -25,6 +26,11 @@ const routes = (isLoggedIn) => [
         path: ROUTES.SIGNUP,
         element: <AuthLayout />,
         children: [{ path: '/', element: <RegisterPage /> }],
+      },
+      {
+        path: ROUTES.LOGGEDOUT,
+        element: <AuthLayout />,
+        children: [{ path: '/', element: <LoggedOutPage /> }],
       },
       {
         path: 'profile',

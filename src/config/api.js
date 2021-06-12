@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_URL } from 'src/constants';
-import authApiClient from './authApiClient';
 
 import { getUserToken } from 'src/utils';
 
@@ -20,7 +19,5 @@ apiInstance.interceptors.request.use(
     return Promise.reject(error);
   },
 );
-
-export { authApiClient };
 
 export default apiInstance;
