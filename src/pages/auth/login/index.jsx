@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Page from 'src/components/common/page';
+import Page from 'src/components/common/helmet';
 import LoginFormHeader from 'src/containers/auth/login-form/header';
 import LoginFormContainer from 'src/containers/auth/login-form';
 
