@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import Page from 'src/components/common/page';
 import LoginFormHeader from 'src/containers/auth/login-form/header';
 import LoginFormContainer from 'src/containers/auth/login-form';
-import AuthHeader from 'src/containers/auth/header';
 
 const LoginPage = () => {
   const classes = useStyles();
@@ -25,7 +24,6 @@ const LoginPage = () => {
   return (
     <Page className={classes.root} title="Login">
       <Container>
-        <AuthHeader />
         <LoginFormHeader />
         <LoginFormContainer />
       </Container>

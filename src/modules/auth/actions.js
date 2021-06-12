@@ -46,6 +46,7 @@ export const login = (data) => {
     } catch (e) {
       if (e.response !== undefined) {
         if (e.response.status === 422) {
+          console.log(e.response);
           errMessage = 'Username / Password yang anda masukan salah';
           dispatch(loginFailure(errMessage));
           batch(() => {
@@ -102,15 +103,17 @@ export const register = (data) => {
     try {
       const response = await AuthService.register(data);
       if (response.status === 201) {
-        const { token, user } = response.data.data;
+        const { token, user } = response.data;
         localStorage.setItem(USER_TOKEN_KEY, token);
         dispatch(registerSuccess(token, user));
       }
     } catch (e) {
       if (e.response !== undefined) {
-        console.log(e.response);
         if (e.response.status === 422) {
-          errMessage = 'Unprocessable entity';
+          const { message } = e.response.data;
+          if (message.email) {
+            errMessage = message.email;
+          }
           batch(() => {
             dispatch(registerFailure(errMessage));
             dispatch(
@@ -178,3 +181,45 @@ export const fetchAuthenticatedUser = (token) => {
       });
   };
 };
+
+/**
+ * ------------------------
+ * Revoke auth token
+ * ------------------------
+ */
+const revokingTokenRequest = () => ({
+  type: Actions.REVOKING_TOKEN_REQUEST,
+});
+
+const revokingTokenFailure = (errorMessage) => ({
+  type: Actions.REVOKING_TOKEN_FAILURE,
+  payload: errorMessage,
+});
+
+const revokingTokenSuccess = () => ({
+  type: Actions.REVOKING_TOKEN_SUCCESS,
+});
+
+export const revokeToken = () => {
+  return async (dispatch) => {
+    let errorMessage = 'Failed to revoke token';
+    dispatch(revokingTokenRequest());
+    try {
+      const response = await AuthService.revokeToken();
+      if (response.status === 200) {
+        dispatch(revokingTokenSuccess());
+        localStorage.removeItem(USER_TOKEN_KEY);
+      }
+    } catch (e) {
+      if (e.response !== undefined) {
+        console.log(e.response);
+      }
+      /** Also reset auth state if failed to revoke token from the server */
+      dispatch(revokingTokenSuccess());
+    }
+  };
+};
+
+export const resetAuthState = () => ({
+  type: Actions.RESET_AUTH_STATE,
+});

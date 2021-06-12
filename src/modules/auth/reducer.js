@@ -5,8 +5,7 @@ const initialState = {
   token: null,
   isLoading: false,
   isError: false,
-  isRegisterSuccess: false,
-  isLoginSuccess: false,
+  isLoggedOut: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -29,7 +28,6 @@ export default function authReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         isError: false,
-        isLoginSuccess: true,
         token: action.payload.token,
         user: action.payload.user,
       };
@@ -50,11 +48,18 @@ export default function authReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         isError: false,
-        isRegisterSuccess: true,
         token: action.payload.token,
         user: action.payload.user,
       };
-
+    case Actions.REVOKING_TOKEN_SUCCESS:
+      return {
+        ...state,
+        isLoggedOut: true,
+        token: null,
+        user: null,
+      };
+    case Actions.RESET_AUTH_STATE:
+      return initialState;
     default:
       return state;
   }

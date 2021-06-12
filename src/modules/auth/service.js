@@ -1,12 +1,14 @@
-import axios from 'axios';
-import { API_URL } from 'src/constants';
+import api from 'src/config/api';
 
 class AuthService {
   login = async (data) => {
-    return await axios.post(`${API_URL}/auth/login`, data);
+    return await api.post('/auth/login', data);
   };
   register = async (data) => {
-    return await axios.post(`${API_URL}/auth/register`, data);
+    return await api.post('/auth/register', data);
+  };
+  revokeToken = async () => {
+    return await api.post('/auth/revoke-token');
   };
 }
 

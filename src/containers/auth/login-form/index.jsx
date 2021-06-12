@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'src/modules/auth/actions';
 
 const loginSchema = yup.object().shape({
-  username: yup.string().required('Username or email is required'),
+  username_or_email: yup.string().required('Username or email is required'),
   password: yup.string().required('Password is required.'),
 });
 
@@ -39,7 +39,6 @@ const LoginFormContainer = () => {
 
   const onSubmit = (data) => {
     dispatch(login(data));
-    // console.log(data);
   };
 
   const { isLoading, isError, token, user } = useSelector(
@@ -58,7 +57,7 @@ const LoginFormContainer = () => {
         <Grid item xs={12} md={12}>
           <FormControl fullWidth className={classes.margin} variant="outlined">
             <Controller
-              name="username"
+              name="username_or_email"
               control={control}
               render={({ field }) => (
                 <TextField
@@ -66,7 +65,7 @@ const LoginFormContainer = () => {
                   helperText={'Username or email'}
                   variant="outlined"
                   label="Username or email"
-                  error={errors.username}
+                  error={errors.username_or_email}
                   {...field}
                 />
               )}

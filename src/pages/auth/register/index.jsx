@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import Page from 'src/components/common/page';
 import RegisterFormHeader from 'src/containers/auth/register-form/header';
 import RegisterFormContainer from 'src/containers/auth/register-form';
-import AuthHeader from 'src/containers/auth/header';
 
 const RegisterPage = () => {
   const classes = useStyles();
@@ -25,7 +24,6 @@ const RegisterPage = () => {
   return (
     <Page className={classes.root} title="Login">
       <Container>
-        <AuthHeader />
         <RegisterFormHeader />
         <RegisterFormContainer />
       </Container>
