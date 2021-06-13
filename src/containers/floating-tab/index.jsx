@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(4),
     visibility: 'hidden',
     transform: 'translateY(114px)',
+    zIndex: theme.zIndex.snackbar,
     '&.enter-done': {
       visibility: 'visible',
       transform: 'translateY(0)',
