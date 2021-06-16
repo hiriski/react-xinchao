@@ -32,7 +32,7 @@ const PhrasebookList = ({ phrasebooks, category }) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(4),
+    padding: theme.spacing(4, 0, 12, 0),
   },
 }));
 

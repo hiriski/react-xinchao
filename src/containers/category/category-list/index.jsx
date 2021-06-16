@@ -14,7 +14,7 @@ const CategoryList = ({ categories }) => {
     <div className={classes.root}>
       <Grid container spacing={isBigScreen ? 2 : 1}>
         {categories.map((category) => (
-          <Grid key={category.id} item xs={6} md={4}>
+          <Grid key={category.id} item xs={6} md={4} lg={3}>
             <CategoryItem category={category} />
           </Grid>
         ))}
@@ -26,6 +26,7 @@ const CategoryList = ({ categories }) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    padding: theme.spacing(4, 0, 12, 0),
   },
 }));
 

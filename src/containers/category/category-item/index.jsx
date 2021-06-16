@@ -62,8 +62,10 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     '&:hover': {
       '& .round': {
-        width: 750,
-        height: 750,
+        width: 1000,
+        height: 1000,
+        top: -100,
+        left: -100,
       },
       '& h3': {
         color: 'inherit',
@@ -73,17 +75,17 @@ const useStyles = makeStyles((theme) => ({
       transition: theme.transitions.create(['height', 'width']),
       transitionDuration: theme.transitions.duration.complex,
       position: 'absolute',
-      top: -32,
-      left: -20,
-      height: 88,
-      width: 88,
+      top: -12,
+      left: -10,
+      height: 68,
+      width: 68,
       borderRadius: 88,
       opacity: 0.1,
     },
   },
   container: {
     position: 'relative',
-    padding: theme.spacing(1.6, 2.6),
+    padding: theme.spacing(1, 1.2),
     [theme.breakpoints.up('sm')]: {
       padding: theme.spacing(1.6, 1.8),
     },
@@ -93,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   icon: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(0.4),
     '& svg': {
       fontSize: 32,
     },
