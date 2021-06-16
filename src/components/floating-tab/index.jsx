@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { CSSTransition } from 'react-transition-group';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import tabs from 'src/config/tabs';
@@ -17,7 +17,7 @@ const FloatingTab = () => {
     if (elRef.current.offsetWidth > 0) {
       setContentWidth(elRef.current.offsetWidth);
     }
-  }, [elRef]);
+  }, [elRef, pathname]);
 
   return (
     <CSSTransition in={Boolean(contentWidth)} timeout={400}>
@@ -89,12 +89,23 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0.5),
     '& svg': {
       fontSize: '1.2rem',
-      marginRight: theme.spacing(1),
+      marginRight: theme.spacing(0.8),
+      [theme.breakpoints.up('sm')]: {
+        marginRight: theme.spacing(1.4),
+      },
+    },
+    [theme.breakpoints.down('sm')]: {
+      '& svg + span': {
+        display: 'none',
+      },
     },
   },
   itemActive: {
     backgroundColor: theme.palette.primary.main,
     color: '#fbfbfb',
+    '& svg + span': {
+      display: 'inline-block',
+    },
   },
   label: {
     lineHeight: 1.1,

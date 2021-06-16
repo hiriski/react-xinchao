@@ -10,6 +10,11 @@ const useStyles = makeStyles((theme) =>
       '.MuiListItemText-primary': {
         fontSize: '0.97rem',
       },
+      html: {
+        '-ms-text-size-adjust': '100%',
+        '-webkit-text-size-adjust': '100%',
+        '-webkit-tap-highlight-color': 'transparent',
+      },
       '.MuiSvgIcon-root': {
         fontSize: '1.2rem',
       },
