@@ -27,7 +27,7 @@ const PhrasebookListPage = () => {
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+  }, [category_slug]);
 
   return (
     <React.Fragment>

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import FolderIcon from '@material-ui/icons/Folder';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { ROUTES } from 'src/config';
 
 function TabPanel(props) {
@@ -69,8 +69,10 @@ const PhrasebookCategoryTab = React.memo(({ categories }) => {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          {categories.map(({ id, text }, index) => (
+          {categories.map(({ id, slug, text }, index) => (
             <CustomTab
+              component={RouterLink}
+              to={ROUTES.PHRASEBOOK_LIST + '/' + slug}
               icon={<FolderIcon />}
               label={<Typography component="h5">{text.en}</Typography>}
               key={id}
