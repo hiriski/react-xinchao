@@ -1,28 +1,43 @@
 import React from 'react';
-import { batch, useDispatch, useSelector } from 'react-redux';
-import CategoryList from 'src/containers/category/category-list';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import PhrasebookList from 'src/containers/phrasebook/phrasebook-list';
-import { fetchPhrasebookCategories } from 'src/modules/category/actions';
+import Container from '@material-ui/core/Container';
+import DialogPhrasebookDetails from 'src/containers/phrasebook/dialog-phrasebook';
+import PhrasebookCategoryTab from 'src/containers/phrasebook/phrasebook-category-tab';
+
 import { fetchPhrasebooks } from 'src/modules/phrasebook/actions';
+import { fetchPhrasebookCategories } from 'src/modules/category/actions';
 
 const PhrasebookListPage = () => {
   const dispatch = useDispatch();
-  const { list } = useSelector((state) => state.phrasebookReducer);
+  const { category_slug } = useParams();
+
+  const { list, category } = useSelector((state) => state.phrasebookReducer);
   const { list: categories } = useSelector((state) => state.categoryReducer);
 
   const fetchData = () => {
-    batch(() => {
-      dispatch(fetchPhrasebooks());
-      dispatch(fetchPhrasebookCategories());
-    });
+    if (category_slug) {
+      if (categories.length === 0) {
+        dispatch(fetchPhrasebookCategories());
+      }
+      dispatch(fetchPhrasebooks(category_slug));
+    }
   };
+
   React.useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <React.Fragment>
-      {categories.length > 0 ? <CategoryList categories={categories} /> : null}
-      {list.length > 0 ? <PhrasebookList phrasebooks={list} /> : null}
+      <PhrasebookCategoryTab categories={categories} />
+      <Container>
+        <DialogPhrasebookDetails />
+        {list.length > 0 ? (
+          <PhrasebookList phrasebooks={list} category={category} />
+        ) : null}
+      </Container>
     </React.Fragment>
   );
 };

@@ -8,7 +8,7 @@ import rootReducer from './root-reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['authReducer'],
+  whitelist: ['authReducer', 'commonReducer', 'categoryReducer'],
 };
 
 const middlewares = [thunk];

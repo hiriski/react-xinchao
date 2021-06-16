@@ -5,27 +5,58 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import { useDispatch } from 'react-redux';
+import { openDialogPhrasebookDetails } from 'src/modules/common/actions';
 
 const PhrasebookItem = ({ phrasebook }) => {
+  const { text } = phrasebook;
+  const dispatch = useDispatch();
+
+  const handleClickItem = () => {
+    dispatch(openDialogPhrasebookDetails(phrasebook));
+  };
+
   const classes = useStyles();
   return (
-    <ListItem>
+    <ListItem className={classes.root}>
       <ListItemAvatar>
-        <Avatar>
-          <BeachAccessIcon />
+        <Avatar className={classes.avatarIcon}>
+          <VolumeUpIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary="Vacation" secondary="July 20, 2014" />
+      <ListItemText
+        onClick={handleClickItem}
+        primary={text.vi}
+        secondary={text.id ? text.id : ''}
+      />
     </ListItem>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.common.white,
+    borderRadius: theme.shape.borderRadius,
+    overflow: 'hidden',
+    '& .MuiListItemText-primary': {
+      whiteSpace: 'nowrap',
+    },
+    '& .MuiListItemText-secondary': {
+      whiteSpace: 'nowrap',
+      fontSize: 13,
+    },
+  },
+  avatarIcon: {
+    backgroundColor: '#ececec',
+    color: theme.palette.primary.main,
+    '& svg': {
+      color: 'inherit',
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
   },
 }));
 

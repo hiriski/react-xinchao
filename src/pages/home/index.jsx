@@ -10,13 +10,12 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(true);
   const { list: categories } = useSelector((state) => state.categoryReducer);
-  const { list } = useSelector((state) => state.phrasebookReducer);
 
   const bootstrapFetchData = () => {
-    batch(() => {
-      dispatch(fetchPhrasebookCategories());
-      dispatch(fetchPhrasebooks());
-    });
+    dispatch(fetchPhrasebookCategories());
+    // batch(() => {
+    //   dispatch(fetchPhrasebooks());
+    // });
   };
 
   React.useEffect(() => {
@@ -24,10 +23,10 @@ const HomePage = () => {
   }, []);
 
   React.useEffect(() => {
-    if (categories.length > 0 && list.length > 0) {
+    if (categories.length > 0) {
       setLoading(false);
     }
-  }, [categories, list]);
+  }, [categories]);
 
   return (
     <Container maxWidth="md">

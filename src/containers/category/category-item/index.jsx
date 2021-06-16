@@ -5,12 +5,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'src/config';
 
 const CategoryItem = ({ category }) => {
   const classes = useStyles();
-  const { text, color, phrases_count } = category;
+  const navigate = useNavigate();
+  const { text, color, phrases_count, slug } = category;
+
+  const handleClick = () => {
+    navigate(ROUTES.PHRASEBOOK_LIST + '/' + slug);
+  };
+
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} onClick={handleClick}>
       <div
         className={clsx('round', !color && classes.defaultBackground)}
         style={{ backgroundColor: color ? color.value : null }}
@@ -31,9 +39,13 @@ const CategoryItem = ({ category }) => {
           {text.en}
         </Typography>
         {phrases_count > 0 ? (
-          <Typography variant="subtitle2">{phrases_count} phrases </Typography>
+          <Typography className={classes.phrasesCount} variant="subtitle2">
+            {phrases_count} phrases{' '}
+          </Typography>
         ) : (
-          <Typography variant="subtitle2">No phrases</Typography>
+          <Typography className={classes.phrasesCount} variant="subtitle2">
+            No phrases
+          </Typography>
         )}
       </div>
     </Box>
@@ -59,14 +71,14 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .round': {
       transition: theme.transitions.create(['height', 'width']),
-      transitionDuration: theme.transitions.duration.standard * 2,
+      transitionDuration: theme.transitions.duration.complex,
       position: 'absolute',
       top: -32,
       left: -20,
       height: 88,
       width: 88,
       borderRadius: 88,
-      opacity: 0.2,
+      opacity: 0.1,
     },
   },
   container: {
@@ -92,6 +104,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       fontSize: 20,
     },
+  },
+  phrasesCount: {
+    color: theme.palette.text.hint,
   },
 }));
 

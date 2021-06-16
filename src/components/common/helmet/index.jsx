@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/display-name
 const Page = ({ children, title }) => {
   return (
     <React.Fragment>

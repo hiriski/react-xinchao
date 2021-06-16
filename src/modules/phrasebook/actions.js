@@ -43,14 +43,14 @@ export const resetCreatePhrase = () => ({
  * Fetch phrasebook
  * --------------------
  */
-export const fetchPhrasebooks = (categoryId) => {
+export const fetchPhrasebooks = (category) => {
   return async (dispatch) => {
     dispatch(fetchingPhrasebooksRequest());
     try {
-      const response = await PhrasebookService.getPhrasebooks(categoryId);
+      const response = await PhrasebookService.getPhrasebooks(category);
       if (response.status === 200) {
-        const items = response.data.data;
-        dispatch(fetchingPhrasebookSuccess(items));
+        let { data } = response;
+        dispatch(fetchingPhrasebookSuccess(data));
       }
     } catch (e) {
       dispatch(fetchingPhrasebookFailure());
@@ -66,9 +66,9 @@ const fetchingPhrasebookFailure = () => ({
   type: Actions.FETCHING_PHRASEBOOKS_FAILURE,
 });
 
-const fetchingPhrasebookSuccess = (phrasebooks) => ({
+const fetchingPhrasebookSuccess = (data) => ({
   type: Actions.FETCHING_PHRASEBOOKS_SUCCESS,
-  payload: phrasebooks,
+  payload: data,
 });
 
 export const resetFetchPhrasebooks = () => ({

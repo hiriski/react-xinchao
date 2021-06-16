@@ -55,9 +55,9 @@ const FloatingTab = () => {
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
-    bottom: theme.spacing(4),
+    bottom: theme.spacing(2),
     visibility: 'hidden',
-    transform: 'translateY(114px)',
+    transform: 'translateY(120px)',
     zIndex: theme.zIndex.snackbar,
     '&.enter-done': {
       visibility: 'visible',

@@ -26,7 +26,7 @@ const Loading = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#fbfbfb',
+    backgroundColor: '#fff',
     position: 'fixed',
     top: 0,
     left: 0,
