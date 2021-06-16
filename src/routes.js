@@ -11,6 +11,7 @@ import ProfilePage from './pages/account/profile';
 import ChatPage from './pages/chat';
 import PhrasebookListPage from './pages/phrasebook/phrasebook-list';
 import LoggedOutPage from './pages/auth/logged-out';
+import PhrasebookCategoryListPage from './pages/phrasebook/phrasebook-category-list';
 
 const routes = (isLoggedIn) => [
   {
@@ -37,7 +38,8 @@ const routes = (isLoggedIn) => [
         element: isLoggedIn ? <ProfilePage /> : <Navigate to={ROUTES.SIGNIN} />,
       },
       { path: 'chat', element: <ChatPage /> },
-      { path: 'phrasebook', element: <PhrasebookListPage /> },
+      { path: 'phrasebook', element: <PhrasebookCategoryListPage /> },
+      { path: 'phrasebook/:category_slug', element: <PhrasebookListPage /> },
       { path: '404', element: <NotMatchPage /> },
       { path: '/', element: <HomePage /> },
       { path: '*', element: <Navigate to={'/404'} /> },

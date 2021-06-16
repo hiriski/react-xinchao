@@ -7,7 +7,7 @@ export default {
     paper: colors.common.white,
   },
   primary: {
-    light: '#ff7e94',
+    light: '#ffc6d0',
     main: '#FF4564',
     dark: '#f10930',
     contrastText: '#fff',

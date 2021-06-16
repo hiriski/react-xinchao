@@ -7,6 +7,7 @@ const initialState = {
     isSuccess: false,
   },
   list: [], // all of phrasebooks.
+  category: null,
 };
 
 export default function phrasebookReducer(state = initialState, action) {
@@ -61,7 +62,8 @@ export default function phrasebookReducer(state = initialState, action) {
     case Actions.FETCHING_PHRASEBOOKS_SUCCESS:
       return {
         ...state,
-        list: action.payload,
+        list: action.payload.phrasebooks, // all of phrasebooks.
+        category: action.payload.category || null,
       };
     case Actions.RESET_FETCHING_PHRASEBOOKS_STATE:
       return state;

@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     width: '100%',
     overflow: 'hidden',
-    paddingTop: theme.custom.appBarHeight,
   },
   container: {
     flex: '1',

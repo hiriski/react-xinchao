@@ -15,11 +15,10 @@ class PhrasebookService {
    * @param categoryId
    * @returns {Promise<AxiosResponse<T>>}
    */
-  getPhrasebooks = async (categoryId) => {
-    const response = await api.get(
-      categoryId ? '/phrasebook?category_id=' + categoryId : '/phrasebook',
-    );
-    return response;
+  getPhrasebooks = async (category) => {
+    return category
+      ? await api.get('/phrasebook?category=' + category)
+      : await api.get('/phrasebook');
   };
 }
 

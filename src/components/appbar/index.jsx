@@ -6,6 +6,7 @@ import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 import Logo from 'src/components/logo';
+import { useNavigate } from 'react-router-dom';
 
 const HideOnScroll = (props) => {
   const { children, window } = props;
@@ -32,14 +33,20 @@ HideOnScroll.propTypes = {
 
 const AppBar = (props) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+
+  const handleClickLogo = () => {
+    navigate('/');
+  };
+
   return (
     <HideOnScroll {...props}>
       <MaterialUIAppBar
         elevation={0}
-        color="transparent"
+        color="inherit"
         className={classes.appBar}
       >
-        <div className={classes.logoContainer}>
+        <div className={classes.logoContainer} onClick={handleClickLogo}>
           <Logo logoStyle={classes.logoImg} />
           <Typography className={classes.text} component="h3">
             Xin Chào
@@ -55,13 +62,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: theme.spacing(1.2, 0),
+    padding: theme.spacing(1, 0),
     height: theme.custom.appBarHeight,
   },
   logoContainer: {
     lineHeight: 0,
     display: 'flex',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   logoImg: {
     width: 30,

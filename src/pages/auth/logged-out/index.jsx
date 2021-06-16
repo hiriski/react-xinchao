@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Page from 'src/components/common/page';
+import Page from 'src/components/common/helmet';
 
 const LoggedOutPage = () => {
   const classes = useStyles();

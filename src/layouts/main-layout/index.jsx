@@ -2,23 +2,21 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import FloatingTab from 'src/containers/floating-tab';
-import Container from '@material-ui/core/Container';
-
-import AppBar from 'src/containers/appbar';
+import FloatingTab from 'src/components/floating-tab';
+import AppBar from 'src/components/appbar';
 
 const MainLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const isNotMobile = useMediaQuery(theme.breakpoints.up('lg'));
+  const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
   return (
-    <Container maxWidth="md">
+    <React.Fragment>
+      <AppBar />
       <div className={classes.root}>
-        <FloatingTab />
-        <AppBar />
         <Outlet />
       </div>
-    </Container>
+      <FloatingTab />
+    </React.Fragment>
   );
 };
 
