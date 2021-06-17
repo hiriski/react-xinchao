@@ -9,7 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Logo from 'src/components/logo';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { openDrawer } from 'src/modules/common/actions';
 
@@ -40,13 +40,14 @@ const AppBar = (props) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const handleClickLogo = () => {
     navigate('/');
   };
 
   const handleOpenDrawer = () => {
-    dispatch(openDrawer());
+    dispatch(openDrawer(pathname));
   };
 
   return (

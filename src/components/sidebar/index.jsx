@@ -32,8 +32,9 @@ const Sidebar = () => {
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
   const { token, user } = useSelector((state) => state.authReducer);
-  const { isOpenSidebarDrawer } = useSelector((state) => state.commonReducer);
-
+  const { isOpenSidebarDrawer, currentPath } = useSelector(
+    (state) => state.commonReducer,
+  );
   const [topMenus, setTopMenus] = React.useState(data.topMenus);
 
   const handleClickLogo = () => {
@@ -57,6 +58,12 @@ const Sidebar = () => {
       setTopMenus(data.topMenus.filter((menu) => menu.path !== ROUTES.PROFILE));
     }
   }, [token, user]);
+
+  React.useEffect(() => {
+    if (currentPath !== null && currentPath !== pathname) {
+      dispatch(closeDrawer());
+    }
+  }, [currentPath, pathname]);
 
   const renderSidebarContent = (
     <div className={classes.drawerContent}>
@@ -208,7 +215,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiListItemText-primary': {
       fontSize: 15,
       whiteSpace: 'nowrap',
-      fontWeight: theme.typography.fontWeightBold,
     },
   },
   icon: {

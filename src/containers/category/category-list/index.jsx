@@ -26,7 +26,7 @@ const CategoryList = ({ categories }) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    padding: theme.spacing(4, 0, 12, 0),
+    padding: theme.spacing(0, 0, 12, 0),
   },
 }));
 

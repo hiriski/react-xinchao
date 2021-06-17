@@ -6,12 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import { CSSTransition } from 'react-transition-group';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import tabs from 'src/config/tabs';
+import { useSelector } from 'react-redux';
 
 const FloatingTab = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const [contentWidth, setContentWidth] = React.useState(0);
   const elRef = React.useRef(null);
+  const { isOpenSidebarDrawer } = useSelector((state) => state.commonReducer);
 
   React.useEffect(() => {
     if (elRef.current.offsetWidth > 0) {
@@ -22,8 +24,11 @@ const FloatingTab = () => {
   return (
     <CSSTransition in={Boolean(contentWidth)} timeout={400}>
       <div
-        className={classes.root}
-        style={{ left: `calc(50% - ${contentWidth / 2}px)` }}
+        className={clsx(classes.root)}
+        style={{
+          left: `calc(50% - ${contentWidth / 2}px)`,
+          bottom: isOpenSidebarDrawer ? -100 : 10,
+        }}
         ref={elRef}
       >
         <Box className={classes.container}>
@@ -58,11 +63,17 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     visibility: 'hidden',
     transform: 'translateY(120px)',
-    zIndex: theme.zIndex.snackbar,
+    zIndex: theme.zIndex.appBar,
     '&.enter-done': {
       visibility: 'visible',
       transform: 'translateY(0)',
       transition: `all ${300}ms ease`,
+      '&.hide': {
+        transform: 'translateY(120px)',
+      },
+      '&.unHide': {
+        transform: 'translateY(0)',
+      },
     },
   },
   container: {

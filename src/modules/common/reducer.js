@@ -4,6 +4,7 @@ const initialState = {
   isOpenDialogPhrasebookDetails: false,
   isOpenDialogConfirmLogout: false,
   isOpenSidebarDrawer: false,
+  currentPath: null,
   phrasebook: null,
 };
 
@@ -40,11 +41,13 @@ export default function commonReducer(state = initialState, action) {
       return {
         ...state,
         isOpenSidebarDrawer: true,
+        currentPath: action.payload,
       };
     case Actions.CLOSE_DRAWER:
       return {
         ...state,
         isOpenSidebarDrawer: false,
+        currentPath: null,
       };
     case Actions.TOGGLE_DRAWER:
       return {

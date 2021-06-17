@@ -13,8 +13,9 @@ export const toggleDialogPhrasebookDetails = () => ({
   type: Actions.TOGGLE_DIALOG_PHRASEBOOK_DETAILS,
 });
 
-export const openDrawer = () => ({
+export const openDrawer = (currentPath) => ({
   type: Actions.OPEN_DRAWER,
+  payload: currentPath,
 });
 
 export const closeDrawer = () => ({
