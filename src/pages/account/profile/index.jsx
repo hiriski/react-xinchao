@@ -7,19 +7,19 @@ import { resetAuthState, revokeToken } from 'src/modules/auth/actions';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoggedOut } = useSelector((state) => state.authReducer);
+  // const navigate = useNavigate();
+  // const { isLoggedOut } = useSelector((state) => state.authReducer);
 
   const handleClickLogout = () => {
     dispatch(revokeToken());
   };
 
-  React.useEffect(() => {
-    if (isLoggedOut) {
-      navigate(ROUTES.LOGGEDOUT);
-      dispatch(resetAuthState());
-    }
-  }, [isLoggedOut]);
+  // React.useEffect(() => {
+  //   if (isLoggedOut) {
+  //     navigate(ROUTES.LOGGEDOUT);
+  //     dispatch(resetAuthState());
+  //   }
+  // }, [isLoggedOut]);
 
   return (
     <React.Fragment>

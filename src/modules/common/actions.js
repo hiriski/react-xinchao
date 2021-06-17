@@ -24,3 +24,11 @@ export const closeDrawer = () => ({
 export const toggleDrawer = () => ({
   type: Actions.TOGGLE_DRAWER,
 });
+
+export const openDialogConfirmLogout = () => ({
+  type: Actions.OPEN_DIALOG_CONFIRM_LOGOUT,
+});
+
+export const closeDialogConfirmLogout = () => ({
+  type: Actions.CLOSE_DIALOG_CONFIRM_LOGOUT,
+});

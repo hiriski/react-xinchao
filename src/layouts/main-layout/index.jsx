@@ -4,6 +4,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FloatingTab from 'src/components/floating-tab';
 import AppBar from 'src/components/appbar';
+import Sidebar from 'src/components/sidebar';
+import DialogConfirmLogout from 'src/components/dialog-confirm-logout';
 
 const MainLayout = () => {
   const classes = useStyles();
@@ -12,10 +14,12 @@ const MainLayout = () => {
   return (
     <React.Fragment>
       <AppBar />
+      <Sidebar />
       <div className={classes.root}>
         <Outlet />
       </div>
       <FloatingTab />
+      <DialogConfirmLogout />
     </React.Fragment>
   );
 };

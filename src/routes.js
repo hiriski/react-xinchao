@@ -12,6 +12,11 @@ import ChatPage from './pages/chat';
 import PhrasebookListPage from './pages/phrasebook/phrasebook-list';
 import LoggedOutPage from './pages/auth/logged-out';
 import PhrasebookCategoryListPage from './pages/phrasebook/phrasebook-category-list';
+import ThreadPage from './pages/thread';
+import SettingsPage from './pages/settings';
+import FavoritePage from './pages/favorite';
+import ContactPage from './pages/contact';
+import AboutPage from './pages/about';
 
 const routes = (isLoggedIn) => [
   {
@@ -34,13 +39,21 @@ const routes = (isLoggedIn) => [
         children: [{ path: '/', element: <LoggedOutPage /> }],
       },
       {
-        path: 'profile',
+        path: ROUTES.PROFILE,
         element: isLoggedIn ? <ProfilePage /> : <Navigate to={ROUTES.SIGNIN} />,
       },
-      { path: 'chat', element: <ChatPage /> },
-      { path: 'phrasebook', element: <PhrasebookCategoryListPage /> },
-      { path: 'phrasebook/:category_slug', element: <PhrasebookListPage /> },
-      { path: '404', element: <NotMatchPage /> },
+      { path: ROUTES.CHAT, element: <ChatPage /> },
+      { path: ROUTES.THREAD, element: <ThreadPage /> },
+      { path: ROUTES.SETTINGS, element: <SettingsPage /> },
+      { path: ROUTES.FAVORITE, element: <FavoritePage /> },
+      { path: ROUTES.PHRASEBOOK_LIST, element: <PhrasebookCategoryListPage /> },
+      {
+        path: ROUTES.PHRASEBOOK_LIST + '/:category_slug',
+        element: <PhrasebookListPage />,
+      },
+      { path: ROUTES.CONTACT, element: <ContactPage /> },
+      { path: ROUTES.ABOUT, element: <AboutPage /> },
+      { path: ROUTES.NOT_MATCH, element: <NotMatchPage /> },
       { path: '/', element: <HomePage /> },
       { path: '*', element: <Navigate to={'/404'} /> },
     ],

@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) =>
         borderRadius: 4,
         backgroundColor: theme.palette.primary.main,
       },
+      '.MuiButton-root': {
+        textTransform: 'unset',
+      },
       '@keyframes pulseAnimation': {
         '0%': {
           opacity: 0,
