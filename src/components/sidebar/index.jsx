@@ -19,7 +19,10 @@ import Logo from 'src/components/logo';
 import { APP_NAME, ROUTES } from 'src/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { userAvatar } from 'src/utils';
-import { openDialogConfirmLogout } from 'src/modules/common/actions';
+import {
+  closeDrawer,
+  openDialogConfirmLogout,
+} from 'src/modules/common/actions';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -29,6 +32,7 @@ const Sidebar = () => {
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
   const { token, user } = useSelector((state) => state.authReducer);
+  const { isOpenSidebarDrawer } = useSelector((state) => state.commonReducer);
 
   const [topMenus, setTopMenus] = React.useState(data.topMenus);
 
@@ -42,6 +46,10 @@ const Sidebar = () => {
 
   const handleClickSignOut = () => {
     dispatch(openDialogConfirmLogout());
+  };
+
+  const handleDrawerClose = () => {
+    dispatch(closeDrawer());
   };
 
   React.useEffect(() => {
@@ -135,6 +143,8 @@ const Sidebar = () => {
     <Box className={classes.root} zIndex="drawer">
       <Drawer
         className={classes.drawer}
+        open={isOpenSidebarDrawer}
+        onClose={handleDrawerClose}
         variant={isBigScreen ? 'permanent' : 'temporary'}
         classes={{
           paper: classes.paper,

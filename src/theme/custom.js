@@ -1,4 +1,4 @@
 export default {
-  appBarHeight: 72,
+  appBarHeight: 58,
   sidebarWidth: 300,
 };

@@ -3,7 +3,7 @@ import * as Actions from './constants';
 const initialState = {
   isOpenDialogPhrasebookDetails: false,
   isOpenDialogConfirmLogout: false,
-  openDrawer: false,
+  isOpenSidebarDrawer: false,
   phrasebook: null,
 };
 
@@ -39,17 +39,17 @@ export default function commonReducer(state = initialState, action) {
     case Actions.OPEN_DRAWER:
       return {
         ...state,
-        openDrawer: true,
+        isOpenSidebarDrawer: true,
       };
     case Actions.CLOSE_DRAWER:
       return {
         ...state,
-        openDrawer: false,
+        isOpenSidebarDrawer: false,
       };
     case Actions.TOGGLE_DRAWER:
       return {
         ...state,
-        openDrawer: !state.openDrawer,
+        isOpenSidebarDrawer: !state.isOpenSidebarDrawer,
       };
     default:
       return state;

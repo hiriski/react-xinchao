@@ -13,7 +13,7 @@ const MainLayout = () => {
   const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
   return (
     <React.Fragment>
-      <AppBar />
+      {!isBigScreen && <AppBar />}
       <Sidebar />
       <div className={classes.root}>
         <Outlet />
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.custom.appBarHeight,
     [theme.breakpoints.up('lg')]: {
       paddingLeft: theme.custom.sidebarWidth,
+      paddingTop: 0,
     },
   },
 }));

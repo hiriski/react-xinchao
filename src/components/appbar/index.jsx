@@ -4,9 +4,14 @@ import MaterialUIAppBar from '@material-ui/core/AppBar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import Logo from 'src/components/logo';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { openDrawer } from 'src/modules/common/actions';
 
 const HideOnScroll = (props) => {
   const { children, window } = props;
@@ -34,9 +39,14 @@ HideOnScroll.propTypes = {
 const AppBar = (props) => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickLogo = () => {
     navigate('/');
+  };
+
+  const handleOpenDrawer = () => {
+    dispatch(openDrawer());
   };
 
   return (
@@ -46,12 +56,25 @@ const AppBar = (props) => {
         color="inherit"
         className={classes.appBar}
       >
-        <div className={classes.logoContainer} onClick={handleClickLogo}>
-          <Logo logoStyle={classes.logoImg} />
-          <Typography className={classes.text} component="h3">
-            Xin Chào
-          </Typography>
-        </div>
+        <Toolbar className={classes.toolBar}>
+          <div className={classes.mobileMenu}>
+            <IconButton
+              onClick={handleOpenDrawer}
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
+          <div className={classes.logoContainer} onClick={handleClickLogo}>
+            <Logo logoStyle={classes.logoImg} />
+            <Typography className={classes.text} component="h3">
+              Xin Chào
+            </Typography>
+          </div>
+        </Toolbar>
       </MaterialUIAppBar>
     </HideOnScroll>
   );
@@ -60,7 +83,6 @@ const AppBar = (props) => {
 const useStyles = makeStyles((theme) => ({
   appBar: {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
     padding: theme.spacing(1, 0),
     height: theme.custom.appBarHeight,
@@ -70,14 +92,17 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
+    color: theme.palette.primary.main,
   },
   logoImg: {
-    width: 30,
+    width: 24,
+    marginRight: theme.spacing(1),
   },
-  text: {
-    marginLeft: theme.spacing(2),
-    fontSize: 22,
-    fontWeight: theme.typography.fontWeightBold,
+  authLogoImg: {
+    width: 18,
+  },
+  mobileMenu: {
+    marginRight: theme.spacing(1),
   },
 }));
 
