@@ -9,6 +9,7 @@ import {
 } from 'react-transition-group';
 import { transitionStyles, TRANSITION_TIMEOUT } from './transition-styles';
 import Snackbar from 'src/components/snackbar';
+import FloatingTab from 'src/components/floating-tab';
 
 const AuthLayout = () => {
   const classes = useStyles();
@@ -39,6 +40,7 @@ const AuthLayout = () => {
         )}
       </ReactTransition>
       <Snackbar />
+      <FloatingTab />
     </TransitionGroup>
   );
 };

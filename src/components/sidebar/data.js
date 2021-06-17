@@ -13,44 +13,44 @@ export default {
   topMenus: [
     {
       label: 'My Profile',
-      path: ROUTES.PROFILE,
+      path: ROUTES.PREFIX + ROUTES.PROFILE,
       Icon: <AccountCircleIcon />,
     },
     {
       label: 'Thread',
-      path: ROUTES.THREAD,
+      path: ROUTES.PREFIX + ROUTES.THREAD,
       Icon: <ForumIcon />,
     },
     {
       label: 'Phrasesbook',
-      path: ROUTES.PHRASEBOOK_LIST,
+      path: ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST,
       Icon: <BookIcon />,
     },
     {
       label: 'Chatting',
-      path: ROUTES.CHAT,
+      path: ROUTES.PREFIX + ROUTES.CHAT,
       Icon: <ChatIcon />,
     },
     {
       label: 'Favorite',
-      path: ROUTES.FAVORITE,
+      path: ROUTES.PREFIX + ROUTES.FAVORITE,
       Icon: <FavoriteIcon />,
     },
     {
       label: 'Settings',
-      path: ROUTES.SETTINGS,
+      path: ROUTES.PREFIX + ROUTES.SETTINGS,
       Icon: <SettingsIcon />,
     },
   ],
   bottomMenus: [
     {
       label: 'Contact Developer',
-      path: ROUTES.CONTACT,
+      path: ROUTES.PREFIX + ROUTES.CONTACT,
       Icon: <MailOutlineIcon />,
     },
     {
       label: 'About this app',
-      path: ROUTES.ABOUT,
+      path: ROUTES.PREFIX + ROUTES.ABOUT,
       Icon: <HelpOutlineIcon />,
     },
   ],

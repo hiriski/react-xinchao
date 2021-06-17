@@ -1,8 +1,9 @@
 export const ROUTES = {
+  PREFIX: '/app/',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
   LOGGEDOUT: '/logged-out',
-  PHRASEBOOK_LIST: '/phrasebook',
+  PHRASEBOOK_LIST: 'phrasebook',
   CHAT: '/chat',
   SETTINGS: '/settings',
   FAVORITE: '/favorite',

@@ -21,23 +21,30 @@ import AboutPage from './pages/about';
 const routes = (isLoggedIn) => [
   {
     path: '/',
-    element: <MainLayout />,
+    element: <AuthLayout />,
     children: [
       {
         path: ROUTES.SIGNIN,
-        element: <AuthLayout />,
-        children: [{ path: '/', element: <LoginPage /> }],
+        element: <LoginPage />,
       },
       {
         path: ROUTES.SIGNUP,
-        element: <AuthLayout />,
-        children: [{ path: '/', element: <RegisterPage /> }],
+        element: <RegisterPage />,
       },
       {
         path: ROUTES.LOGGEDOUT,
-        element: <AuthLayout />,
-        children: [{ path: '/', element: <LoggedOutPage /> }],
+        element: <LoggedOutPage />,
       },
+      {
+        path: '/',
+        element: <Navigate to={'/app'} />,
+      },
+    ],
+  },
+  {
+    path: '/app',
+    element: <MainLayout />,
+    children: [
       {
         path: ROUTES.PROFILE,
         element: isLoggedIn ? <ProfilePage /> : <Navigate to={ROUTES.SIGNIN} />,
