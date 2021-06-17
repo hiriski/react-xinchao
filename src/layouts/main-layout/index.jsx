@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     width: '100%',
     paddingTop: theme.custom.appBarHeight,
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: theme.custom.sidebarWidth,
+    },
   },
 }));
 

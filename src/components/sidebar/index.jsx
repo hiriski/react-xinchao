@@ -27,7 +27,7 @@ const Sidebar = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMatchesToDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+  const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
   const { token, user } = useSelector((state) => state.authReducer);
 
   const [topMenus, setTopMenus] = React.useState(data.topMenus);
@@ -135,7 +135,7 @@ const Sidebar = () => {
     <Box className={classes.root} zIndex="drawer">
       <Drawer
         className={classes.drawer}
-        variant={isMatchesToDesktop ? 'permanent' : 'temporary'}
+        variant={isBigScreen ? 'permanent' : 'temporary'}
         classes={{
           paper: classes.paper,
         }}
