@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     overflow: 'hidden',
     width: '100%',
-    paddingTop: theme.custom.appBarHeight + theme.spacing(3),
+    paddingTop: theme.custom.appBarHeight,
     [theme.breakpoints.up('lg')]: {
       paddingLeft: theme.custom.sidebarWidth,
-      paddingTop: theme.spacing(4),
+      paddingTop: 0,
     },
   },
 }));

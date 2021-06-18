@@ -1,38 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { ROUTES } from 'src/config';
-import { resetAuthState, revokeToken } from 'src/modules/auth/actions';
+import Container from '@material-ui/core/Container';
+import ProfileCoverImage from 'src/containers/account/profile/profile-cover-image';
+import ProfileInfo from 'src/containers/account/profile/profile-info';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const { isLoggedOut } = useSelector((state) => state.authReducer);
-
-  const handleClickLogout = () => {
-    dispatch(revokeToken());
-  };
-
-  // React.useEffect(() => {
-  //   if (isLoggedOut) {
-  //     navigate(ROUTES.LOGGEDOUT);
-  //     dispatch(resetAuthState());
-  //   }
-  // }, [isLoggedOut]);
+  const { user } = useSelector((state) => state.authReducer);
 
   return (
     <React.Fragment>
-      <h1>Profile page</h1>
-      <Button
-        onClick={handleClickLogout}
-        disableElevation
-        color="primary"
-        variant="contained"
-        to="/"
-      >
-        Sign out
-      </Button>
+      {user.cover_photo_url && (
+        <ProfileCoverImage photo={user.cover_photo_url} />
+      )}
+      <ProfileInfo user={user} />
     </React.Fragment>
   );
 };

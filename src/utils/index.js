@@ -47,11 +47,11 @@ export const hasPhotoUrl = (user) => {
   return false;
 };
 
-export const getInitialsUsername = (user) => {
-  if (!user) {
+export const getInitialsUsername = (name) => {
+  if (!name) {
     return 'Xc'; // it's mean XinChào :)
   }
-  return user.name
+  return name
     .split(' ')
     .map((str) => str[0])
     .join('');

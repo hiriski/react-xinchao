@@ -18,11 +18,11 @@ import data from './data';
 import Logo from 'src/components/logo';
 import { APP_NAME, ROUTES } from 'src/config';
 import { useDispatch, useSelector } from 'react-redux';
-import { userAvatar } from 'src/utils';
 import {
   closeDrawer,
   openDialogConfirmLogout,
 } from 'src/modules/common/actions';
+import Avatar from '../avatar';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -42,7 +42,7 @@ const Sidebar = () => {
   };
 
   const handleClickAvatar = () => {
-    navigate(ROUTES.PROFILE);
+    navigate(ROUTES.PREFIX + ROUTES.PROFILE);
   };
 
   const handleClickSignOut = () => {
@@ -86,11 +86,10 @@ const Sidebar = () => {
         <React.Fragment>
           <Box className={classes.userInfo}>
             <Box mr={2}>
-              <img
+              <Avatar
                 onClick={handleClickAvatar}
-                className={classes.avatarImg}
-                src={userAvatar(user)}
-                alt={user.useranme}
+                user={user}
+                avatarStyle={classes.avatarImg}
               />
             </Box>
             <Box className={classes.name}>

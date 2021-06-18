@@ -1,9 +1,8 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
 import HomeShare from 'src/containers/home/share';
-import { batch, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
-import { fetchPhrasebooks } from 'src/modules/phrasebook/actions';
 import Loading from 'src/containers/loading';
 
 const HomePage = () => {
@@ -13,9 +12,6 @@ const HomePage = () => {
 
   const bootstrapFetchData = () => {
     dispatch(fetchPhrasebookCategories());
-    // batch(() => {
-    //   dispatch(fetchPhrasebooks());
-    // });
   };
 
   React.useEffect(() => {
