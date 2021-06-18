@@ -8,8 +8,9 @@ import Avatar from 'src/components/avatar';
 import { useDispatch } from 'react-redux';
 import { openDialogConfirmLogout } from 'src/modules/common/actions';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import clsx from 'clsx';
 
-const ProfileInfo = ({ user }) => {
+const ProfileInfo = ({ user, hasCoverPhoto }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -20,14 +21,20 @@ const ProfileInfo = ({ user }) => {
   return (
     <div className={classes.root}>
       <Box
-        className={classes.box}
+        className={clsx(classes.box)}
         alignItems="center"
         justifyContent="center"
         display="flex"
         flexDirection="column"
         width="100%"
       >
-        <Avatar avatarStyle={classes.avatar} user={user} />
+        <Avatar
+          avatarStyle={clsx(
+            classes.avatar,
+            hasCoverPhoto && classes.hasCoverPhoto,
+          )}
+          user={user}
+        />
         <div className={classes.userInfo}>
           <Typography className={classes.name} variant="h3" component="h2">
             {user.name}
@@ -66,10 +73,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1, 4, 1),
   },
   avatar: {
-    marginTop: -(AVATAR_SIZE / 2),
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
     borderRadius: AVATAR_SIZE,
+    marginTop: theme.spacing(2),
+  },
+  hasCoverPhoto: {
+    marginTop: -(AVATAR_SIZE / 2),
   },
   userInfo: {
     textAlign: 'center',
@@ -83,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
 
 ProfileInfo.propTypes = {
   user: PropTypes.object.isRequired,
+  hasCoverPhoto: PropTypes.bool.isRequired,
 };
 
 export default ProfileInfo;
