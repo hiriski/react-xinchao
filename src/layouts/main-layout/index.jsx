@@ -6,11 +6,16 @@ import FloatingTab from 'src/components/floating-tab';
 import AppBar from 'src/components/appbar';
 import Sidebar from 'src/components/sidebar';
 import DialogConfirmLogout from 'src/components/dialog-confirm-logout';
+import { useSelector } from 'react-redux';
+import FloatingButtonAddPhrase from 'src/components/floating-button-add-phrase';
+import DialogAddNewPhrase from 'src/containers/phrasebook/dialog-add-new-phrase';
 
 const MainLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const { user, token } = useSelector((state) => state.authReducer);
+
   return (
     <React.Fragment>
       {!isBigScreen && <AppBar />}
@@ -20,6 +25,12 @@ const MainLayout = () => {
       </div>
       <FloatingTab />
       <DialogConfirmLogout />
+      {user !== null && Boolean(token) && (
+        <React.Fragment>
+          <FloatingButtonAddPhrase />
+          <DialogAddNewPhrase />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

@@ -8,9 +8,8 @@ import PhrasebookCategoryTab from 'src/containers/phrasebook/phrasebook-category
 
 import { fetchPhrasebooks } from 'src/modules/phrasebook/actions';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
-import PhrasebookListHeader from 'src/containers/phrasebook/phrasebook-list-header';
 
-const PhrasebookListPage = () => {
+const CreatePhrasePage = () => {
   const dispatch = useDispatch();
   const { category_slug } = useParams();
 
@@ -18,11 +17,8 @@ const PhrasebookListPage = () => {
   const { list: categories } = useSelector((state) => state.categoryReducer);
 
   const fetchData = () => {
-    if (category_slug) {
-      if (categories.length === 0) {
-        dispatch(fetchPhrasebookCategories());
-      }
-      dispatch(fetchPhrasebooks(category_slug));
+    if (!categories.length > 0) {
+      dispatch(fetchPhrasebookCategories());
     }
   };
 
@@ -32,7 +28,6 @@ const PhrasebookListPage = () => {
 
   return (
     <React.Fragment>
-      <PhrasebookCategoryTab categories={categories} />
       <Container>
         <DialogPhrasebookDetails />
         {list.length > 0 ? (
@@ -43,4 +38,4 @@ const PhrasebookListPage = () => {
   );
 };
 
-export default PhrasebookListPage;
+export default CreatePhrasePage;

@@ -4,6 +4,7 @@ export const ROUTES = {
   SIGNUP: '/signup',
   LOGGEDOUT: '/logged-out',
   PHRASEBOOK_LIST: '/phrasebook',
+  CREATE_PHRASE: '/phrasebook/create',
   CHAT: '/chat',
   SETTINGS: '/settings',
   FAVORITE: '/favorite',

@@ -33,3 +33,11 @@ export const openDialogConfirmLogout = () => ({
 export const closeDialogConfirmLogout = () => ({
   type: Actions.CLOSE_DIALOG_CONFIRM_LOGOUT,
 });
+
+export const openDialogAddNewPhrase = () => ({
+  type: Actions.OPEN_DIALOG_ADD_NEW_PHRASE,
+});
+
+export const closeDialogAddNewPhrase = () => ({
+  type: Actions.CLOSE_DIALOG_ADD_NEW_PHRASE,
+});

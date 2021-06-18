@@ -17,6 +17,7 @@ import SettingsPage from './pages/settings';
 import FavoritePage from './pages/favorite';
 import ContactPage from './pages/contact';
 import AboutPage from './pages/about';
+import CreatePhrasePage from './pages/phrasebook/create-phrase';
 
 const routes = (isLoggedIn) => [
   {
@@ -57,6 +58,10 @@ const routes = (isLoggedIn) => [
       {
         path: ROUTES.PHRASEBOOK_LIST + '/:category_slug',
         element: <PhrasebookListPage />,
+      },
+      {
+        path: ROUTES.CREATE_PHRASE,
+        element: <CreatePhrasePage />,
       },
       { path: ROUTES.CONTACT, element: <ContactPage /> },
       { path: ROUTES.ABOUT, element: <AboutPage /> },

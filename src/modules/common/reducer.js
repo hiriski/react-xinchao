@@ -3,6 +3,7 @@ import * as Actions from './constants';
 const initialState = {
   isOpenDialogPhrasebookDetails: false,
   isOpenDialogConfirmLogout: false,
+  isOpenDialogAddNewPhrase: false,
   isOpenSidebarDrawer: false,
   currentPath: null,
   phrasebook: null,
@@ -31,6 +32,16 @@ export default function commonReducer(state = initialState, action) {
       return {
         ...state,
         isOpenDialogConfirmLogout: false,
+      };
+    case Actions.OPEN_DIALOG_ADD_NEW_PHRASE:
+      return {
+        ...state,
+        isOpenDialogAddNewPhrase: true,
+      };
+    case Actions.CLOSE_DIALOG_ADD_NEW_PHRASE:
+      return {
+        ...state,
+        isOpenDialogAddNewPhrase: false,
       };
     case Actions.TOGGLE_DIALOG_PHRASEBOOK_DETAILS:
       return {
