@@ -9,6 +9,8 @@ import {
 } from 'react-transition-group';
 import { transitionStyles, TRANSITION_TIMEOUT } from './transition-styles';
 import Snackbar from 'src/components/snackbar';
+import AppBar from 'src/components/appbar';
+import Sidebar from 'src/components/sidebar';
 import FloatingTab from 'src/components/floating-tab';
 
 const AuthLayout = () => {
@@ -17,31 +19,36 @@ const AuthLayout = () => {
   const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
   const { pathname } = useLocation();
 
-  // console.log('isBigScreen', isBigScreen);
-
   return (
-    <TransitionGroup component={null}>
-      <ReactTransition
-        key={pathname}
-        transitionName="auth"
-        timeout={{
-          enter: TRANSITION_TIMEOUT,
-          exit: TRANSITION_TIMEOUT,
-        }}
-      >
-        {(status) => (
-          <div className={classes.root} style={{ ...transitionStyles[status] }}>
-            <div className={classes.container}>
-              <Box className={classes.content}>
-                <Outlet />
-              </Box>
+    <React.Fragment>
+      {!isBigScreen && <AppBar />}
+      <Sidebar />
+      <TransitionGroup component={null}>
+        <ReactTransition
+          key={pathname}
+          transitionName="auth"
+          timeout={{
+            enter: TRANSITION_TIMEOUT,
+            exit: TRANSITION_TIMEOUT,
+          }}
+        >
+          {(status) => (
+            <div
+              className={classes.root}
+              style={{ ...transitionStyles[status] }}
+            >
+              <div className={classes.container}>
+                <Box className={classes.content}>
+                  <Outlet />
+                </Box>
+              </div>
             </div>
-          </div>
-        )}
-      </ReactTransition>
-      <Snackbar />
-      <FloatingTab />
-    </TransitionGroup>
+          )}
+        </ReactTransition>
+        <Snackbar />
+        <FloatingTab />
+      </TransitionGroup>
+    </React.Fragment>
   );
 };
 

@@ -14,7 +14,7 @@ const CategoryItem = ({ category }) => {
   const { text, color, phrases_count, slug } = category;
 
   const handleClick = () => {
-    navigate(ROUTES.PHRASEBOOK_LIST + '/' + slug);
+    navigate(ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST + '/' + slug);
   };
 
   return (

@@ -55,7 +55,11 @@ const Sidebar = () => {
 
   React.useEffect(() => {
     if (!Boolean(token) && !user !== null) {
-      setTopMenus(data.topMenus.filter((menu) => menu.path !== ROUTES.PROFILE));
+      setTopMenus(
+        data.topMenus.filter(
+          (menu) => menu.path !== ROUTES.PREFIX + ROUTES.PROFILE,
+        ),
+      );
     }
   }, [token, user]);
 

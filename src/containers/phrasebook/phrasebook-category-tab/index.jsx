@@ -72,7 +72,7 @@ const PhrasebookCategoryTab = React.memo(({ categories }) => {
           {categories.map(({ id, slug, text }, index) => (
             <CustomTab
               component={RouterLink}
-              to={ROUTES.PHRASEBOOK_LIST + '/' + slug}
+              to={ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST + '/' + slug}
               icon={<FolderIcon />}
               label={<Typography component="h5">{text.en}</Typography>}
               key={id}
