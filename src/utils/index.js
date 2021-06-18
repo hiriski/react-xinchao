@@ -54,5 +54,6 @@ export const getInitialsUsername = (name) => {
   return name
     .split(' ')
     .map((str) => str[0])
-    .join('');
+    .join('')
+    .toLowerCase();
 };

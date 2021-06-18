@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import MaterialUIAvatar from '@material-ui/core/Avatar';
 
-const Avatar = ({ onClick, user, avatarStyle, textStyle }) => {
+const Avatar = ({ onClick, user, avatarStyle, avatarTextStyle }) => {
   const classes = useStyles();
   return (
     <MaterialUIAvatar
@@ -15,7 +15,7 @@ const Avatar = ({ onClick, user, avatarStyle, textStyle }) => {
       alt={user.name}
       src={userAvatar(user)}
     >
-      <Typography className={clsx(classes.defaultAvatarText, textStyle)}>
+      <Typography className={clsx(classes.defaultAvatarText, avatarTextStyle)}>
         {getInitialsUsername(user.name)}
       </Typography>
     </MaterialUIAvatar>
@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   defaultAvatarText: {
-    fontSize: 22,
+    fontSize: 18,
+    color: 'inherit',
+    fontWeight: 'bold',
+    textTransform: 'capitalize !important',
   },
 }));
 
@@ -41,7 +44,7 @@ Avatar.propTypes = {
   onClick: PropTypes.func,
   user: PropTypes.object.isRequired,
   avatarStyle: PropTypes.any,
-  textStyle: PropTypes.any,
+  avatarTextStyle: PropTypes.any,
 };
 
 export default Avatar;

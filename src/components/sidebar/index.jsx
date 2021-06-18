@@ -90,13 +90,19 @@ const Sidebar = () => {
                 onClick={handleClickAvatar}
                 user={user}
                 avatarStyle={classes.avatarImg}
+                avatarTextStyle={classes.avatarTextStyle}
               />
             </Box>
             <Box className={classes.name}>
               <Typography noWrap variant="h4" component="h4">
                 {user.name}
               </Typography>
-              <Typography noWrap variant="subtitle2" component="p">
+              <Typography
+                className={classes.textLevel}
+                noWrap
+                variant="subtitle2"
+                component="p"
+              >
                 {user.level.name}
               </Typography>
             </Box>
@@ -260,15 +266,20 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 16,
       fontWeight: theme.typography.fontWeightBold,
     },
-    '& p': {
-      color: theme.palette.text.hint,
-      fontSize: 13,
-    },
+  },
+  textLevel: {
+    color: theme.palette.text.hint,
+    fontSize: 13,
   },
   avatarImg: {
     height: AVATAR_SIZE,
     width: AVATAR_SIZE,
     borderRadius: AVATAR_SIZE,
+    color: theme.palette.primary.contrastText,
+  },
+  avatarTextStyle: {
+    color: theme.palette.primary.contrastText,
+    fontSize: 14,
   },
   userInfoDivider: {
     margin: theme.spacing(0.8, 4),
