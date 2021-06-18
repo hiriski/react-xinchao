@@ -8,7 +8,7 @@ import PhrasebookItem from '../phrasebook-item';
 import PhrasebookTitle from '../phrasebook-title';
 import FolderIcon from '@material-ui/icons/Folder';
 
-const PhrasebookList = ({ phrasebooks, category }) => {
+const PhrasebookList = ({ phrases, category }) => {
   const classes = useStyles();
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -19,9 +19,9 @@ const PhrasebookList = ({ phrasebooks, category }) => {
         <PhrasebookTitle title={category.text.en} Icon={<FolderIcon />} />
       ) : null}
       <Grid container spacing={isBigScreen ? 1 : 1}>
-        {phrasebooks.map((phrasebook) => (
-          <Grid key={phrasebook.id} item xs={12} md={4}>
-            <PhrasebookItem key={phrasebook.id} phrasebook={phrasebook} />
+        {phrases.map((phrase) => (
+          <Grid key={phrase.id} item xs={12} md={4}>
+            <PhrasebookItem key={phrase.id} phrase={phrase} />
           </Grid>
         ))}
       </Grid>
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 PhrasebookList.propTypes = {
-  phrasebooks: PropTypes.array.isRequired,
+  phrases: PropTypes.array.isRequired,
   category: PropTypes.object.isRequired,
 };
 

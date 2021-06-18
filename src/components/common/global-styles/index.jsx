@@ -16,7 +16,16 @@ const useStyles = makeStyles((theme) =>
         '-webkit-tap-highlight-color': 'transparent',
       },
       '.MuiSvgIcon-root': {
-        fontSize: '1.2rem',
+        fontSize: '1.15rem',
+      },
+      '.MuiButton-contained': {
+        backgroundColor: theme.palette.background.paper,
+      },
+      '.MuiTypography-subtitle2': {
+        fontSize: '0.77rem',
+      },
+      '.MuiDivider-root ': {
+        backgroundColor: ' rgb(0 0 0 / 7%)',
       },
       '::-webkit-scrollbar': {
         width: 7,

@@ -74,3 +74,36 @@ const fetchingPhrasebookSuccess = (data) => ({
 export const resetFetchPhrasebooks = () => ({
   type: Actions.RESET_FETCHING_PHRASEBOOKS_STATE,
 });
+
+/**
+ * --------------------
+ * Fetch latest phrasebook
+ * --------------------
+ */
+export const fetchLatestPhrasebook = (count = 12) => {
+  return async (dispatch) => {
+    dispatch(fetchingLatestPhrasebookRequest());
+    try {
+      const response = await PhrasebookService.getLatestPhrasebook(count);
+      if (response.status === 200) {
+        let { data } = response.data;
+        dispatch(fetchingLatestPhrasebookSuccess(data));
+      }
+    } catch (e) {
+      dispatch(fetchingLatestPhrasebookFailure());
+    }
+  };
+};
+
+const fetchingLatestPhrasebookRequest = () => ({
+  type: Actions.FETCHING_LATEST_PHRASEBOOK_REQUEST,
+});
+
+const fetchingLatestPhrasebookFailure = () => ({
+  type: Actions.FETCHING_LATEST_PHRASEBOOK_FAILURE,
+});
+
+const fetchingLatestPhrasebookSuccess = (data) => ({
+  type: Actions.FETCHING_LATEST_PHRASEBOOK_SUCCESS,
+  payload: data,
+});

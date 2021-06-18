@@ -35,7 +35,7 @@ const PhrasebookListPage = () => {
       <Container>
         <DialogPhrasebookDetails />
         {list.length > 0 ? (
-          <PhrasebookList phrasebooks={list} category={category} />
+          <PhrasebookList phrases={list} category={category} />
         ) : null}
       </Container>
     </React.Fragment>

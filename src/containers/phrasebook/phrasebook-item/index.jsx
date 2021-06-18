@@ -8,18 +8,19 @@ import Avatar from '@material-ui/core/Avatar';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { useDispatch } from 'react-redux';
 import { openDialogPhrasebookDetails } from 'src/modules/common/actions';
+import clsx from 'clsx';
 
-const PhrasebookItem = ({ phrasebook }) => {
-  const { text } = phrasebook;
+const PhrasebookItem = ({ phrase, containerStyle }) => {
+  const { text } = phrase;
   const dispatch = useDispatch();
 
   const handleClickItem = () => {
-    dispatch(openDialogPhrasebookDetails(phrasebook));
+    dispatch(openDialogPhrasebookDetails(phrase));
   };
 
   const classes = useStyles();
   return (
-    <ListItem className={classes.root}>
+    <ListItem className={clsx(classes.root, containerStyle && containerStyle)}>
       <ListItemAvatar>
         <Avatar className={classes.avatarIcon}>
           <VolumeUpIcon />
@@ -61,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 PhrasebookItem.propTypes = {
-  phrasebook: PropTypes.object.isRequired,
+  phrase: PropTypes.object.isRequired,
+  containerStyle: PropTypes.any,
 };
 
 export default PhrasebookItem;

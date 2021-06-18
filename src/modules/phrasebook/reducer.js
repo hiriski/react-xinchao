@@ -1,12 +1,16 @@
+import { TrainRounded } from '@material-ui/icons';
 import * as Actions from './constants';
 
 const initialState = {
+  isFetching: false,
+  isFailure: false,
   create: {
     isError: false,
     isLoading: false,
     isSuccess: false,
   },
   list: [], // all of phrasebooks.
+  newPhrases: [],
   category: null,
 };
 
@@ -56,17 +60,52 @@ export default function phrasebookReducer(state = initialState, action) {
      * ---------------
      */
     case Actions.FETCHING_PHRASEBOOKS_REQUEST:
-      return state;
+      return {
+        ...state,
+        isFetching: true,
+        isFailure: false,
+      };
     case Actions.FETCHING_PHRASEBOOKS_FAILURE:
-      return state;
+      return {
+        ...state,
+        isFetching: false,
+        isFailure: true,
+      };
     case Actions.FETCHING_PHRASEBOOKS_SUCCESS:
       return {
         ...state,
-        list: action.payload.phrasebooks, // all of phrasebooks.
+        isFetching: false,
+        isFailure: false,
+        list: action.payload.phrasebooks || [], // all of phrasebooks.
         category: action.payload.category || null,
       };
     case Actions.RESET_FETCHING_PHRASEBOOKS_STATE:
       return state;
+
+    /**
+     * ---------------
+     * Fetch latest phrasebooks.
+     * ---------------
+     */
+    case Actions.FETCHING_LATEST_PHRASEBOOK_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        isFailure: false,
+      };
+    case Actions.FETCHING_LATEST_PHRASEBOOK_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        isFailure: true,
+      };
+    case Actions.FETCHING_LATEST_PHRASEBOOK_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        isFailure: false,
+        newPhrases: action.payload,
+      };
 
     default:
       return state;

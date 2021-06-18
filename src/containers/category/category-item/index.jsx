@@ -8,7 +8,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'src/config';
 
-const CategoryItem = ({ category }) => {
+const CategoryItem = ({ category, containerStyle }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { text, color, phrases_count, slug } = category;
@@ -18,7 +18,10 @@ const CategoryItem = ({ category }) => {
   };
 
   return (
-    <Box className={classes.root} onClick={handleClick}>
+    <Box
+      className={clsx(classes.root, containerStyle && containerStyle)}
+      onClick={handleClick}
+    >
       <div
         className={clsx('round', !color && classes.defaultBackground)}
         style={{ backgroundColor: color ? color.value : null }}
@@ -114,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
 
 CategoryItem.propTypes = {
   category: PropTypes.object.isRequired,
+  containerStyle: PropTypes.any,
 };
 
 export default CategoryItem;

@@ -8,9 +8,15 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { ROUTES } from 'src/config';
+import HomeIcon from '@material-ui/icons/Home';
 
 export default {
   topMenus: [
+    {
+      label: 'Home',
+      path: ROUTES.PREFIX,
+      Icon: <HomeIcon />,
+    },
     {
       label: 'My Profile',
       path: ROUTES.PREFIX + ROUTES.PROFILE,

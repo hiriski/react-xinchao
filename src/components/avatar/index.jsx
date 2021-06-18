@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 Avatar.propTypes = {
   onClick: PropTypes.func,
   user: PropTypes.object.isRequired,
-  avatarStyle: PropTypes.object,
-  textStyle: PropTypes.object,
+  avatarStyle: PropTypes.any,
+  textStyle: PropTypes.any,
 };
 
 export default Avatar;
