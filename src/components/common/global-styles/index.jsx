@@ -18,9 +18,6 @@ const useStyles = makeStyles((theme) =>
       '.MuiSvgIcon-root': {
         fontSize: '1.15rem',
       },
-      '.MuiButton-contained': {
-        backgroundColor: theme.palette.background.paper,
-      },
       '.MuiTypography-subtitle2': {
         fontSize: '0.77rem',
       },

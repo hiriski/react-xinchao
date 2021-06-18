@@ -30,7 +30,6 @@ const HomePage = () => {
   React.useEffect(() => {
     if (categories.length > 0 && newPhrases.length > 0) {
       setLoading(false);
-      console.log('called');
     }
   }, [categories, newPhrases]);
 

@@ -25,11 +25,15 @@ const HomeShare = () => {
             Share to your friends.
           </Typography>
         </div>
-        <div className={classes.button}>
-          <Button variant="contained" color="default">
-            Share
-          </Button>
-        </div>
+
+        <Button
+          className={classes.button}
+          variant="contained"
+          disableElevation
+          color="default"
+        >
+          Share
+        </Button>
       </Box>
     </Box>
   );
@@ -71,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
   },
 }));
 
