@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     padding: theme.spacing(0, 0, 12, 0),
+    position: 'relative',
   },
   sliderContainer: {},
   item: {
