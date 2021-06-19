@@ -19,9 +19,9 @@ const PageTitle = ({ title, subtitle, center }) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'left',
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(1.4),
     [theme.breakpoints.up('sm')]: {
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(2),
     },
   },
   center: {

@@ -1,5 +1,7 @@
 import PhrasebookService from './service';
 import * as Actions from './constants';
+import { batch } from 'react-redux';
+import { showAlert } from '../alert/actions';
 
 /**
  * --------------------
@@ -13,6 +15,12 @@ export const createPhrase = (data) => {
       const response = await PhrasebookService.create(data);
       if (response.status === 201) {
         dispatch(createPhraseSuccess(response.data.data));
+        dispatch(
+          showAlert({
+            message: 'Phrase has been added successfully.',
+            severity: 'success',
+          }),
+        );
       }
     } catch (e) {
       dispatch(createPhraseFailure());
@@ -50,6 +58,7 @@ export const fetchPhrasebooks = (category) => {
       const response = await PhrasebookService.getPhrasebooks(category);
       if (response.status === 200) {
         let { data } = response;
+
         dispatch(fetchingPhrasebookSuccess(data));
       }
     } catch (e) {

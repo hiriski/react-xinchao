@@ -9,6 +9,7 @@ import DialogConfirmLogout from 'src/components/dialog-confirm-logout';
 import { useSelector } from 'react-redux';
 import FloatingButtonAddPhrase from 'src/components/floating-button-add-phrase';
 import DialogAddNewPhrase from 'src/containers/phrasebook/dialog-add-new-phrase';
+import Snackbar from 'src/components/snackbar';
 
 const MainLayout = () => {
   const classes = useStyles();
@@ -18,6 +19,7 @@ const MainLayout = () => {
 
   return (
     <React.Fragment>
+      <Snackbar />
       {!isBigScreen && <AppBar />}
       <Sidebar />
       <div className={classes.root}>

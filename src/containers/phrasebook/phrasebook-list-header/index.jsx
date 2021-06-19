@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import { ROUTES } from 'src/config';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const PhrasebookListHeader = ({ title, color, phrases_count, Icon }) => {
   const classes = useStyles();
@@ -30,15 +31,17 @@ const PhrasebookListHeader = ({ title, color, phrases_count, Icon }) => {
             </Typography>
           </Box>
         </Box>
-        <Button
-          component={RouterLink}
-          to={ROUTES.PREFIX + ROUTES.CREATE_PHRASE}
-          variant="contained"
-          color="default"
-          className={classes.button}
-        >
-          Add Phrase
-        </Button>
+        <Tooltip title="Add phrase">
+          <Button
+            component={RouterLink}
+            to={ROUTES.PREFIX + ROUTES.CREATE_PHRASE}
+            variant="contained"
+            color="default"
+            className={classes.button}
+          >
+            Add Phrase
+          </Button>
+        </Tooltip>
       </Container>
     </div>
   );

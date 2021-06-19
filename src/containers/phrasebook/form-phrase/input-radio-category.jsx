@@ -1,49 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Controller } from 'react-hook-form';
 import Typography from '@material-ui/core/Typography';
-import CheckIcon from '@material-ui/icons/Check';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Radio from '@material-ui/core/Radio';
+import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 
-const InputRadioCategory = ({ setCategory, categories, control }) => {
+const InputRadioCategory = ({ categories, control, errors, watchCategory }) => {
   const classes = useStyles();
-
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-  };
 
   return (
     <div className={classes.root}>
       <Typography className={classes.textColorLabel} variant="subtitle2">
         Select category :
       </Typography>
-      <div className={classes.category}>
-        {categories.map(({ id, slug, color, text }) => (
-          <div key={id} className={classes.item}>
-            <label
-              style={{
-                border: `1px solid ${color}`,
-              }}
-              className={clsx(
-                classes.label,
-                categories[id] && classes.selected,
-              )}
-              htmlFor={String(slug)}
-            >
-              <CheckIcon />
-              <Typography>{text.en}</Typography>
-            </label>
-            <input
-              onChange={handleChange}
-              type="checkbox"
-              id={String(slug)}
-              name={String(slug)}
-              value={String(id)}
-            ></input>
-          </div>
-        ))}
-      </div>
+
+      <FormControl component="fieldset" error={errors.category_id}>
+        <Controller
+          rules={{ required: true }}
+          control={control}
+          // defaultValue="1"
+          name="category_id"
+          render={({ field }) => (
+            <React.Fragment>
+              <RadioGroup className={classes.radioGroup} {...field}>
+                {categories.map(({ id, text }) => (
+                  <FormControlLabel
+                    className={clsx(
+                      classes.controlLabel,
+                      watchCategory == id
+                        ? classes.selected
+                        : classes.unSelected,
+                    )}
+                    key={id}
+                    value={String(id)}
+                    control={<Radio />}
+                    label={text.en}
+                  />
+                ))}
+              </RadioGroup>
+              <FormHelperText>{'Please select category'}</FormHelperText>
+            </React.Fragment>
+          )}
+        />
+      </FormControl>
     </div>
   );
 };
@@ -53,41 +57,63 @@ const useStyles = makeStyles((theme) => ({
   textColorLabel: {
     marginBottom: theme.spacing(0.4),
   },
-  category: {
+  radioGroup: {
     display: 'flex',
     flexDirection: 'row',
+    overflow: 'scroll',
+    '&::-webkit-scrollbar': {
+      width: 4,
+      backgroundColor: theme.palette.background.paper,
+      height: 4,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: theme.palette.secondary.light,
+    },
     '& input': {
       display: 'none',
     },
   },
-  item: {},
+  controlLabel: {
+    display: 'block',
+  },
   selected: {
-    '& svg': {
-      display: 'block !important',
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    border: `1px solid ` + theme.palette.secondary.main + ' !important',
+    '& .MuiRadio-colorSecondary.Mui-checked': {
+      color: '#fff !important',
     },
   },
-  label: {
+  controlLabel: {
     cursor: 'pointer',
-    height: 42,
-    width: 125,
+    height: 28,
     borderRadius: theme.shape.borderRadius,
+    paddingRight: theme.spacing(1),
     display: 'inline-block',
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(0, 0.6, 0.6, 0),
+    marginLeft: 0, // reset from material ui
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    border: `1px solid #ececec`,
+    border: `1px solid #c7c7c7`,
+    '& .MuiFormControlLabel-label': {
+      fontSize: 13,
+    },
     '& svg': {
       color: 'inherit',
-      display: 'none',
+      fontSize: '1rem',
+    },
+    '& p': {
+      fontSize: 13,
     },
   },
 }));
 
 InputRadioCategory.propTypes = {
   categories: PropTypes.object,
-  setCategory: PropTypes.func,
   control: PropTypes.any,
+  errors: PropTypes.any,
+  watchCategory: PropTypes.any,
 };
 
 export default InputRadioCategory;

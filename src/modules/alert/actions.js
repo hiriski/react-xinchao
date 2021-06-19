@@ -2,7 +2,7 @@ import { batch } from 'react-redux';
 import * as Actions from './constants';
 
 export const showAlert =
-  ({ message, severity = 'success', autoHideDuration = 5000 }) =>
+  ({ message, severity = 'success', autoHideDuration = 3200 }) =>
   (dispatch) => {
     batch(() => {
       dispatch({

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) =>
         fontSize: '1.15rem',
       },
       '.MuiTypography-subtitle2': {
-        fontSize: '0.77rem',
+        fontSize: '0.8rem',
       },
       '.MuiDivider-root ': {
         backgroundColor: ' rgb(0 0 0 / 7%)',

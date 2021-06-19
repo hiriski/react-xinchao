@@ -11,21 +11,22 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import InputRadioCategory from './input-radio-category';
+import SaveIcon from '@material-ui/icons/Save';
 
 const phrasebookSchema = yup.object().shape({
   vi_VN: yup.string().required('Tieng viet is required'),
-  // category_id: yup.number().required('Category is required.'),
+  category_id: yup.number().required('Category is required.'),
 });
 
-const FormPhrase = ({ handleFormSubmit }) => {
+const FormPhrase = ({ handleFormSubmit, unAuthenticate, isLoading }) => {
   const classes = useStyles();
-  const [category, setCategory] = React.useState(1);
   const { list: categories } = useSelector((state) => state.categoryReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(phrasebookSchema),
@@ -35,14 +36,17 @@ const FormPhrase = ({ handleFormSubmit }) => {
     handleFormSubmit(data);
   };
 
+  const watchCategory = watch('category_id');
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <InputRadioCategory
             categories={categories}
-            setCategory={setCategory}
             control={control}
+            errors={errors}
+            watchCategory={watchCategory}
           />
         </Grid>
         <Grid item xs={12} md={12}>
@@ -52,11 +56,12 @@ const FormPhrase = ({ handleFormSubmit }) => {
               control={control}
               render={({ field }) => (
                 <TextField
+                  disabled={unAuthenticate}
                   size="small"
-                  helperText={'Tiếng Việt'}
                   variant="outlined"
                   label="Tiếng Việt"
                   error={errors.vi_VN}
+                  helperText={errors.vi_VN ? 'Field is required' : null}
                   {...field}
                 />
               )}
@@ -70,6 +75,7 @@ const FormPhrase = ({ handleFormSubmit }) => {
               control={control}
               render={({ field }) => (
                 <TextField
+                  disabled={unAuthenticate}
                   size="small"
                   helperText={'Bahasa Indonesia'}
                   variant="outlined"
@@ -88,6 +94,7 @@ const FormPhrase = ({ handleFormSubmit }) => {
               control={control}
               render={({ field }) => (
                 <TextField
+                  disabled={unAuthenticate}
                   size="small"
                   helperText={'English'}
                   variant="outlined"
@@ -106,9 +113,10 @@ const FormPhrase = ({ handleFormSubmit }) => {
               control={control}
               render={({ field }) => (
                 <TextField
+                  disabled={unAuthenticate}
                   multiline
-                  rows={2}
-                  rowsMax={4}
+                  rows={4}
+                  rowsMax={6}
                   size="small"
                   helperText={'Notes'}
                   variant="outlined"
@@ -121,8 +129,16 @@ const FormPhrase = ({ handleFormSubmit }) => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth type="submit" variant="contained" color="primary">
-            Add New Phrase
+          <Button
+            fullWidth
+            disabled={unAuthenticate || isLoading}
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<SaveIcon />}
+          >
+            Add Phrase
           </Button>
         </Grid>
       </Grid>
@@ -141,6 +157,8 @@ const useStyles = makeStyles((theme) => ({
 
 FormPhrase.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
+  unAuthenticate: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default FormPhrase;
