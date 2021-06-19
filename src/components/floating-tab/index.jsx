@@ -60,7 +60,7 @@ const FloatingTab = () => {
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(3),
     visibility: 'hidden',
     transform: 'translateY(120px)',
     zIndex: theme.zIndex.appBar,
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 40,
-    padding: theme.spacing(1.4, 2),
+    padding: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
     boxShadow: '0px 31px 65px -6px rgba(0,0,0,0.20)',
     '-webkit-box-shadow': '0px 31px 65px -6px rgba(0,0,0,0.20)',
@@ -95,15 +95,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     borderRadius: 40,
     textDecoration: 'none',
-    padding: theme.spacing(1, 1.6),
+    padding: theme.spacing(0.8, 1.2),
     color: theme.palette.primary.main,
     margin: theme.spacing(0, 0.5),
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: '#fbfbfb',
+    },
     '& svg': {
-      fontSize: '1.2rem',
-      marginRight: theme.spacing(0.8),
-      [theme.breakpoints.up('sm')]: {
-        marginRight: theme.spacing(1.4),
-      },
+      fontSize: '1rem',
     },
     [theme.breakpoints.down('sm')]: {
       '& svg + span': {
@@ -115,11 +115,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     color: '#fbfbfb',
     '& svg + span': {
-      display: 'inline-block',
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'inline-block',
+      },
     },
   },
   label: {
     lineHeight: 1.1,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+    },
   },
 }));
 
