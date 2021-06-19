@@ -80,7 +80,13 @@ export default function phrasebookReducer(state = initialState, action) {
         category: action.payload.category || null,
       };
     case Actions.RESET_FETCHING_PHRASEBOOKS_STATE:
-      return state;
+      return {
+        ...state,
+        isFetching: false,
+        isFailure: false,
+        list: [],
+        category: null,
+      };
 
     /**
      * ---------------

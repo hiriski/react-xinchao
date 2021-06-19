@@ -10,31 +10,32 @@ import {
 import { transitionStyles, TRANSITION_TIMEOUT } from './transition-styles';
 import Snackbar from 'src/components/snackbar';
 import AppBar from 'src/components/appbar';
-import Sidebar from 'src/components/sidebar';
 import FloatingTab from 'src/components/floating-tab';
+import AuthSidebar from 'src/components/auth-sidebar';
+import clsx from 'clsx';
 
 const AuthLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const isBigScreen = useMediaQuery(theme.breakpoints.up('md'));
   const { pathname } = useLocation();
 
   return (
     <React.Fragment>
       {!isBigScreen && <AppBar />}
-      <Sidebar />
+      <AuthSidebar />
       <TransitionGroup component={null}>
         <ReactTransition
           key={pathname}
           transitionName="auth"
           timeout={{
             enter: TRANSITION_TIMEOUT,
-            exit: TRANSITION_TIMEOUT,
+            exit: TRANSITION_TIMEOUT / 2,
           }}
         >
           {(status) => (
             <div
-              className={classes.root}
+              className={clsx(classes.root, status)}
               style={{ ...transitionStyles[status] }}
             >
               <div className={classes.container}>
@@ -58,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     width: '100%',
     overflow: 'hidden',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.custom.authSidebarWidth,
+    },
   },
   container: {
     flex: '1',

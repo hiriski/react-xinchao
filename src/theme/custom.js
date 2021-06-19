@@ -1,4 +1,5 @@
 export default {
   appBarHeight: 58,
-  sidebarWidth: 300,
+  sidebarWidth: 280,
+  authSidebarWidth: 350,
 };

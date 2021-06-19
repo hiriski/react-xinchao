@@ -24,6 +24,12 @@ export default {
     dark: '#253d92',
     contrastText: '#fff',
   },
+  darkBlue: {
+    light: '#5b6b9a',
+    main: '#142042',
+    dark: '#0d1223',
+    contrastText: '#fbfbfb',
+  },
   green: {
     light: '#51ef89',
     main: '#00b13f',

@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import FolderIcon from '@material-ui/icons/Folder';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
@@ -59,28 +57,27 @@ const PhrasebookCategoryTab = React.memo(({ categories }) => {
 
   return (
     <div className={classes.root}>
-      <Container>
-        <CustomTabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-        >
-          {categories.map(({ id, slug, text }, index) => (
-            <CustomTab
-              component={RouterLink}
-              to={ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST + '/' + slug}
-              icon={<FolderIcon />}
-              label={<Typography component="h5">{text.en}</Typography>}
-              key={id}
-              {...a11yProps(id)}
-            />
-          ))}
-        </CustomTabs>
-      </Container>
+      <CustomTabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        variant="scrollable"
+        scrollButtons="auto"
+        aria-label="scrollable auto tabs example"
+      >
+        {categories.map(({ id, slug, text }, index) => (
+          <CustomTab
+            component={RouterLink}
+            to={ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST + '/' + slug}
+            icon={<FolderIcon />}
+            label={<Typography component="h5">{text.en}</Typography>}
+            key={id}
+            {...a11yProps(id)}
+          />
+        ))}
+      </CustomTabs>
+
       {/* {categories.map(({ id, text }, index) => (
         <TabPanel key={id} value={value} index={index}>
           {text.en}
