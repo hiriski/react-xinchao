@@ -56,12 +56,12 @@ const routes = (isLoggedIn) => [
       { path: ROUTES.FAVORITE, element: <FavoritePage /> },
       { path: ROUTES.PHRASEBOOK_LIST, element: <PhrasebookCategoryListPage /> },
       {
-        path: ROUTES.PHRASEBOOK_LIST + '/:category_slug',
-        element: <PhrasebookListPage />,
-      },
-      {
         path: ROUTES.CREATE_PHRASE,
         element: <CreatePhrasePage />,
+      },
+      {
+        path: ROUTES.PHRASEBOOK_LIST + '/:category_slug',
+        element: <PhrasebookListPage />,
       },
       { path: ROUTES.CONTACT, element: <ContactPage /> },
       { path: ROUTES.ABOUT, element: <AboutPage /> },
