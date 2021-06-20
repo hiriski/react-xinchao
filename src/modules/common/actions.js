@@ -13,8 +13,9 @@ export const toggleDialogPhrasebookDetails = () => ({
   type: Actions.TOGGLE_DIALOG_PHRASEBOOK_DETAILS,
 });
 
-export const openDrawer = () => ({
+export const openDrawer = (currentPath) => ({
   type: Actions.OPEN_DRAWER,
+  payload: currentPath,
 });
 
 export const closeDrawer = () => ({
@@ -23,4 +24,20 @@ export const closeDrawer = () => ({
 
 export const toggleDrawer = () => ({
   type: Actions.TOGGLE_DRAWER,
+});
+
+export const openDialogConfirmLogout = () => ({
+  type: Actions.OPEN_DIALOG_CONFIRM_LOGOUT,
+});
+
+export const closeDialogConfirmLogout = () => ({
+  type: Actions.CLOSE_DIALOG_CONFIRM_LOGOUT,
+});
+
+export const openDialogAddNewPhrase = () => ({
+  type: Actions.OPEN_DIALOG_ADD_NEW_PHRASE,
+});
+
+export const closeDialogAddNewPhrase = () => ({
+  type: Actions.CLOSE_DIALOG_ADD_NEW_PHRASE,
 });

@@ -1,12 +1,14 @@
 import React from 'react';
-import { batch, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CategoryList from 'src/containers/category/category-list';
 import Container from '@material-ui/core/Container';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
-import { fetchPhrasebooks } from 'src/modules/phrasebook/actions';
+import PageTitle from 'src/components/page-title';
+import { makeStyles } from '@material-ui/core/styles';
 
 const PhrasebookCategoryListPage = () => {
   const dispatch = useDispatch();
+  const classes = useStyles();
   const { list } = useSelector((state) => state.phrasebookReducer);
   const { list: categories } = useSelector((state) => state.categoryReducer);
 
@@ -18,7 +20,8 @@ const PhrasebookCategoryListPage = () => {
   }, []);
   return (
     <React.Fragment>
-      <Container>
+      <Container className={classes.container}>
+        <PageTitle title="Phrasebook Category" />
         {categories.length > 0 ? (
           <CategoryList categories={categories} />
         ) : null}
@@ -26,5 +29,11 @@ const PhrasebookCategoryListPage = () => {
     </React.Fragment>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 export default PhrasebookCategoryListPage;

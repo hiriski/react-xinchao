@@ -1,5 +1,7 @@
 import PhrasebookService from './service';
 import * as Actions from './constants';
+import { batch } from 'react-redux';
+import { showAlert } from '../alert/actions';
 
 /**
  * --------------------
@@ -13,6 +15,12 @@ export const createPhrase = (data) => {
       const response = await PhrasebookService.create(data);
       if (response.status === 201) {
         dispatch(createPhraseSuccess(response.data.data));
+        dispatch(
+          showAlert({
+            message: 'Phrase has been added successfully.',
+            severity: 'success',
+          }),
+        );
       }
     } catch (e) {
       dispatch(createPhraseFailure());
@@ -50,6 +58,7 @@ export const fetchPhrasebooks = (category) => {
       const response = await PhrasebookService.getPhrasebooks(category);
       if (response.status === 200) {
         let { data } = response;
+
         dispatch(fetchingPhrasebookSuccess(data));
       }
     } catch (e) {
@@ -73,4 +82,37 @@ const fetchingPhrasebookSuccess = (data) => ({
 
 export const resetFetchPhrasebooks = () => ({
   type: Actions.RESET_FETCHING_PHRASEBOOKS_STATE,
+});
+
+/**
+ * --------------------
+ * Fetch latest phrasebook
+ * --------------------
+ */
+export const fetchLatestPhrasebook = (count = 12) => {
+  return async (dispatch) => {
+    dispatch(fetchingLatestPhrasebookRequest());
+    try {
+      const response = await PhrasebookService.getLatestPhrasebook(count);
+      if (response.status === 200) {
+        let { data } = response.data;
+        dispatch(fetchingLatestPhrasebookSuccess(data));
+      }
+    } catch (e) {
+      dispatch(fetchingLatestPhrasebookFailure());
+    }
+  };
+};
+
+const fetchingLatestPhrasebookRequest = () => ({
+  type: Actions.FETCHING_LATEST_PHRASEBOOK_REQUEST,
+});
+
+const fetchingLatestPhrasebookFailure = () => ({
+  type: Actions.FETCHING_LATEST_PHRASEBOOK_FAILURE,
+});
+
+const fetchingLatestPhrasebookSuccess = (data) => ({
+  type: Actions.FETCHING_LATEST_PHRASEBOOK_SUCCESS,
+  payload: data,
 });

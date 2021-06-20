@@ -28,11 +28,16 @@ const RegisterFormHeader = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(3),
-    textAlign: 'center',
+    marginBottom: theme.spacing(4),
+    // textAlign: 'center',
   },
   title: {
     fontWeight: theme.typography.fontWeightBold,
+    fontSize: 24,
+    marginBottom: theme.spacing(0.5),
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 28,
+    },
   },
   link: theme.typography.fontWeightBold,
 }));

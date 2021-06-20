@@ -3,7 +3,7 @@ import { colors } from '@material-ui/core';
 export default {
   background: {
     dark: '#F4F6F8',
-    default: '#fbfbfb',
+    default: '#f7f7f7',
     paper: colors.common.white,
   },
   primary: {
@@ -13,9 +13,28 @@ export default {
     contrastText: '#fff',
   },
   secondary: {
-    main: '#28272f',
-    dark: '#111113',
-    light: '#111113',
+    light: '#c0ceff',
+    main: '#4d73ff',
+    dark: '#253d92',
+    contrastText: '#fff',
+  },
+  blue: {
+    light: '#c0ceff',
+    main: '#4d73ff',
+    dark: '#253d92',
+    contrastText: '#fff',
+  },
+  darkBlue: {
+    light: '#5b6b9a',
+    main: '#142042',
+    dark: '#0d1223',
+    contrastText: '#fbfbfb',
+  },
+  green: {
+    light: '#51ef89',
+    main: '#00b13f',
+    dark: '#008630',
+    contrastText: '#fff',
   },
   text: {
     primary: colors.blueGrey[900],

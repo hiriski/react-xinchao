@@ -12,35 +12,60 @@ import ChatPage from './pages/chat';
 import PhrasebookListPage from './pages/phrasebook/phrasebook-list';
 import LoggedOutPage from './pages/auth/logged-out';
 import PhrasebookCategoryListPage from './pages/phrasebook/phrasebook-category-list';
+import ThreadPage from './pages/thread';
+import SettingsPage from './pages/settings';
+import FavoritePage from './pages/favorite';
+import ContactPage from './pages/contact';
+import AboutPage from './pages/about';
+import CreatePhrasePage from './pages/phrasebook/create-phrase';
 
 const routes = (isLoggedIn) => [
   {
     path: '/',
-    element: <MainLayout />,
+    element: <AuthLayout />,
     children: [
       {
         path: ROUTES.SIGNIN,
-        element: <AuthLayout />,
-        children: [{ path: '/', element: <LoginPage /> }],
+        element: <LoginPage />,
       },
       {
         path: ROUTES.SIGNUP,
-        element: <AuthLayout />,
-        children: [{ path: '/', element: <RegisterPage /> }],
+        element: <RegisterPage />,
       },
       {
         path: ROUTES.LOGGEDOUT,
-        element: <AuthLayout />,
-        children: [{ path: '/', element: <LoggedOutPage /> }],
+        element: <LoggedOutPage />,
       },
       {
-        path: 'profile',
+        path: '/',
+        element: <Navigate to={'/app'} />,
+      },
+    ],
+  },
+  {
+    path: '/app',
+    element: <MainLayout />,
+    children: [
+      {
+        path: ROUTES.PROFILE,
         element: isLoggedIn ? <ProfilePage /> : <Navigate to={ROUTES.SIGNIN} />,
       },
-      { path: 'chat', element: <ChatPage /> },
-      { path: 'phrasebook', element: <PhrasebookCategoryListPage /> },
-      { path: 'phrasebook/:category_slug', element: <PhrasebookListPage /> },
-      { path: '404', element: <NotMatchPage /> },
+      { path: ROUTES.CHAT, element: <ChatPage /> },
+      { path: ROUTES.THREAD, element: <ThreadPage /> },
+      { path: ROUTES.SETTINGS, element: <SettingsPage /> },
+      { path: ROUTES.FAVORITE, element: <FavoritePage /> },
+      { path: ROUTES.PHRASEBOOK_LIST, element: <PhrasebookCategoryListPage /> },
+      {
+        path: ROUTES.CREATE_PHRASE,
+        element: <CreatePhrasePage />,
+      },
+      {
+        path: ROUTES.PHRASEBOOK_LIST + '/:category_slug',
+        element: <PhrasebookListPage />,
+      },
+      { path: ROUTES.CONTACT, element: <ContactPage /> },
+      { path: ROUTES.ABOUT, element: <AboutPage /> },
+      { path: ROUTES.NOT_MATCH, element: <NotMatchPage /> },
       { path: '/', element: <HomePage /> },
       { path: '*', element: <Navigate to={'/404'} /> },
     ],

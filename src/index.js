@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import ReduxProvider from './providers/redux-provider';
 import './assets/fonts/hk-grotesk/style.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 render(
   <BrowserRouter>

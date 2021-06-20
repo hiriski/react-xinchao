@@ -1,40 +1,40 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { ROUTES } from 'src/config';
-import { resetAuthState, revokeToken } from 'src/modules/auth/actions';
+import ProfileCoverImage from 'src/containers/account/profile/profile-cover-image';
+import ProfileInfo from 'src/containers/account/profile/profile-info';
+import { fetchProfile } from 'src/modules/account/actions';
+import { makeStyles } from '@material-ui/core/styles';
 
 const ProfilePage = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoggedOut } = useSelector((state) => state.authReducer);
-
-  const handleClickLogout = () => {
-    dispatch(revokeToken());
-  };
+  const { profile } = useSelector((state) => state.accountReducer);
 
   React.useEffect(() => {
-    if (isLoggedOut) {
-      navigate(ROUTES.LOGGEDOUT);
-      dispatch(resetAuthState());
-    }
-  }, [isLoggedOut]);
+    dispatch(fetchProfile());
+  }, []);
 
   return (
-    <React.Fragment>
-      <h1>Profile page</h1>
-      <Button
-        onClick={handleClickLogout}
-        disableElevation
-        color="primary"
-        variant="contained"
-        to="/"
-      >
-        Sign out
-      </Button>
-    </React.Fragment>
+    <div className={classes.root}>
+      {profile !== null ? (
+        <React.Fragment>
+          {Boolean(profile.cover_photo_url) && (
+            <ProfileCoverImage photo={profile.cover_photo_url} />
+          )}
+          <ProfileInfo
+            hasCoverPhoto={Boolean(profile.cover_photo_url)}
+            user={profile}
+          />
+        </React.Fragment>
+      ) : null}
+    </div>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingBottom: theme.spacing(8),
+  },
+}));
 
 export default ProfilePage;

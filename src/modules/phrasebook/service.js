@@ -20,6 +20,15 @@ class PhrasebookService {
       ? await api.get('/phrasebook?category=' + category)
       : await api.get('/phrasebook');
   };
+
+  /**
+   * Get phrasebooks.
+   * @param categoryId
+   * @returns {Promise<AxiosResponse<T>>}
+   */
+  getLatestPhrasebook = async (count) => {
+    return await api.get(`/phrasebook?latest=${count}`);
+  };
 }
 
 export default new PhrasebookService();

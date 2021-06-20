@@ -10,8 +10,19 @@ const useStyles = makeStyles((theme) =>
       '.MuiListItemText-primary': {
         fontSize: '0.97rem',
       },
+      html: {
+        '-ms-text-size-adjust': '100%',
+        '-webkit-text-size-adjust': '100%',
+        '-webkit-tap-highlight-color': 'transparent',
+      },
       '.MuiSvgIcon-root': {
-        fontSize: '1.2rem',
+        fontSize: '1.15rem',
+      },
+      '.MuiTypography-subtitle2': {
+        fontSize: '0.8rem',
+      },
+      '.MuiDivider-root ': {
+        backgroundColor: ' rgb(0 0 0 / 7%)',
       },
       '::-webkit-scrollbar': {
         width: 7,
@@ -24,6 +35,9 @@ const useStyles = makeStyles((theme) =>
       '::-webkit-scrollbar-thumb': {
         borderRadius: 4,
         backgroundColor: theme.palette.primary.main,
+      },
+      '.MuiButton-root': {
+        textTransform: 'unset',
       },
       '@keyframes pulseAnimation': {
         '0%': {

@@ -2,12 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PhrasebookList from 'src/containers/phrasebook/phrasebook-list';
-import Container from '@material-ui/core/Container';
 import DialogPhrasebookDetails from 'src/containers/phrasebook/dialog-phrasebook';
 import PhrasebookCategoryTab from 'src/containers/phrasebook/phrasebook-category-tab';
 
-import { fetchPhrasebooks } from 'src/modules/phrasebook/actions';
+import {
+  fetchPhrasebooks,
+  resetFetchPhrasebooks,
+} from 'src/modules/phrasebook/actions';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
+import phrasebookReducer from 'src/modules/phrasebook/reducer';
 
 const PhrasebookListPage = () => {
   const dispatch = useDispatch();
@@ -27,17 +30,20 @@ const PhrasebookListPage = () => {
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+    if (list.length > 0) {
+      return () => {
+        dispatch(resetFetchPhrasebooks());
+      };
+    }
+  }, [category_slug]);
 
   return (
     <React.Fragment>
       <PhrasebookCategoryTab categories={categories} />
-      <Container>
-        <DialogPhrasebookDetails />
-        {list.length > 0 ? (
-          <PhrasebookList phrasebooks={list} category={category} />
-        ) : null}
-      </Container>
+      <DialogPhrasebookDetails />
+      {list.length > 0 ? (
+        <PhrasebookList phrases={list} category={category} />
+      ) : null}
     </React.Fragment>
   );
 };

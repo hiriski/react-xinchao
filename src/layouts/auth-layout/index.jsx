@@ -9,37 +9,47 @@ import {
 } from 'react-transition-group';
 import { transitionStyles, TRANSITION_TIMEOUT } from './transition-styles';
 import Snackbar from 'src/components/snackbar';
+import AppBar from 'src/components/appbar';
+import FloatingTab from 'src/components/floating-tab';
+import AuthSidebar from 'src/components/auth-sidebar';
+import clsx from 'clsx';
 
 const AuthLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const isBigScreen = useMediaQuery(theme.breakpoints.up('md'));
   const { pathname } = useLocation();
 
-  // console.log('isBigScreen', isBigScreen);
-
   return (
-    <TransitionGroup component={null}>
-      <ReactTransition
-        key={pathname}
-        transitionName="auth"
-        timeout={{
-          enter: TRANSITION_TIMEOUT,
-          exit: TRANSITION_TIMEOUT,
-        }}
-      >
-        {(status) => (
-          <div className={classes.root} style={{ ...transitionStyles[status] }}>
-            <div className={classes.container}>
-              <Box className={classes.content}>
-                <Outlet />
-              </Box>
+    <React.Fragment>
+      {!isBigScreen && <AppBar />}
+      <AuthSidebar />
+      <TransitionGroup component={null}>
+        <ReactTransition
+          key={pathname}
+          transitionName="auth"
+          timeout={{
+            enter: TRANSITION_TIMEOUT,
+            exit: TRANSITION_TIMEOUT / 2,
+          }}
+        >
+          {(status) => (
+            <div
+              className={clsx(classes.root, status)}
+              style={{ ...transitionStyles[status] }}
+            >
+              <div className={classes.container}>
+                <Box className={classes.content}>
+                  <Outlet />
+                </Box>
+              </div>
             </div>
-          </div>
-        )}
-      </ReactTransition>
-      <Snackbar />
-    </TransitionGroup>
+          )}
+        </ReactTransition>
+        <Snackbar />
+        <FloatingTab />
+      </TransitionGroup>
+    </React.Fragment>
   );
 };
 
@@ -49,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     width: '100%',
     overflow: 'hidden',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.custom.authSidebarWidth,
+    },
   },
   container: {
     flex: '1',

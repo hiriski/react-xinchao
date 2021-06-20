@@ -2,7 +2,10 @@ import * as Actions from './constants';
 
 const initialState = {
   isOpenDialogPhrasebookDetails: false,
-  openDrawer: false,
+  isOpenDialogConfirmLogout: false,
+  isOpenDialogAddNewPhrase: false,
+  isOpenSidebarDrawer: false,
+  currentPath: null,
   phrasebook: null,
 };
 
@@ -20,6 +23,26 @@ export default function commonReducer(state = initialState, action) {
         isOpenDialogPhrasebookDetails: false,
         phrasebook: null,
       };
+    case Actions.OPEN_DIALOG_CONFIRM_LOGOUT:
+      return {
+        ...state,
+        isOpenDialogConfirmLogout: true,
+      };
+    case Actions.CLOSE_DIALOG_CONFIRM_LOGOUT:
+      return {
+        ...state,
+        isOpenDialogConfirmLogout: false,
+      };
+    case Actions.OPEN_DIALOG_ADD_NEW_PHRASE:
+      return {
+        ...state,
+        isOpenDialogAddNewPhrase: true,
+      };
+    case Actions.CLOSE_DIALOG_ADD_NEW_PHRASE:
+      return {
+        ...state,
+        isOpenDialogAddNewPhrase: false,
+      };
     case Actions.TOGGLE_DIALOG_PHRASEBOOK_DETAILS:
       return {
         ...state,
@@ -28,17 +51,19 @@ export default function commonReducer(state = initialState, action) {
     case Actions.OPEN_DRAWER:
       return {
         ...state,
-        openDrawer: true,
+        isOpenSidebarDrawer: true,
+        currentPath: action.payload,
       };
     case Actions.CLOSE_DRAWER:
       return {
         ...state,
-        openDrawer: false,
+        isOpenSidebarDrawer: false,
+        currentPath: null,
       };
     case Actions.TOGGLE_DRAWER:
       return {
         ...state,
-        openDrawer: !state.openDrawer,
+        isOpenSidebarDrawer: !state.isOpenSidebarDrawer,
       };
     default:
       return state;
