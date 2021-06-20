@@ -57,11 +57,17 @@ const FormPhrase = ({ handleFormSubmit, unAuthenticate, isLoading }) => {
               render={({ field }) => (
                 <TextField
                   disabled={unAuthenticate}
+                  multiline
+                  rowsMax={2}
+                  rows={1}
                   size="small"
                   variant="outlined"
+                  color="secondary"
                   label="Tiếng Việt"
                   error={errors.vi_VN}
-                  helperText={errors.vi_VN ? 'Field is required' : null}
+                  helperText={
+                    errors.vi_VN ? 'Field is required' : 'Phrase in Tiếng Việt '
+                  }
                   {...field}
                 />
               )}
@@ -77,8 +83,12 @@ const FormPhrase = ({ handleFormSubmit, unAuthenticate, isLoading }) => {
                 <TextField
                   disabled={unAuthenticate}
                   size="small"
-                  helperText={'Bahasa Indonesia'}
+                  multiline
+                  rowsMax={2}
+                  rows={1}
+                  helperText={'Phrase in Bahasa Indonesia'}
                   variant="outlined"
+                  color="secondary"
                   label="Bahasa Indonesia"
                   error={errors.id_ID}
                   {...field}
@@ -96,8 +106,12 @@ const FormPhrase = ({ handleFormSubmit, unAuthenticate, isLoading }) => {
                 <TextField
                   disabled={unAuthenticate}
                   size="small"
-                  helperText={'English'}
+                  multiline
+                  rowsMax={2}
+                  rows={1}
+                  helperText={'Phrase in English'}
                   variant="outlined"
+                  color="secondary"
                   label="English"
                   error={errors.en_US}
                   {...field}
@@ -120,6 +134,7 @@ const FormPhrase = ({ handleFormSubmit, unAuthenticate, isLoading }) => {
                   size="small"
                   helperText={'Notes'}
                   variant="outlined"
+                  color="secondary"
                   label="Notes"
                   error={errors.notes}
                   {...field}
