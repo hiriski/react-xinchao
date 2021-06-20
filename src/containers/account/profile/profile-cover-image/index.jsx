@@ -7,9 +7,9 @@ import Box from '@material-ui/core/Box';
 const ProfileCoverImage = ({ photo }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'));
   return (
-    <Container disableGutters={!isLargeScreen}>
+    <Container disableGutters>
       <Box
         className={classes.root}
         width="100%"
@@ -19,7 +19,7 @@ const ProfileCoverImage = ({ photo }) => {
   );
 };
 
-const IMAGE_HEIGHT = 220;
+const IMAGE_HEIGHT = 180;
 
 const useStyles = makeStyles((theme) => ({
   root: {

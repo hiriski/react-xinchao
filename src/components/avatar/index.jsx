@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     width: DETAULT_AVATAR_SIZE,
     borderRadius: DETAULT_AVATAR_SIZE,
     color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main,
   },
   defaultAvatarText: {
     fontSize: 18,
