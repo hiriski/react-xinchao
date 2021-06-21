@@ -7,6 +7,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PhrasebookItem from '../phrasebook-item';
 import PhrasebookListHeader from '../phrasebook-list-header';
 import FolderIcon from '@material-ui/icons/Folder';
+import EmptyPhrases from './empty';
 
 const PhrasebookList = ({ phrases, category }) => {
   const classes = useStyles();
@@ -24,13 +25,20 @@ const PhrasebookList = ({ phrases, category }) => {
         />
       ) : null}
       <Container className={classes.container}>
-        <Grid container spacing={isBigScreen ? 1 : 1}>
-          {phrases.map((phrase) => (
-            <Grid key={phrase.id} item xs={12} md={4}>
-              <PhrasebookItem key={phrase.id} phrase={phrase} />
-            </Grid>
-          ))}
-        </Grid>
+        {phrases.length > 0 ? (
+          <Grid container spacing={isBigScreen ? 1 : 1}>
+            {phrases.map((phrase) => (
+              <Grid key={phrase.id} item xs={12} md={4}>
+                <PhrasebookItem key={phrase.id} phrase={phrase} />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <EmptyPhrases
+            text="No Phrases"
+            category={category !== null ? category.text.en : '-'}
+          />
+        )}
       </Container>
     </div>
   );

@@ -29,7 +29,7 @@ const PhrasebookItem = ({ phrase, containerStyle }) => {
       <ListItemText
         onClick={handleClickItem}
         primary={text.vi}
-        secondary={text.id ? text.id : ''}
+        secondary={text.id ? text.id : '-'}
       />
     </ListItem>
   );
@@ -50,13 +50,13 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarIcon: {
     backgroundColor: '#ececec',
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     '& svg': {
       color: 'inherit',
     },
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
     },
   },
 }));

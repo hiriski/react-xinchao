@@ -35,7 +35,7 @@ const NewPhraseItem = ({ phrase, containerStyle }) => {
         <ListItemText
           onClick={handleClickItem}
           primary={text.vi}
-          secondary={text.id ? text.id : ''}
+          secondary={text.id ? text.id : '-'}
         />
       </ListItem>
       <Divider className={classes.divider} />
