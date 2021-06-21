@@ -12,7 +12,7 @@ import ChatPage from './pages/chat';
 import PhrasebookListPage from './pages/phrasebook/phrasebook-list';
 import LoggedOutPage from './pages/auth/logged-out';
 import PhrasebookCategoryListPage from './pages/phrasebook/phrasebook-category-list';
-import ThreadPage from './pages/thread';
+import DiscussionPage from './pages/discussion';
 import SettingsPage from './pages/settings';
 import FavoritePage from './pages/favorite';
 import ContactPage from './pages/contact';
@@ -51,7 +51,7 @@ const routes = (isLoggedIn) => [
         element: isLoggedIn ? <ProfilePage /> : <Navigate to={ROUTES.SIGNIN} />,
       },
       { path: ROUTES.CHAT, element: <ChatPage /> },
-      { path: ROUTES.THREAD, element: <ThreadPage /> },
+      { path: ROUTES.DISCUSSION, element: <DiscussionPage /> },
       { path: ROUTES.SETTINGS, element: <SettingsPage /> },
       { path: ROUTES.FAVORITE, element: <FavoritePage /> },
       { path: ROUTES.PHRASEBOOK_LIST, element: <PhrasebookCategoryListPage /> },

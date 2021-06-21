@@ -5,6 +5,7 @@ import categoryReducer from 'src/modules/category/reducer';
 import phrasebookReducer from 'src/modules/phrasebook/reducer';
 import commonReducer from 'src/modules/common/reducer';
 import accountReducer from 'src/modules/account/reducer';
+import discussionReducer from 'src/modules/discussion/reducer';
 
 export default combineReducers({
   authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   phrasebookReducer,
   commonReducer,
   accountReducer,
+  discussionReducer,
 });

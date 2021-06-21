@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     color: 'inherit',
     fontWeight: 'bold',
     [theme.breakpoints.up('sm')]: {
-      fontSize: 32,
+      fontSize: 28,
     },
   },
   subtitle: {

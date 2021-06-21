@@ -23,8 +23,8 @@ export default {
       Icon: <AccountCircleIcon />,
     },
     {
-      label: 'Thread',
-      path: ROUTES.PREFIX + ROUTES.THREAD,
+      label: 'Discussion',
+      path: ROUTES.PREFIX + ROUTES.DISCUSSION,
       Icon: <ForumIcon />,
     },
     {
