@@ -98,8 +98,8 @@ const Sidebar = () => {
                 {user.name}
               </Typography>
               <Typography
-                className={classes.textLevel}
                 noWrap
+                className={classes.textLevel}
                 variant="subtitle2"
                 component="p"
               >
@@ -227,7 +227,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    minWidth: 48,
     color: 'inherit',
     '& svg': {
       fontSize: 20,
