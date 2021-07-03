@@ -18,7 +18,7 @@ class ConversationService {
    * @returns {Promise<AxiosResponse<T>>}
    */
   createConversation = async ({ type, participants, message }) => {
-    return await api.post('/conversation/', { participants, message });
+    return await api.post('/conversation', { participants, message });
   };
 
   /**
