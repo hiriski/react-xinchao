@@ -41,3 +41,12 @@ export const openDialogAddNewPhrase = () => ({
 export const closeDialogAddNewPhrase = () => ({
   type: Actions.CLOSE_DIALOG_ADD_NEW_PHRASE,
 });
+
+export const openDialogNewConversation = (type) => ({
+  type: Actions.OPEN_DIALOG_NEW_CONVERSATION,
+  payload: type,
+});
+
+export const closeDialogNewConversation = () => ({
+  type: Actions.CLOSE_DIALOG_NEW_CONVERSATION,
+});

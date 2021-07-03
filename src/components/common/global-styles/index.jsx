@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) =>
       '.MuiSvgIcon-root': {
         fontSize: '1.15rem',
       },
+      '.MuiListItemIcon-root': {
+        minWidth: 48,
+      },
       '.MuiTypography-subtitle2': {
         fontSize: '0.8rem',
       },

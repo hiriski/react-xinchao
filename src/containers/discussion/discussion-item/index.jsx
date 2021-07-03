@@ -10,7 +10,8 @@ import { useDispatch } from 'react-redux';
 import { openDialogPhrasebookDetails } from 'src/modules/common/actions';
 import clsx from 'clsx';
 
-const PhrasebookItem = ({ phrase, containerStyle }) => {
+const DiscussionItem = ({ phrase, containerStyle }) => {
+  const classes = useStyles();
   const { text } = phrase;
   const dispatch = useDispatch();
 
@@ -18,7 +19,6 @@ const PhrasebookItem = ({ phrase, containerStyle }) => {
     dispatch(openDialogPhrasebookDetails(phrase));
   };
 
-  const classes = useStyles();
   return (
     <ListItem className={clsx(classes.root, containerStyle && containerStyle)}>
       <ListItemAvatar>
@@ -61,9 +61,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-PhrasebookItem.propTypes = {
+DiscussionItem.propTypes = {
   phrase: PropTypes.object.isRequired,
   containerStyle: PropTypes.any,
 };
 
-export default PhrasebookItem;
+export default DiscussionItem;

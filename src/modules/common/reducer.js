@@ -2,6 +2,8 @@ import * as Actions from './constants';
 
 const initialState = {
   isOpenDialogPhrasebookDetails: false,
+  isOpenDialogNewConversation: false,
+  newConversationType: null,
   isOpenDialogConfirmLogout: false,
   isOpenDialogAddNewPhrase: false,
   isOpenSidebarDrawer: false,
@@ -64,6 +66,18 @@ export default function commonReducer(state = initialState, action) {
       return {
         ...state,
         isOpenSidebarDrawer: !state.isOpenSidebarDrawer,
+      };
+
+    case Actions.OPEN_DIALOG_NEW_CONVERSATION:
+      return {
+        ...state,
+        isOpenDialogNewConversation: true,
+        newConversationType: action.payload,
+      };
+    case Actions.CLOSE_DIALOG_NEW_CONVERSATION:
+      return {
+        ...state,
+        isOpenDialogNewConversation: false,
       };
     default:
       return state;

@@ -10,7 +10,6 @@ import {
   resetFetchPhrasebooks,
 } from 'src/modules/phrasebook/actions';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
-import phrasebookReducer from 'src/modules/phrasebook/reducer';
 
 const PhrasebookListPage = () => {
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ const PhrasebookListPage = () => {
     <React.Fragment>
       <PhrasebookCategoryTab categories={categories} />
       <DialogPhrasebookDetails />
-      {list.length > 0 ? (
+      {list.length > 0 || category !== null ? (
         <PhrasebookList phrases={list} category={category} />
       ) : null}
     </React.Fragment>

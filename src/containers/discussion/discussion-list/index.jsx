@@ -9,21 +9,22 @@ import PhrasebookListHeader from '../phrasebook-list-header';
 import FolderIcon from '@material-ui/icons/Folder';
 import EmptyPhrases from './empty';
 
-const PhrasebookList = ({ phrases, category }) => {
+const DiscussionList = ({ phrases, category }) => {
   const classes = useStyles();
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <div className={classes.root}>
-      {category ? (
-        <PhrasebookListHeader
-          title={category.text.en}
-          color={category.color ? category.color.value : null}
-          phrases_count={category.phrases_count}
-          Icon={<FolderIcon />}
-        />
-      ) : null}
+      {category
+        ? null
+        : // <DiscussionListHeader
+          //   title={category.text.en}
+          //   color={category.color ? category.color.value : null}
+          //   phrases_count={category.phrases_count}
+          //   Icon={<FolderIcon />}
+          // />
+          null}
       <Container className={classes.container}>
         {phrases.length > 0 ? (
           <Grid container spacing={isBigScreen ? 1 : 1}>
@@ -54,9 +55,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-PhrasebookList.propTypes = {
+DiscussionList.propTypes = {
   phrases: PropTypes.array.isRequired,
   category: PropTypes.object.isRequired,
 };
 
-export default PhrasebookList;
+export default DiscussionList;
