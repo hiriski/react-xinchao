@@ -1,14 +1,14 @@
 import React from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ForumIcon from '@material-ui/icons/Forum';
+import { ROUTES } from 'src/config';
+import HomeIcon from '@material-ui/icons/Home';
 import BookIcon from '@material-ui/icons/Book';
 import ChatIcon from '@material-ui/icons/Chat';
+import ForumIcon from '@material-ui/icons/Forum';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import { ROUTES } from 'src/config';
-import HomeIcon from '@material-ui/icons/Home';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export default {
   topMenus: [
@@ -29,7 +29,7 @@ export default {
     },
     {
       label: 'Phrasesbook',
-      path: ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK_LIST,
+      path: ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK,
       Icon: <BookIcon />,
     },
     {
