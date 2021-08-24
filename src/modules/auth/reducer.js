@@ -1,8 +1,8 @@
 import * as Actions from './constants';
 
 const initialState = {
-  user: null,
-  token: null,
+  user: undefined,
+  token: undefined,
   isLoading: false,
   isError: false,
   isLoggedOut: false,

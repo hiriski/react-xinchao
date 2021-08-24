@@ -8,24 +8,29 @@ import PhrasebookItem from '../phrasebook-item';
 import PhrasebookListHeader from '../phrasebook-list-header';
 import FolderIcon from '@material-ui/icons/Folder';
 import EmptyPhrases from './empty';
+import PhrasebookListHeaderSkeleton from '../phrasebook-list-header/skeleton';
 
-const PhrasebookList = ({ phrases, category }) => {
+const PhrasebookList = ({ isFetching, phrases, category }) => {
   const classes = useStyles();
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <div className={classes.root}>
-      {category ? (
-        <PhrasebookListHeader
-          title={category.text.en}
-          color={category.color ? category.color.value : null}
-          phrases_count={category.phrases_count}
-          Icon={<FolderIcon />}
-        />
-      ) : null}
+      {isFetching ? (
+        <PhrasebookListHeaderSkeleton />
+      ) : (
+        category && (
+          <PhrasebookListHeader
+            title={category.text.en}
+            color={category.color ? category.color.value : null}
+            phrases_count={category.phrases_count}
+            Icon={<FolderIcon />}
+          />
+        )
+      )}
       <Container className={classes.container}>
-        {phrases.length > 0 ? (
+        {Array.isArray(phrases) && phrases.length > 0 ? (
           <Grid container spacing={isBigScreen ? 1 : 1}>
             {phrases.map((phrase) => (
               <Grid key={phrase.id} item xs={12} md={4}>
@@ -57,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 PhrasebookList.propTypes = {
   phrases: PropTypes.array.isRequired,
   category: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 export default PhrasebookList;

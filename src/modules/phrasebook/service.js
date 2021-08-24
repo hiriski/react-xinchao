@@ -22,12 +22,15 @@ class PhrasebookService {
   };
 
   /**
-   * Get phrasebooks.
-   * @param categoryId
+   * Get latest phrasebooks.
+   * @param count
    * @returns {Promise<AxiosResponse<T>>}
    */
   getLatestPhrasebook = async (count) => {
-    return await api.get(`/phrasebook?latest=${count}`);
+    if (!count) {
+      return await api.get(`/phrasebook/latest`);
+    }
+    return await api.get(`/phrasebook/latest?limit=${count}`);
   };
 }
 

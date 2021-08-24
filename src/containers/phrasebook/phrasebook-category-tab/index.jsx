@@ -50,7 +50,7 @@ const PhrasebookCategoryTab = React.memo(({ categories }) => {
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
-    console.log(event.target.dataset);
+    // console.log(event.target.dataset);
     setValue(newValue);
     // navigate(ROUTES.PHRASEBOOK_LIST + '/' + slug);
   };
@@ -69,7 +69,7 @@ const PhrasebookCategoryTab = React.memo(({ categories }) => {
         {categories.map(({ id, slug, text }, index) => (
           <CustomTab
             component={RouterLink}
-            to={ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST + '/' + slug}
+            to={`/${ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK}?category=${slug}`}
             icon={<FolderIcon />}
             label={<Typography component="h5">{text.en}</Typography>}
             key={id}

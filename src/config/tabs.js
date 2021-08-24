@@ -12,17 +12,17 @@ export default [
   },
   {
     title: 'Chat',
-    path: ROUTES.PREFIX + ROUTES.CHAT,
+    path: ROUTES.PREFIX_APP + ROUTES.CHAT,
     Icon: ForumIcon,
   },
   {
     title: 'Phrasebooks',
-    path: ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST,
+    path: ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK,
     Icon: BookIcon,
   },
   {
     title: 'Profile',
-    path: ROUTES.PREFIX + ROUTES.PROFILE,
+    path: ROUTES.PREFIX_APP + ROUTES.PROFILE,
     Icon: AccountCircleIcon,
   },
 ];

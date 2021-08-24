@@ -1,31 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useLocation, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
-import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import IconButton from '@material-ui/core/IconButton';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import data from './data';
 import Logo from 'src/components/logo';
 import { APP_NAME, ROUTES } from 'src/config';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {
   closeDrawer,
   openDialogConfirmLogout,
 } from 'src/modules/common/actions';
 import Avatar from '../avatar';
+import { isAuthSelector } from 'src/modules/auth/selectors';
 
-const Sidebar = () => {
+const Sidebar = ({ isAuthenticated, closeDrawer, openDialogConfirmLogout }) => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -41,32 +43,38 @@ const Sidebar = () => {
   };
 
   const handleClickAvatar = () => {
-    navigate(ROUTES.PREFIX + ROUTES.PROFILE);
+    navigate(ROUTES.PREFIX_APP + ROUTES.PROFILE);
   };
 
   const handleClickSignOut = () => {
-    dispatch(openDialogConfirmLogout());
+    // dispatch(openDialogConfirmLogout());
+    openDialogConfirmLogout();
   };
 
   const handleDrawerClose = () => {
-    dispatch(closeDrawer());
+    // dispatch(closeDrawer());
   };
 
   React.useEffect(() => {
-    if (!Boolean(token) && !user !== null) {
+    if (!isAuthenticated) {
       setTopMenus(
         data.topMenus.filter(
-          (menu) => menu.path !== ROUTES.PREFIX + ROUTES.PROFILE,
+          (menu) => menu.path !== ROUTES.PREFIX_APP + ROUTES.PROFILE,
         ),
       );
     }
-  }, [token, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   React.useEffect(() => {
     if (currentPath !== null && currentPath !== pathname) {
-      dispatch(closeDrawer());
+      // dispatch(closeDrawer());
+      closeDrawer();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPath, pathname]);
+
+  console.log('isAuthenticated', isAuthenticated);
 
   const renderSidebarContent = (
     <div className={classes.drawerContent}>
@@ -81,7 +89,7 @@ const Sidebar = () => {
         </Typography>
       </div>
 
-      {Boolean(token) && user !== null && (
+      {isAuthenticated ? (
         <React.Fragment>
           <Box className={classes.userInfo}>
             <Box mr={2}>
@@ -113,6 +121,20 @@ const Sidebar = () => {
           </Box>
           <Divider className={classes.userInfoDivider} />
         </React.Fragment>
+      ) : (
+        <Box mb={1} display="flex" justifyContent="center" alignItems="center">
+          <Box mr={1}>
+            <Button component={RouterLink} to={ROUTES.SIGNIN} color="primary">
+              Login
+            </Button>
+          </Box>
+
+          <Box ml={1}>
+            <Button component={RouterLink} to={ROUTES.SIGNUP} color="secondary">
+              Register
+            </Button>
+          </Box>
+        </Box>
       )}
 
       <List className={clsx(classes.list, classes.listTop)}>
@@ -291,4 +313,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default Sidebar;
+Sidebar.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  closeDrawer: PropTypes.func,
+  openDialogConfirmLogout: PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: isAuthSelector(state),
+});
+
+const mapDispatchToProps = {
+  closeDrawer,
+  openDialogConfirmLogout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

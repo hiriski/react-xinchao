@@ -1,6 +1,6 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
-import HomeShare from 'src/containers/home/share';
+// import HomeShare from 'src/containers/home/share';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
 import Loading from 'src/containers/loading';
@@ -27,13 +27,15 @@ const HomePage = () => {
 
   React.useEffect(() => {
     bootstrapFetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     if (categories.length > 0 && newPhrases.length > 0) {
       setLoading(false);
     }
-  }, [categories, newPhrases]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories.length, newPhrases.length]);
 
   return (
     <div className={classes.root}>
@@ -43,7 +45,7 @@ const HomePage = () => {
           <React.Fragment>
             {/* <HomeShare /> */}
             <HomeCategoryList categories={categories} />
-            <NewPhraseList phrases={newPhrases} />
+            <NewPhraseList phrases={newPhrases.length > 0 ? newPhrases : []} />
           </React.Fragment>
         ) : (
           <Loading />

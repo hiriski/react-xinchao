@@ -14,7 +14,7 @@ const CategoryItem = ({ category, containerStyle }) => {
   const { text, color, phrases_count, slug } = category;
 
   const handleClick = () => {
-    navigate(ROUTES.PREFIX + ROUTES.PHRASEBOOK_LIST + '/' + slug);
+    navigate(`${ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK}?category=${slug}`);
   };
 
   return (
@@ -41,7 +41,7 @@ const CategoryItem = ({ category, containerStyle }) => {
         >
           {text.en}
         </Typography>
-        {phrases_count > 0 ? (
+        {phrases_count && phrases_count > 0 ? (
           <Typography className={classes.phrasesCount} variant="subtitle2">
             {phrases_count} phrases{' '}
           </Typography>

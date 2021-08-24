@@ -6,7 +6,8 @@ import SectionTitle from 'src/components/section-title';
 import Slider from 'react-slick';
 import NewPhraseItem from '../new-phrase-item';
 
-const NewPhraseList = ({ phrases }) => {
+// eslint-disable-next-line react/display-name
+const NewPhraseList = React.memo(({ phrases }) => {
   const classes = useStyles();
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -26,17 +27,19 @@ const NewPhraseList = ({ phrases }) => {
     <div className={classes.root}>
       <SectionTitle title="New Phrases" />
       <Slider className={classes.sliderContainer} {...settings}>
-        {phrases.map((phrase) => (
-          <NewPhraseItem
-            containerStyle={classes.item}
-            key={phrase.id}
-            phrase={phrase}
-          />
-        ))}
+        {Array.isArray(phrases) && phrases.length > 0
+          ? phrases.map((phrase) => (
+              <NewPhraseItem
+                containerStyle={classes.item}
+                key={phrase.id}
+                phrase={phrase}
+              />
+            ))
+          : null}
       </Slider>
     </div>
   );
-};
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {

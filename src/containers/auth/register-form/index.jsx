@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register } from 'src/modules/auth/actions';
 
 const registerShcema = yup.object().shape({
-  name: yup.string().required('Nama harus di isi.'),
+  name: yup.string().required('Nama harus di isi ya.'),
   email: yup
     .string()
     .email('Opss.. sepertinya email yang kamu masukan salah.')
@@ -25,16 +24,18 @@ const registerShcema = yup.object().shape({
   password: yup.string().required('Password harus diisi.'),
   password_confirmation: yup
     .string()
+    .required('Konfirmasi password harus di isi')
     .oneOf([yup.ref('password'), null], 'Password konfirmasi harus sama'),
 });
 
 const RegisterFormContainer = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const handleTogglePassword = () => setShowPassword(!showPassword);
+  const handleToggleConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -47,13 +48,8 @@ const RegisterFormContainer = () => {
     dispatch(register(data));
   };
 
-  const { token, user } = useSelector((state) => state.authReducer);
-
-  React.useEffect(() => {
-    if (token) {
-      navigate('/', { replace: true });
-    }
-  }, [token, user]);
+  const { isLoading, isError } = useSelector((state) => state.authReducer);
+  console.log('register error', isError);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -63,13 +59,16 @@ const RegisterFormContainer = () => {
             <Controller
               name="name"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
                   size="small"
-                  helperText={'What your name'}
+                  helperText={
+                    Boolean(errors.name?.type) ? errors.name.message : 'Nama'
+                  }
                   variant="outlined"
                   label="What your name"
-                  error={errors.name}
+                  error={Boolean(errors.name?.type)}
                   {...field}
                 />
               )}
@@ -81,14 +80,19 @@ const RegisterFormContainer = () => {
             <Controller
               name="email"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
                   id="email"
                   size="small"
-                  helperText={'Email address'}
+                  helperText={
+                    Boolean(errors.email?.type)
+                      ? errors.email.message
+                      : 'Email address'
+                  }
                   variant="outlined"
                   label="Email address"
-                  error={errors.email}
+                  error={Boolean(errors.email?.type)}
                   {...field}
                 />
               )}
@@ -100,27 +104,31 @@ const RegisterFormContainer = () => {
             <Controller
               name="password"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
                   type={showPassword ? 'text' : 'password'}
                   size="small"
-                  helperText={'Password'}
+                  helperText={
+                    Boolean(errors.password?.type)
+                      ? errors.password.message
+                      : 'Password'
+                  }
                   variant="outlined"
                   label="Password"
-                  error={errors.password}
+                  error={Boolean(errors.password?.type)}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
                           size="small"
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
+                          onClick={handleTogglePassword}
                         >
                           {showPassword ? (
-                            <VisibilityIcon />
-                          ) : (
                             <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
                           )}
                         </IconButton>
                       </InputAdornment>
@@ -137,27 +145,31 @@ const RegisterFormContainer = () => {
             <Controller
               name="password_confirmation"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
-                  type={showPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   size="small"
-                  helperText={'Confirm password'}
                   variant="outlined"
+                  helperText={
+                    Boolean(errors.password_confirmation?.type)
+                      ? errors.password_confirmation.message
+                      : 'Ulangi Password'
+                  }
                   label="Confirm password"
-                  error={errors.password_confirmation}
+                  error={Boolean(errors.password_confirmation?.type)}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
                           size="small"
                           aria-label="toggle password_confirmation visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
+                          onClick={handleToggleConfirmPassword}
                         >
-                          {showPassword ? (
-                            <VisibilityIcon />
-                          ) : (
+                          {showConfirmPassword ? (
                             <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
                           )}
                         </IconButton>
                       </InputAdornment>
@@ -170,7 +182,13 @@ const RegisterFormContainer = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth type="submit" variant="contained" color="primary">
+          <Button
+            fullWidth
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+          >
             Register Now
           </Button>
         </Grid>

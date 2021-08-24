@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -24,11 +23,9 @@ const loginSchema = yup.object().shape({
 const LoginFormContainer = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const handleToggleShowPassword = () => setShowPassword(!showPassword);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -41,15 +38,8 @@ const LoginFormContainer = () => {
     dispatch(login(data));
   };
 
-  const { isLoading, isError, token, user } = useSelector(
-    (state) => state.authReducer,
-  );
-
-  React.useEffect(() => {
-    if (token) {
-      navigate('/', { replace: true });
-    }
-  }, [token, user]);
+  const { isLoading, isError } = useSelector((state) => state.authReducer);
+  console.log('login error', isError);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,14 +48,19 @@ const LoginFormContainer = () => {
           <FormControl fullWidth className={classes.margin} variant="outlined">
             <Controller
               name="username_or_email"
+              defaultValue=""
               control={control}
               render={({ field }) => (
                 <TextField
                   size="small"
-                  helperText={'Username or email'}
+                  helperText={
+                    Boolean(errors.username_or_email?.type)
+                      ? errors.username_or_email.message
+                      : 'Username or Email'
+                  }
                   variant="outlined"
                   label="Username or email"
-                  error={errors.username_or_email}
+                  error={Boolean(errors.username_or_email?.type)}
                   {...field}
                 />
               )}
@@ -76,23 +71,27 @@ const LoginFormContainer = () => {
           <FormControl fullWidth className={classes.margin} variant="outlined">
             <Controller
               name="password"
+              defaultValue=""
               control={control}
               render={({ field }) => (
                 <TextField
                   type={showPassword ? 'text' : 'password'}
                   size="small"
-                  helperText={'Password'}
+                  helperText={
+                    Boolean(errors.password?.type)
+                      ? errors.password.message
+                      : 'Password'
+                  }
                   variant="outlined"
                   label="Password"
-                  error={errors.password}
+                  error={Boolean(errors.password?.type)}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
                           size="small"
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
+                          onClick={handleToggleShowPassword}
                         >
                           {showPassword ? (
                             <VisibilityIcon />
@@ -110,7 +109,13 @@ const LoginFormContainer = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth type="submit" variant="contained" color="primary">
+          <Button
+            fullWidth
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+          >
             Sign In Now
           </Button>
         </Grid>

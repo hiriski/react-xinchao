@@ -89,7 +89,7 @@ export const resetFetchPhrasebooks = () => ({
  * Fetch latest phrasebook
  * --------------------
  */
-export const fetchLatestPhrasebook = (count = 12) => {
+export const fetchLatestPhrasebook = (count) => {
   return async (dispatch) => {
     dispatch(fetchingLatestPhrasebookRequest());
     try {

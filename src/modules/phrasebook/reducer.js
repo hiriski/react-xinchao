@@ -1,4 +1,3 @@
-import { TrainRounded } from '@material-ui/icons';
 import * as Actions from './constants';
 
 const initialState = {
@@ -9,7 +8,7 @@ const initialState = {
     isLoading: false,
     isSuccess: false,
   },
-  list: [], // all of phrasebooks.
+  phrases: [], // all of phrasebooks.
   newPhrases: [],
   category: null,
 };
@@ -76,7 +75,7 @@ export default function phrasebookReducer(state = initialState, action) {
         ...state,
         isFetching: false,
         isFailure: false,
-        list: action.payload.phrasebooks || [], // all of phrasebooks.
+        phrases: action.payload.phrases || [],
         category: action.payload.category || null,
       };
     case Actions.RESET_FETCHING_PHRASEBOOKS_STATE:
@@ -84,7 +83,7 @@ export default function phrasebookReducer(state = initialState, action) {
         ...state,
         isFetching: false,
         isFailure: false,
-        list: [],
+        phrases: [],
         category: null,
       };
 

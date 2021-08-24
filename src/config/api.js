@@ -20,4 +20,29 @@ apiInstance.interceptors.request.use(
   },
 );
 
+apiInstance.interceptors.response.use(
+  (response) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Response success ====>', response);
+    }
+
+    return response;
+  },
+  (err) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Response error ====>', err.response || err);
+    }
+
+    // Check if network disconnected
+    if (err.code === 'ECONNABORTED') {
+      console.error(
+        'Response error ====>',
+        'Something when wrong with your connection',
+      );
+    }
+
+    return Promise.reject(err);
+  },
+);
+
 export default apiInstance;

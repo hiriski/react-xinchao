@@ -29,7 +29,7 @@ export default {
     },
     {
       label: 'Phrasesbook',
-      path: ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK_LIST,
+      path: ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK,
       Icon: <BookIcon />,
     },
     {

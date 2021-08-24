@@ -12,7 +12,6 @@ import {
   LandingPage,
   LoginPage,
   NotMatchPage,
-  PhrasebookCategoryListPage,
   PhrasebookListPage,
   ProfilePage,
   RegisterPage,
@@ -31,13 +30,13 @@ const routes = (isLoggedIn) => [
             path: '/create',
             element: <CreatePhrasebookPage />,
           },
-          {
-            path: '/category/:categoryName',
-            element: <PhrasebookListPage />,
-          },
+          // {
+          //   path: ROUTES.PHRASEBOOK + '/:category_slug',
+          //   element: <PhrasebookListPage />,
+          // },
           {
             path: '/',
-            element: <PhrasebookCategoryListPage />,
+            element: <PhrasebookListPage />,
           },
         ],
       },
@@ -85,12 +84,13 @@ const routes = (isLoggedIn) => [
       },
       { path: ROUTES.CONTACT, element: <ContactPage /> },
       { path: ROUTES.ABOUT, element: <AboutPage /> },
-      { path: ROUTES.NOT_MATCH, element: <NotMatchPage /> },
+      // { path: ROUTES.NOT_MATCH, element: <NotMatchPage /> },
+      { path: '*', element: <NotMatchPage /> },
       {
         path: '/',
         element: <LandingPage />,
       },
-      { path: '*', element: <Navigate to={'/404'} /> },
+      // { path: '*', element: <Navigate to={'/404'} /> },
     ],
   },
 ];
