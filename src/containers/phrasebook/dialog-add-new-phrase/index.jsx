@@ -1,18 +1,14 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { closeDialogAddNewPhrase } from 'src/modules/common/actions';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import FormPhrase from '../form-phrase';
-import AddIcon from '@material-ui/icons/Add';
 import { fetchPhrasebookCategories } from 'src/modules/category/actions';
 
 function PaperComponent(props) {
@@ -53,9 +49,16 @@ const DialogAddNewPhrase = () => {
       onClose={handleClose}
       PaperComponent={PaperComponent}
       aria-labelledby="draggable-dialog-title"
+      maxWidth="lg"
     >
-      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-        Add New Phrase
+      <DialogTitle
+        className={classes.dialogTitle}
+        style={{ cursor: 'move' }}
+        id="draggable-dialog-title"
+      >
+        <Typography component="h2" variant="h3">
+          Add New Phrase
+        </Typography>
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         {/* <DialogContentText>
@@ -86,7 +89,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
   },
   dialogContent: {
-    padding: theme.spacing(0, 3, 3, 3),
+    padding: theme.spacing(3, 8, 5, 8),
+  },
+  dialogTitle: {
+    padding: theme.spacing(3, 8, 0, 8),
   },
 }));
 

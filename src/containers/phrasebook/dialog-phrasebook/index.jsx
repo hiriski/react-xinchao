@@ -3,14 +3,14 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
+// import MuiDialogContent from '@material-ui/core/DialogContent';
+// import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeDialogPhrasebookDetails } from 'src/modules/common/actions';
-import PhrasebookDetails from 'src/containers/phrasebook/phrasebook-details';
+import { closeDialogDetailPhrase } from 'src/modules/phrasebook/actions';
+import PhraseDetail from '../phrase-detail';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -47,28 +47,15 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
-
 const DialogPhrasebookDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { isOpenDialogPhrasebookDetails, phrasebook } = useSelector(
-    (state) => state.commonReducer,
+  const { dialogDetailPhrase } = useSelector(
+    (state) => state.phrasebookReducer,
   );
 
   const handleClose = () => {
-    dispatch(closeDialogPhrasebookDetails());
+    dispatch(closeDialogDetailPhrase());
   };
 
   return (
@@ -77,7 +64,7 @@ const DialogPhrasebookDetails = () => {
       keepMounted
       onClose={handleClose}
       aria-labelledby="customized-dialog-title"
-      open={isOpenDialogPhrasebookDetails}
+      open={Boolean(dialogDetailPhrase?.open)}
       fullWidth
       maxWidth="sm"
       className={classes.root}
@@ -85,8 +72,10 @@ const DialogPhrasebookDetails = () => {
         paper: classes.paper,
       }}
     >
-      <DialogTitle>Phrasebook</DialogTitle>
-      {phrasebook && <PhrasebookDetails phrasebook={phrasebook} />}
+      <DialogTitle>Phrase</DialogTitle>
+      {dialogDetailPhrase?.data && (
+        <PhraseDetail phrase={dialogDetailPhrase.data} />
+      )}
     </Dialog>
   );
 };

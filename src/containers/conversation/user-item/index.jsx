@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { openDialogPhrasebookDetails } from 'src/modules/common/actions';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -20,7 +19,7 @@ const ConversationUserItem = ({
   const classes = useStyles();
 
   const handleClickItem = () => {
-    dispatch(openDialogPhrasebookDetails(user));
+    // dispatch(openDialogPhrasebookDetails(user));
   };
 
   const handleToggle = (e) => {

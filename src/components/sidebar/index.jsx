@@ -32,7 +32,7 @@ const Sidebar = ({ isAuthenticated, closeDrawer, openDialogConfirmLogout }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up('lg'));
-  const { token, user } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.authReducer);
   const { isOpenSidebarDrawer, currentPath } = useSelector(
     (state) => state.commonReducer,
   );
@@ -68,20 +68,25 @@ const Sidebar = ({ isAuthenticated, closeDrawer, openDialogConfirmLogout }) => {
 
   React.useEffect(() => {
     if (currentPath !== null && currentPath !== pathname) {
-      // dispatch(closeDrawer());
       closeDrawer();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPath, pathname]);
 
-  console.log('isAuthenticated', isAuthenticated);
-
   const renderSidebarContent = (
     <div className={classes.drawerContent}>
       <div className={classes.logoContainer} onClick={handleClickLogo}>
-        <Logo logoStyle={clsx(classes.logoImg, token && classes.authLogoImg)} />
+        <Logo
+          logoStyle={clsx(
+            classes.logoImg,
+            isAuthenticated && classes.authLogoImg,
+          )}
+        />
         <Typography
-          className={clsx(classes.textLogo, token && classes.authTextLogo)}
+          className={clsx(
+            classes.textLogo,
+            isAuthenticated && classes.authTextLogo,
+          )}
           component="h3"
           noWrap
         >
@@ -314,7 +319,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 Sidebar.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
   closeDrawer: PropTypes.func,
   openDialogConfirmLogout: PropTypes.func,
 };

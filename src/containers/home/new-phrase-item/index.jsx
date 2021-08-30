@@ -10,17 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import Divider from '@material-ui/core/Divider';
 import { useDispatch } from 'react-redux';
-import { openDialogPhrasebookDetails } from 'src/modules/common/actions';
 import clsx from 'clsx';
 import Avatar from 'src/components/avatar';
 import { timeAgo } from 'src/utils/time';
+import { openDialogDetailPhrase } from 'src/modules/phrasebook/actions';
 
 const NewPhraseItem = ({ phrase, containerStyle }) => {
   const { text, created_by: creator, created_at } = phrase;
   const dispatch = useDispatch();
 
   const handleClickItem = () => {
-    dispatch(openDialogPhrasebookDetails(phrase));
+    dispatch(openDialogDetailPhrase({ open: true, data: phrase }));
   };
 
   const classes = useStyles();

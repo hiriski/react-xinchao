@@ -116,3 +116,15 @@ const fetchingLatestPhrasebookSuccess = (data) => ({
   type: Actions.FETCHING_LATEST_PHRASEBOOK_SUCCESS,
   payload: data,
 });
+
+/**
+ * Dialog detail phrase.
+ */
+export const openDialogDetailPhrase = ({ open, data }) => ({
+  type: Actions.OPEN_DIALOG_DETAIL_PHRASE,
+  payload: { open, data },
+});
+
+export const closeDialogDetailPhrase = () => ({
+  type: Actions.CLOSE_DIALOG_DETAIL_PHRASE,
+});

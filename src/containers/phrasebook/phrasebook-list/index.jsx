@@ -33,7 +33,7 @@ const PhrasebookList = ({ isFetching, phrases, category }) => {
         {Array.isArray(phrases) && phrases.length > 0 ? (
           <Grid container spacing={isBigScreen ? 1 : 1}>
             {phrases.map((phrase) => (
-              <Grid key={phrase.id} item xs={12} md={4}>
+              <Grid key={phrase.id} item xs={12} md={6}>
                 <PhrasebookItem key={phrase.id} phrase={phrase} />
               </Grid>
             ))}

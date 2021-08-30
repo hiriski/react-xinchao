@@ -1,5 +1,10 @@
 import * as Actions from './constants';
 
+const defaultDialogDetailPhrase = {
+  open: false,
+  data: {},
+};
+
 const initialState = {
   isFetching: false,
   isFailure: false,
@@ -11,6 +16,9 @@ const initialState = {
   phrases: [], // all of phrasebooks.
   newPhrases: [],
   category: null,
+
+  /** dialog phrase detail */
+  dialogDetailPhrase: defaultDialogDetailPhrase,
 };
 
 export default function phrasebookReducer(state = initialState, action) {
@@ -110,6 +118,22 @@ export default function phrasebookReducer(state = initialState, action) {
         isFetching: false,
         isFailure: false,
         newPhrases: action.payload,
+      };
+
+    /**
+     * ---------------
+     * Dialog detail phrase.
+     * ---------------
+     */
+    case Actions.OPEN_DIALOG_DETAIL_PHRASE:
+      return {
+        ...state,
+        dialogDetailPhrase: action.payload,
+      };
+    case Actions.CLOSE_DIALOG_DETAIL_PHRASE:
+      return {
+        ...state,
+        dialogDetailPhrase: defaultDialogDetailPhrase,
       };
 
     default:

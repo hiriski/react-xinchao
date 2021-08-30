@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,21 +8,23 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { useDispatch } from 'react-redux';
-import { openDialogPhrasebookDetails } from 'src/modules/common/actions';
-import clsx from 'clsx';
-
+import { openDialogDetailPhrase } from 'src/modules/phrasebook/actions';
 const PhrasebookItem = ({ phrase, containerStyle }) => {
   const { text } = phrase;
   const dispatch = useDispatch();
 
   const handleClickItem = () => {
-    dispatch(openDialogPhrasebookDetails(phrase));
+    dispatch(openDialogDetailPhrase({ open: true, data: phrase }));
+  };
+
+  const handleClickIcon = () => {
+    alert('icon cliced');
   };
 
   const classes = useStyles();
   return (
     <ListItem className={clsx(classes.root, containerStyle && containerStyle)}>
-      <ListItemAvatar>
+      <ListItemAvatar onClick={handleClickIcon}>
         <Avatar className={classes.avatarIcon}>
           <VolumeUpIcon />
         </Avatar>
@@ -39,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.common.white,
     borderRadius: theme.shape.borderRadius,
+    cursor: 'pointer',
     overflow: 'hidden',
     '& .MuiListItemText-primary': {
       whiteSpace: 'nowrap',
