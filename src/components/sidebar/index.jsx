@@ -107,7 +107,7 @@ const Sidebar = ({ isAuthenticated, closeDrawer, openDialogConfirmLogout }) => {
             </Box>
             <Box className={classes.name}>
               <Typography noWrap variant="h4" component="h4">
-                {user.name}
+                {user?.name}
               </Typography>
               <Typography
                 noWrap
@@ -115,7 +115,7 @@ const Sidebar = ({ isAuthenticated, closeDrawer, openDialogConfirmLogout }) => {
                 variant="subtitle2"
                 component="p"
               >
-                {user.level.name}
+                {user?.level?.name}
               </Typography>
             </Box>
             <div className={classes.iconButtonSignOut}>

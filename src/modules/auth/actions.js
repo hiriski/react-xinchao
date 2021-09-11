@@ -202,16 +202,18 @@ const revokingTokenSuccess = () => ({
 
 export const revokeToken = () => {
   return async (dispatch) => {
-    let errorMessage = 'Failed to revoke token';
     dispatch(revokingTokenRequest());
     try {
       const response = await AuthService.revokeToken();
       if (response.status === 200) {
-        dispatch(revokingTokenSuccess());
+        batch(() => {
+          dispatch(revokingTokenSuccess());
+          dispatch(resetAuthState());
+        });
         localStorage.removeItem(USER_TOKEN_KEY);
       }
     } catch (e) {
-      if (e.response !== undefined) {
+      if (e.response) {
         console.log(e.response);
       }
       /** Also reset auth state if failed to revoke token from the server */

@@ -5,6 +5,7 @@ const initialState = {
   isError: false,
   list: [],
   lastFetched: null,
+  currentCategoryTab: {},
 };
 
 export default function categoryReducer(state = initialState, action) {
@@ -33,6 +34,16 @@ export default function categoryReducer(state = initialState, action) {
         isError: false,
         list: action.payload,
         lastFetched: new Date(),
+      };
+    case Actions.SET_CURRENT_CATEGORY_TAB:
+      return {
+        ...state,
+        currentCategoryTab: payload,
+      };
+    case Actions.UNSET_CURRENT_CATEGORY_TAB:
+      return {
+        ...state,
+        currentCategoryTab: {},
       };
     default:
       return state;

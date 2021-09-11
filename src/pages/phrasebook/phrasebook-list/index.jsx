@@ -43,9 +43,11 @@ const PhrasebookListPage = () => {
 
   return (
     <React.Fragment>
-      {categoryParams !== null ? (
+      {categoryParams ? (
         <React.Fragment>
-          <PhrasebookCategoryTab categories={categories} />
+          {categories.length > 0 && (
+            <PhrasebookCategoryTab categories={categories} />
+          )}
           <DialogPhrasebookDetails />
           {Array.isArray(phrases) && category !== null ? (
             <PhrasebookList

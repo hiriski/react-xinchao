@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeDialogConfirmLogout } from 'src/modules/common/actions';
-import { resetAuthState, revokeToken } from 'src/modules/auth/actions';
+import { revokeToken } from 'src/modules/auth/actions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -36,8 +36,8 @@ const DialogConfirmLogout = () => {
   React.useEffect(() => {
     if (isLoggedOut) {
       closeDialog();
-      dispatch(resetAuthState());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedOut]);
 
   return (

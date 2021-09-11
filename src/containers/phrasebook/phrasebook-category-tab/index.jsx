@@ -4,37 +4,12 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import FolderIcon from '@material-ui/icons/Folder';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { ROUTES } from 'src/config';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  console.log(props);
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+import { useQuery } from 'src/utils/uri';
+// import { useDispatch } from 'react-redux';
+// import { setCurrentCategoryTab } from 'src/modules/category/actions';
 
 function a11yProps(id) {
   return {
@@ -46,14 +21,30 @@ function a11yProps(id) {
 // eslint-disable-next-line react/display-name
 const PhrasebookCategoryTab = React.memo(({ categories }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const navigate = useNavigate();
+  const [value, setValue] = React.useState(1);
+  let query = useQuery();
+  let categoryParams = query.get('category');
+  // const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
-    // console.log(event.target.dataset);
+    let category = categories.find((item) => item.id === newValue);
     setValue(newValue);
-    // navigate(ROUTES.PHRASEBOOK_LIST + '/' + slug);
+    console.log('category', category);
   };
+
+  React.useEffect(() => {
+    if (Array.isArray(categories) && categories.length > 0) {
+      setValue(categories[0].id);
+    }
+  }, [categories]);
+
+  React.useEffect(() => {
+    console.log('categories', categories);
+    if (categoryParams && categories.length > 0) {
+      setValue(categories.find((item) => item.slug === categoryParams));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -66,23 +57,18 @@ const PhrasebookCategoryTab = React.memo(({ categories }) => {
         scrollButtons="auto"
         aria-label="scrollable auto tabs example"
       >
-        {categories.map(({ id, slug, text }, index) => (
+        {categories.map(({ id, slug, text }) => (
           <CustomTab
+            key={id}
+            value={id}
             component={RouterLink}
             to={`/${ROUTES.PREFIX_APP + ROUTES.PHRASEBOOK}?category=${slug}`}
             icon={<FolderIcon />}
             label={<Typography component="h5">{text.en}</Typography>}
-            key={id}
             {...a11yProps(id)}
           />
         ))}
       </CustomTabs>
-
-      {/* {categories.map(({ id, text }, index) => (
-        <TabPanel key={id} value={value} index={index}>
-          {text.en}
-        </TabPanel>
-      ))} */}
     </div>
   );
 });

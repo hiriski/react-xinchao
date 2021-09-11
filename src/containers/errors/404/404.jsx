@@ -16,7 +16,7 @@ const NotMatchContainer = () => {
         color="primary"
         component={RouterLink}
         variant="contained"
-        to="/"
+        to="/app"
       >
         Back to home
       </Button>

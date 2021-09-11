@@ -33,3 +33,12 @@ const fetchingPhrasebookCategorySuccess = (categories) => ({
   type: Actions.FETCHING_PHRASEBOOK_CATEGORIES_SUCCESS,
   payload: categories,
 });
+
+/**  Category tab */
+export const setCurrentCategoryTab = (payload) => ({
+  type: Actions.SET_CURRENT_CATEGORY_TAB,
+  payload,
+});
+export const unsetCurrentCategoryTab = () => ({
+  type: Actions.UNSET_CURRENT_CATEGORY_TAB,
+});
