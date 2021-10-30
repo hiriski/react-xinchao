@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import AuthAPI from './api'
 import * as ActionTypes from './constants'
 import { AppDispatch } from '../config-store'
-import { TLoginUser, TRequestAuth } from '../../types/auth'
+import { TLoginUser, TRequestLogin } from '../../types/auth'
 import { ACCESS_TOKEN } from '../../utils/constants'
 
 // Actions definiition
@@ -52,7 +52,7 @@ export const setIsLoggedIn = (payload: boolean): ISetIsLoggedIn => ({
   payload,
 })
 
-export const loginAction = (requestData: TRequestAuth) => {
+export const loginAction = (requestData: TRequestLogin) => {
   return async (dispatch: AppDispatch): Promise<void> => {
     dispatch(setAuthRequest(true))
     try {
@@ -99,16 +99,16 @@ export const setAppLock = (payload: boolean): ISetAppLock => ({
   payload,
 })
 
-export const unlockAction = (pin: string, email: string) => {
-  return async (dispatch: AppDispatch): Promise<void> => {
-    try {
-      const { status, data } = await AuthAPI.unlock(pin)
-      if (status === 200 && email.trim() === data.email.trim()) {
-        dispatch(setAppLock(false))
-      }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('e', e)
-    }
-  }
-}
+// export const unlockAction = (pin: string, email: string) => {
+//   return async (dispatch: AppDispatch): Promise<void> => {
+//     try {
+//       const { status, data } = await AuthAPI.unlock(pin)
+//       if (status === 200 && email.trim() === data.email.trim()) {
+//         dispatch(setAppLock(false))
+//       }
+//     } catch (e) {
+//       // eslint-disable-next-line no-console
+//       console.log('e', e)
+//     }
+//   }
+// }

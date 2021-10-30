@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import api from '../../utils/http'
-import { TLoginUser, TRequestAuth } from '../../types/auth'
+import { TLoginUser, TRequestLogin } from '../../types/auth'
 
 type ResponseLogin = {
   success: boolean
@@ -9,7 +9,7 @@ type ResponseLogin = {
 }
 
 const AuthAPI = {
-  login: (data: TRequestAuth): Promise<AxiosResponse<ResponseLogin>> => {
+  login: (data: TRequestLogin): Promise<AxiosResponse<ResponseLogin>> => {
     return api.post('/auth/login', data)
   },
 

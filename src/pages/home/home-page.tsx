@@ -6,7 +6,6 @@ const HomePage: FC = () => {
     <Box
       sx={{
         display: 'flex',
-        minHeight: '100vh',
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',

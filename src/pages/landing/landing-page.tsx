@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router'
 import { heroBackgroundImage } from './bg'
 import CustomButton from '../../components/common/custom-button'
+import { PREFIX_APP_VERSION } from '../../utils/constants'
 
 const BackgroundImage: FC = () => (
   <>
@@ -38,6 +39,7 @@ const BackgroundImage: FC = () => (
 
 const LandingPage: FC = () => {
   const navigate = useNavigate()
+
   return (
     <Box
       sx={{
@@ -89,7 +91,7 @@ const LandingPage: FC = () => {
         </Box>
 
         <Box mt={4}>
-          <CustomButton onClick={() => navigate('/app')}>Get Started</CustomButton>
+          <CustomButton onClick={() => navigate(PREFIX_APP_VERSION)}>Get Started</CustomButton>
         </Box>
       </Box>
     </Box>

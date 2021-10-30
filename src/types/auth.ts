@@ -1,12 +1,13 @@
+import { TUser } from './user'
+
 export type TLoginUser = {
-  id: string
-  name: string
-  email: string
-  photoUrl?: string
-  createdAt?: string
+  success: boolean
+  token: string
+  token_type?: string
+  user: TUser
 }
 
-export type TRequestAuth = {
-  pin: string
+export type TRequestLogin = {
+  username_or_email: string
   email: string
 }
