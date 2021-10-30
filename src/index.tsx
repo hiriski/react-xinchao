@@ -1,11 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import './assets/fonts/hk-grotesk/style.css'
+import ReduxProvider from './providers/redux-provider'
+import ThemeProvider from './providers/theme-provider'
+import SnackbarProvider from './providers/snackbar-provider'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReduxProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('RootXinChao')
 )

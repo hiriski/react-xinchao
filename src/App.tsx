@@ -1,8 +1,10 @@
-import React, { FC } from 'react'
-import Hello from './components/hello'
+import { FC } from 'react'
+import { useRoutes } from 'react-router-dom'
+
+import routes from './lib/routes'
 
 const App: FC = () => {
-  return <Hello text="Xin Chào" />
+  return useRoutes(routes(false))
 }
 
 export default App

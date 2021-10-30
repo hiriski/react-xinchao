@@ -1,0 +1,5 @@
+export const SET_AUTH_REQUEST = 'auth/SET_AUTH_REQUEST'
+export const SET_AUTH_FAILURE = 'auth/SET_AUTH_FAILURE'
+export const SET_AUTH_STATE = 'auth/SET_AUTH_STATE'
+export const SET_IS_LOGGEG_IN = 'auth/SET_IS_LOGGEG_IN'
+export const SET_APP_LOCK = 'auth/SET_APP_LOCK'

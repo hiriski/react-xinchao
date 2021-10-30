@@ -1,6 +1,10 @@
 export default {
   fontFamily: ['HK Grotesk', 'Roboto', 'sans-serif'].join(','),
-  fontWeightRegular: '500',
+  fontFamilySecondary: ['Rancho', 'cursive'].join(','),
+  fontWeightLight: 300,
+  fontWeightRegular: 400,
+  fontWeightMedium: 500,
+  fontWeightBold: 700,
   h1: {
     fontWeight: 500,
     fontSize: 40,
