@@ -1,10 +1,15 @@
 import { batch } from 'react-redux'
 import Cookies from 'js-cookie'
+import { AxiosError, AxiosResponse } from 'axios'
 import AuthAPI from './api'
 import * as ActionTypes from './constants'
 import { AppDispatch } from '../config-store'
-import { TLoginUser, TRequestLogin } from '../../types/auth'
+import { TRequestLogin, TRequestRegister } from '../../types/auth'
 import { ACCESS_TOKEN } from '../../utils/constants'
+import { TUser } from '../../types/user'
+import { getAuthErrorMessage } from './helper'
+import { TAuthValidatorServerError } from './types'
+import { setAlert } from '../alert/actions'
 
 // Actions definiition
 interface ISetAuthRequest {
@@ -17,7 +22,7 @@ interface ISetAuthFailure {
 }
 interface ISetAuthState {
   type: typeof ActionTypes.SET_AUTH_STATE
-  payload: unknown
+  payload: TUser | null
 }
 interface ISetIsLoggedIn {
   type: typeof ActionTypes.SET_IS_LOGGEG_IN
@@ -28,8 +33,29 @@ interface ISetAppLock {
   payload: boolean
 }
 
+interface ISetRegisterRequest {
+  type: typeof ActionTypes.SET_REGISTER_REQUEST
+  payload: boolean
+}
+interface ISetRegisterFailure {
+  type: typeof ActionTypes.SET_REGISTER_FAILURE
+  payload: { status: boolean; messages?: TAuthValidatorServerError | null }
+}
+interface ISetRegisterSuccess {
+  type: typeof ActionTypes.SET_REGISTER_SUCCESS
+  payload: boolean
+}
+
 // Union action types
-export type AuthAction = ISetAuthRequest | ISetAuthFailure | ISetAuthState | ISetIsLoggedIn | ISetAppLock
+export type AuthAction =
+  | ISetAuthRequest
+  | ISetAuthFailure
+  | ISetAuthState
+  | ISetIsLoggedIn
+  | ISetAppLock
+  | ISetRegisterRequest
+  | ISetRegisterFailure
+  | ISetRegisterSuccess
 
 // Actions creators.
 export const setAuthRequest = (payload: boolean): ISetAuthRequest => ({
@@ -42,7 +68,7 @@ export const setAuthFailure = (payload: boolean): ISetAuthFailure => ({
   payload,
 })
 
-export const setAuthState = (payload: TLoginUser): ISetAuthState => ({
+export const setAuthState = (payload: TUser | null): ISetAuthState => ({
   type: ActionTypes.SET_AUTH_STATE,
   payload,
 })
@@ -112,3 +138,53 @@ export const setAppLock = (payload: boolean): ISetAppLock => ({
 //     }
 //   }
 // }
+
+const setRegisterRequest = (payload: boolean): ISetRegisterRequest => ({
+  type: ActionTypes.SET_REGISTER_REQUEST,
+  payload,
+})
+
+const setRegisterFailure = (payload: {
+  status: boolean
+  messages?: TAuthValidatorServerError | null
+}): ISetRegisterFailure => ({
+  type: ActionTypes.SET_REGISTER_FAILURE,
+  payload,
+})
+
+const setRegisterSuccess = (payload: boolean): ISetRegisterSuccess => ({
+  type: ActionTypes.SET_REGISTER_SUCCESS,
+  payload,
+})
+
+export const registerAction = (registerData: TRequestRegister) => {
+  return async (dispatch: AppDispatch): Promise<void> => {
+    dispatch(setRegisterRequest(true))
+    await AuthAPI.register(registerData)
+      .then((response) => {
+        const { status, data } = response
+        if (status === 201 /* 201 Crated */ && data) {
+          // set token
+          Cookies.set(ACCESS_TOKEN, data.token)
+          batch(() => {
+            dispatch(setRegisterSuccess(true))
+            dispatch(setRegisterRequest(false))
+            dispatch(setAuthState(data.user))
+            dispatch(setIsLoggedIn(true))
+          })
+        }
+      })
+      .catch((e: AxiosError): void => {
+        let messages
+        if (e.response.data) {
+          messages = getAuthErrorMessage(e.response.data)
+        }
+        batch(() => {
+          dispatch(setRegisterFailure({ status: true, messages }))
+          dispatch(setRegisterRequest(false))
+          dispatch(setRegisterSuccess(false))
+          dispatch(setAlert({ open: true, message: 'Register failed!', severity: 'error' }))
+        })
+      })
+  }
+}

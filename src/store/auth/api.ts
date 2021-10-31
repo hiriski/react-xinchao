@@ -1,15 +1,13 @@
 import axios, { AxiosResponse } from 'axios'
 import api from '../../utils/http'
-import { TLoginUser, TRequestLogin } from '../../types/auth'
-
-type ResponseLogin = {
-  success: boolean
-  token: string
-  user: TLoginUser
-}
+import { TLoginUser, TRegisterUser, TRequestLogin, TRequestRegister } from '../../types/auth'
 
 const AuthAPI = {
-  login: (data: TRequestLogin): Promise<AxiosResponse<ResponseLogin>> => {
+  register: (data: TRequestRegister): Promise<AxiosResponse<TRegisterUser>> => {
+    return api.post('/auth/register', data)
+  },
+
+  login: (data: TRequestLogin): Promise<AxiosResponse<TLoginUser>> => {
     return api.post('/auth/login', data)
   },
 

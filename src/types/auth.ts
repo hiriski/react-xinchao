@@ -7,7 +7,16 @@ export type TLoginUser = {
   user: TUser
 }
 
+export type TRegisterUser = TLoginUser
+
 export type TRequestLogin = {
   username_or_email: string
   email: string
+}
+
+export type TRequestRegister = {
+  name: string
+  email: string
+  password: string
+  password_confirmation?: string
 }

@@ -1,13 +1,22 @@
 import * as ActionTypes from './constants'
 import { AuthAction } from './actions'
 import { TLoginUser } from '../../types/auth'
+import { TAuthValidatorServerError } from './types'
+import { TUser } from '../../types/user'
 
 export interface IAuthState {
   isLoading: boolean
   isError: boolean
   isLoggedIn: boolean
-  authState?: TLoginUser | unknown
+  authState?: TUser | null
   isLocked: boolean
+
+  registerLoading: boolean
+  registerFailure: {
+    status: boolean
+    messages?: TAuthValidatorServerError | null
+  }
+  registerSuccess: boolean
 }
 
 const initialState = {
@@ -16,6 +25,13 @@ const initialState = {
   isLoggedIn: false,
   authState: null,
   isLocked: false,
+
+  registerLoading: false,
+  registerFailure: {
+    status: false,
+    messages: null,
+  },
+  registerSuccess: false,
 }
 
 const authReducer = (state: IAuthState = initialState, action: AuthAction): IAuthState => {
@@ -44,6 +60,22 @@ const authReducer = (state: IAuthState = initialState, action: AuthAction): IAut
       return {
         ...state,
         isLocked: action.payload,
+      }
+
+    case ActionTypes.SET_REGISTER_REQUEST:
+      return {
+        ...state,
+        registerLoading: action.payload,
+      }
+    case ActionTypes.SET_REGISTER_FAILURE:
+      return {
+        ...state,
+        registerFailure: action.payload,
+      }
+    case ActionTypes.SET_REGISTER_SUCCESS:
+      return {
+        ...state,
+        registerSuccess: action.payload,
       }
     default:
       return state

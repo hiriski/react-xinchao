@@ -8,6 +8,10 @@ export const ACCESS_TOKEN = '@accessToken'
 export const LIMIT = 20
 export const PREFIX_APP_VERSION = process.env.REACT_APP_PREFIX_APP_VERSION
 
-export const ROUTES: Record<string, string> = {
-  LOGIN: `/signin`,
+export const ROUTES = {
+  SIGNIN: '/signin',
+  REGISTER: '/register',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
+  PHRASEBOOK: PREFIX_APP_VERSION ? `${PREFIX_APP_VERSION}/phrasebook` : '/phrasebook',
 }

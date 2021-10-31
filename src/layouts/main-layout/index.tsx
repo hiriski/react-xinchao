@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { Box } from '@mui/material'
 import { Outlet } from 'react-router'
 import Footer from '../../components/footer'
+import Snackbar from '../../components/common/snackbar'
 
 const MainLayout: FC = () => {
   return (
@@ -16,6 +17,7 @@ const MainLayout: FC = () => {
         <Outlet />
       </Box>
       <Footer />
+      <Snackbar />
     </Box>
   )
 }

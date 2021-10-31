@@ -5,29 +5,31 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { AuthLayout } from '../../layouts'
-import { TRequestLogin } from '../../types/auth'
-import { loginAction, setAuthFailure } from '../../store/auth/actions'
+import { TRequestRegister } from '../../types/auth'
+import { loginAction, registerAction, setAuthFailure } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
 import { PREFIX_APP_VERSION, ROUTES } from '../../utils/constants'
 
-type Inputs = TRequestLogin
+type Inputs = TRequestRegister
 
 const defaultValues = {
-  username_or_email: 'admin@example.com',
-  password: 'secret',
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
 }
 
-const LoginPage: FC = () => {
+const ResetPasswordPage: FC = () => {
   const { control, handleSubmit } = useForm({
     defaultValues,
   })
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isLoggedIn, isError } = useAppSelector((state) => state.auth)
+  const { isLoggedIn, isError, registerFailure } = useAppSelector((state) => state.auth)
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {
-    dispatch(loginAction(values))
+    dispatch(registerAction(values))
   }
 
   useEffect(() => {
@@ -72,7 +74,13 @@ const LoginPage: FC = () => {
           }}
         >
           <Typography component="h1" variant="h2">
-            Login
+            Create Account
+          </Typography>
+          <Typography>
+            Already have an account ?{' '}
+            <Link component={RouterLink} to={ROUTES.SIGNIN}>
+              Sign In
+            </Link>
           </Typography>
         </Box>
         <Box
@@ -88,11 +96,14 @@ const LoginPage: FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
-            name="username_or_email"
+            name="name"
             control={control}
-            render={({ field }) => (
-              <TextField {...field} fullWidth size="small" margin="normal" label="Username or Email" />
-            )}
+            render={({ field }) => <TextField {...field} fullWidth size="small" margin="normal" label="Name" />}
+          />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => <TextField {...field} fullWidth size="small" margin="normal" label="Email" />}
           />
           <Controller
             name="password"
@@ -101,27 +112,28 @@ const LoginPage: FC = () => {
               <TextField {...field} fullWidth size="small" type="password" margin="normal" label="Password" />
             )}
           />
-          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'flex-end' }}>
-            <Link component={RouterLink} to={ROUTES.FORGOT_PASSWORD}>
-              Forgot Password
-            </Link>
-          </Box>
-          <Button sx={{ mt: 2 }} type="submit" fullWidth variant="contained" size="large" disableElevation>
-            Login
+          <Controller
+            name="password_confirmation"
+            control={control}
+            render={({ field }) => (
+              <TextField {...field} fullWidth size="small" type="password" margin="normal" label="Password" />
+            )}
+          />
+          <Button
+            sx={{ mt: 1 }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            size="large"
+            disableElevation
+          >
+            Register Now
           </Button>
-        </Box>
-
-        <Box mt={2}>
-          <Typography>
-            Don’t have an account?{' '}
-            <Link component={RouterLink} to={ROUTES.REGISTER}>
-              Create one!
-            </Link>
-          </Typography>
         </Box>
       </Box>
     </AuthLayout>
   )
 }
 
-export default LoginPage
+export default ResetPasswordPage

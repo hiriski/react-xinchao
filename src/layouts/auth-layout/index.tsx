@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from 'react'
 import { Box, Grid } from '@mui/material'
 import Logo from '../../components/common/logo'
+import Snackbar from '../../components/common/snackbar'
 
 type Props = {
   children: ReactNode
@@ -9,6 +10,7 @@ type Props = {
 const AuthLayout: FC<Props> = ({ children }: Props) => {
   return (
     <Box sx={{ height: '100vh' }}>
+      <Snackbar />
       <Grid container>
         <Grid
           item
@@ -62,7 +64,7 @@ const AuthLayout: FC<Props> = ({ children }: Props) => {
           >
             {children}
             <Box sx={{ mt: 5 }}>
-              <Logo width={46} color="secondary" />
+              <Logo width={136} color="secondary" variant="withText" />
             </Box>
           </Box>
         </Grid>

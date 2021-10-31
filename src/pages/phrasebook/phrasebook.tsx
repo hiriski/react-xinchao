@@ -1,12 +1,11 @@
 import React, { FC, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { HomeGreeting } from '../../components/home'
 import { fetchPhrasebookCategories } from '../../store/phrasebookCategory/actions'
 import { useAppSelector } from '../../store/hook'
 import { PhrasebookCategoryList } from '../../components/phrasebook-categories'
 
-const HomePage: FC = () => {
+const PhrasebookPage: FC = () => {
   const dispatch = useDispatch()
   const { categories } = useAppSelector((state) => state.phrasebookCategory)
 
@@ -24,10 +23,10 @@ const HomePage: FC = () => {
         justifyContent: 'center',
       }}
     >
-      <HomeGreeting />
-      <PhrasebookCategoryList items={categories} />
+      <h1>Phrasaebook Page</h1>
+      {/* <PhrasebookCategoryList items={categories} /> */}
     </Box>
   )
 }
 
-export default HomePage
+export default PhrasebookPage

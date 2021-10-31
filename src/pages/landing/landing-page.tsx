@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { heroBackgroundImage } from './bg'
 import CustomButton from '../../components/common/custom-button'
 import { PREFIX_APP_VERSION } from '../../utils/constants'
+import Footer from '../../components/footer'
 
 const BackgroundImage: FC = () => (
   <>
@@ -53,6 +54,7 @@ const LandingPage: FC = () => {
       <BackgroundImage />
       <Box
         sx={{
+          flex: 1,
           display: 'flex',
           position: 'relative',
           alignItems: 'center',
@@ -93,6 +95,10 @@ const LandingPage: FC = () => {
         <Box mt={4}>
           <CustomButton onClick={() => navigate(PREFIX_APP_VERSION)}>Get Started</CustomButton>
         </Box>
+      </Box>
+
+      <Box position="relative">
+        <Footer logo={false} />
       </Box>
     </Box>
   )

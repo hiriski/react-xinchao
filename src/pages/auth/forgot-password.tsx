@@ -1,33 +1,44 @@
+import * as yup from 'yup'
 import React, { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Box, TextField, Typography, Link } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { AuthLayout } from '../../layouts'
-import { TRequestLogin } from '../../types/auth'
-import { loginAction, setAuthFailure } from '../../store/auth/actions'
+import { setAuthFailure } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
 import { PREFIX_APP_VERSION, ROUTES } from '../../utils/constants'
 
-type Inputs = TRequestLogin
+type Inputs = { email: string }
 
 const defaultValues = {
-  username_or_email: 'admin@example.com',
-  password: 'secret',
+  email: '',
 }
 
-const LoginPage: FC = () => {
-  const { control, handleSubmit } = useForm({
+const schema = yup.object().shape({
+  email: yup.string().email('Hehhh, must be a valid email').required('Email required'),
+})
+
+const ForgotPasswordPage: FC = () => {
+  const {
+    control,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm({
     defaultValues,
+    resolver: yupResolver(schema),
   })
+
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isLoggedIn, isError } = useAppSelector((state) => state.auth)
+  const { isLoggedIn, isError, registerFailure } = useAppSelector((state) => state.auth)
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {
-    dispatch(loginAction(values))
+    // dispatch(registerAction(values))
   }
 
   useEffect(() => {
@@ -71,9 +82,10 @@ const LoginPage: FC = () => {
             width: '100%',
           }}
         >
-          <Typography component="h1" variant="h2">
-            Login
+          <Typography sx={{ mb: 1 }} component="h1" variant="h3">
+            Forgot your password?
           </Typography>
+          <Typography>Please enter your email, and we will send you a link to reset your password.</Typography>
         </Box>
         <Box
           sx={{
@@ -88,40 +100,42 @@ const LoginPage: FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
-            name="username_or_email"
+            name="email"
             control={control}
             render={({ field }) => (
-              <TextField {...field} fullWidth size="small" margin="normal" label="Username or Email" />
+              <TextField
+                {...field}
+                fullWidth
+                error={Boolean(errors.email?.message)}
+                size="small"
+                margin="normal"
+                label="Email"
+                helperText={errors.email?.message}
+              />
             )}
           />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <TextField {...field} fullWidth size="small" type="password" margin="normal" label="Password" />
-            )}
-          />
-          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'flex-end' }}>
-            <Link component={RouterLink} to={ROUTES.FORGOT_PASSWORD}>
-              Forgot Password
+
+          <Button
+            sx={{ mt: 1 }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            disableElevation
+          >
+            Reset My Password
+          </Button>
+
+          <Box mt={2}>
+            <Link component={RouterLink} to={ROUTES.SIGNIN}>
+              Back to Login
             </Link>
           </Box>
-          <Button sx={{ mt: 2 }} type="submit" fullWidth variant="contained" size="large" disableElevation>
-            Login
-          </Button>
-        </Box>
-
-        <Box mt={2}>
-          <Typography>
-            Don’t have an account?{' '}
-            <Link component={RouterLink} to={ROUTES.REGISTER}>
-              Create one!
-            </Link>
-          </Typography>
         </Box>
       </Box>
     </AuthLayout>
   )
 }
 
-export default LoginPage
+export default ForgotPasswordPage
