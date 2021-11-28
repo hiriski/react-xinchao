@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import authReducer, { IAuthState } from './auth/reducer'
+import authReducer, { AuthState } from './auth/reducer'
 import sampleReducer, { SampleState } from './sample/reducer'
 import alertReducer, { AlertState } from './alert/reducer'
-import phrasebookCategoryReducer, { PhrasebookCategoryState } from './phrasebookCategory/reducer'
+import phrasebookCategoryReducer, { PhrasebookCategoryState } from './phrasebook-category/reducer'
 
 export interface RootState {
   sample: SampleState
-  auth: IAuthState
+  auth: AuthState
   alert: AlertState
   phrasebookCategory: PhrasebookCategoryState
 }

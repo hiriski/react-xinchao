@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { HomeGreeting } from '../../components/home'
-import { fetchPhrasebookCategories } from '../../store/phrasebookCategory/actions'
+import { fetchPhrasebookCategories } from '../../store/phrasebook-category/actions'
 import { useAppSelector } from '../../store/hook'
 import { PhrasebookCategoryList } from '../../components/phrasebook-categories'
 

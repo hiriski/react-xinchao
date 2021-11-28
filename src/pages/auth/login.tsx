@@ -6,11 +6,11 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { AuthLayout } from '../../layouts'
 import { TRequestLogin } from '../../types/auth'
-import { loginAction, setAuthFailure } from '../../store/auth/actions'
+import { login } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
 import { PREFIX_APP_VERSION, ROUTES } from '../../utils/constants'
 
-type Inputs = TRequestLogin
+type TInputs = TRequestLogin
 
 const defaultValues = {
   username_or_email: 'admin@example.com',
@@ -24,28 +24,18 @@ const LoginPage: FC = () => {
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isLoggedIn, isError } = useAppSelector((state) => state.auth)
+  const { isAuthenticated, loginError } = useAppSelector((state) => state.auth)
 
-  const onSubmit: SubmitHandler<Inputs> = (values) => {
-    dispatch(loginAction(values))
+  const onSubmit: SubmitHandler<TInputs> = (values) => {
+    dispatch(login(values))
   }
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       navigate(PREFIX_APP_VERSION)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn])
-
-  useEffect(() => {
-    if (isError) {
-      enqueueSnackbar('Login failed!', { variant: 'error' })
-      setTimeout(() => {
-        dispatch(setAuthFailure(false))
-      }, 500)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError])
+  }, [isAuthenticated])
 
   return (
     <AuthLayout>

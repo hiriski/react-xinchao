@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 import { useAppSelector } from '../../store/hook'
 
 const HomeGreeting: FC = () => {
-  const { authState, isLoggedIn } = useAppSelector((state) => state.auth)
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth)
   return (
     <Box sx={{ py: 3 }}>
       <Box
@@ -16,7 +16,7 @@ const HomeGreeting: FC = () => {
         <Typography component="span" sx={{ mr: 0.75 }}>
           Hello,{' '}
         </Typography>{' '}
-        <Typography component="span">{isLoggedIn ? authState.name : 'Stranger'}</Typography>
+        <Typography component="span">{isAuthenticated && user ? user.name : 'Stranger'}</Typography>
       </Box>
     </Box>
   )

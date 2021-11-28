@@ -1,7 +1,8 @@
-import { AlertColor } from '@mui/material'
+import { AlertColor as AlertSeverity } from '@mui/material'
 
 export type TPayloadSetAlert = {
   open: boolean
-  message: string
-  severity: AlertColor
+  message: string | null
+  severity?: AlertSeverity
+  autoHideDuration?: number
 }

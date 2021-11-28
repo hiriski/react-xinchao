@@ -7,7 +7,6 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { AuthLayout } from '../../layouts'
-import { setAuthFailure } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
 import { PREFIX_APP_VERSION, ROUTES } from '../../utils/constants'
 
@@ -35,28 +34,18 @@ const ForgotPasswordPage: FC = () => {
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isLoggedIn, isError, registerFailure } = useAppSelector((state) => state.auth)
+  const { isAuthenticated } = useAppSelector((state) => state.auth)
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {
     // dispatch(registerAction(values))
   }
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       navigate(PREFIX_APP_VERSION)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn])
-
-  useEffect(() => {
-    if (isError) {
-      enqueueSnackbar('Login failed!', { variant: 'error' })
-      setTimeout(() => {
-        dispatch(setAuthFailure(false))
-      }, 500)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError])
+  }, [isAuthenticated])
 
   return (
     <AuthLayout>

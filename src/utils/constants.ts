@@ -1,7 +1,9 @@
-export const API_BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? process.env.REACT_APP_API_BASE_URL_DEVELOPMENT
-    : process.env.REACT_APP_API_BASE_URL_PRODUCTION
+// eslint-disable-next-line no-underscore-dangle
+export const __DEV__ = process.env.NODE_ENV === 'development'
+
+export const API_BASE_URL = __DEV__
+  ? process.env.REACT_APP_API_BASE_URL_DEVELOPMENT
+  : process.env.REACT_APP_API_BASE_URL_PRODUCTION
 
 export const APP_NAME = 'Xin Chào'
 export const ACCESS_TOKEN = '@accessToken'

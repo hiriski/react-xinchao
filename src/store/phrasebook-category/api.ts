@@ -3,7 +3,7 @@ import api from '../../utils/http'
 
 import { TPhrasebookCategory } from '../../types/phrasebookCategory'
 
-interface IResponsePhrasebookCategory {
+export interface IResponsePhrasebookCategory {
   data: TPhrasebookCategory[]
 }
 

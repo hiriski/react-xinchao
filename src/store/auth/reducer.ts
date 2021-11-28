@@ -1,81 +1,81 @@
 import * as ActionTypes from './constants'
 import { AuthAction } from './actions'
-import { TLoginUser } from '../../types/auth'
-import { TAuthValidatorServerError } from './types'
 import { TUser } from '../../types/user'
+import { IStateFailure } from '../../types/common'
 
-export interface IAuthState {
-  isLoading: boolean
-  isError: boolean
-  isLoggedIn: boolean
-  authState?: TUser | null
-  isLocked: boolean
+const initialStateError: IStateFailure = {
+  status: false,
+  message: null,
+  messages: null,
+}
+
+export interface AuthState {
+  isAuthenticated: boolean
+  loginLoading: boolean
+  loginError?: IStateFailure
+  user?: TUser | null
 
   registerLoading: boolean
-  registerFailure: {
-    status: boolean
-    messages?: TAuthValidatorServerError | null
-  }
+  registerError?: IStateFailure
   registerSuccess: boolean
 }
 
 const initialState = {
-  isLoading: false,
-  isError: false,
-  isLoggedIn: false,
-  authState: null,
-  isLocked: false,
+  loginLoading: false,
+  loginError: initialStateError,
+  isAuthenticated: false,
+  user: null,
 
   registerLoading: false,
-  registerFailure: {
-    status: false,
-    messages: null,
-  },
+  registerError: initialStateError,
   registerSuccess: false,
 }
 
-const authReducer = (state: IAuthState = initialState, action: AuthAction): IAuthState => {
+const authReducer = (state: AuthState = initialState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case ActionTypes.SET_AUTH_REQUEST:
+    case ActionTypes.LOGIN_LOADING:
       return {
         ...state,
-        isLoading: action.payload,
+        user: null,
+        loginLoading: true,
+        isAuthenticated: false,
       }
-    case ActionTypes.SET_AUTH_FAILURE:
+    case ActionTypes.LOGIN_SUCCESS:
       return {
         ...state,
-        isError: action.payload,
+        user: action.payload,
+        loginError: initialStateError,
+        loginLoading: false,
+        isAuthenticated: true,
       }
-    case ActionTypes.SET_AUTH_STATE:
+    case ActionTypes.LOGIN_FAILURE:
       return {
         ...state,
-        authState: action.payload,
+        user: null,
+        loginError: action.payload ?? /* coming from saga --> */ { ...state.loginError, status: true },
+        loginLoading: false,
       }
-    case ActionTypes.SET_IS_LOGGEG_IN:
+    case ActionTypes.REGISTER_LOADING:
       return {
         ...state,
-        isLoggedIn: action.payload,
+        user: null,
+        registerLoading: true,
+        isAuthenticated: false,
       }
-    case ActionTypes.SET_APP_LOCK:
+    case ActionTypes.REGISTER_SUCCESS:
       return {
         ...state,
-        isLocked: action.payload,
+        user: action.payload,
+        registerError: initialStateError,
+        registerLoading: false,
+        isAuthenticated: true,
       }
-
-    case ActionTypes.SET_REGISTER_REQUEST:
+    case ActionTypes.REGISTER_FAILURE:
       return {
         ...state,
-        registerLoading: action.payload,
-      }
-    case ActionTypes.SET_REGISTER_FAILURE:
-      return {
-        ...state,
-        registerFailure: action.payload,
-      }
-    case ActionTypes.SET_REGISTER_SUCCESS:
-      return {
-        ...state,
-        registerSuccess: action.payload,
+        user: null,
+        registerError: action.payload ?? /* coming from saga --> */ { ...state.loginError, status: true },
+        loginLoading: false,
       }
     default:
       return state

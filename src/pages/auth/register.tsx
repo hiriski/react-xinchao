@@ -7,7 +7,7 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AuthLayout } from '../../layouts'
 import { TRequestRegister } from '../../types/auth'
-import { registerAction } from '../../store/auth/actions'
+import { register } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
 import { PREFIX_APP_VERSION, ROUTES } from '../../utils/constants'
 
@@ -38,19 +38,19 @@ const RegisterPage: FC = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isLoggedIn, registerLoading } = useAppSelector((state) => state.auth)
+  const { isAuthenticated, registerLoading } = useAppSelector((state) => state.auth)
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {
     const body = { ...values, password_confirmation: values.password }
-    dispatch(registerAction(body))
+    dispatch(register(body))
   }
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       navigate(PREFIX_APP_VERSION)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn])
+  }, [isAuthenticated])
 
   return (
     <AuthLayout>

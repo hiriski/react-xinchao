@@ -5,7 +5,7 @@ import { PhrasebookCategoryAction } from './actions'
 export interface PhrasebookCategoryState {
   isFetching: boolean
   isError: boolean
-  categories: TPhrasebookCategory[]
+  categories: TPhrasebookCategory[] | null
 }
 
 const initialState = {
@@ -23,10 +23,12 @@ const phrasebookCategoryReducer = (
       return {
         ...state,
         isError: action.payload,
+        isFetching: false,
       }
-    case ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_REQUEST:
+    case ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_LOADING:
       return {
         ...state,
+        isError: false,
         isFetching: action.payload,
       }
     case ActionTypes.SET_PHRASEBOOK_CATEGORIES:
