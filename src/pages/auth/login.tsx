@@ -8,7 +8,7 @@ import { AuthLayout } from '../../layouts'
 import { TRequestLogin } from '../../types/auth'
 import { login } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
-import { PREFIX_APP_VERSION, ROUTES } from '../../utils/constants'
+import { ROUTES } from '../../utils/constants'
 
 type TInputs = TRequestLogin
 
@@ -32,7 +32,7 @@ const LoginPage: FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(PREFIX_APP_VERSION)
+      navigate(ROUTES.HOME)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
@@ -61,8 +61,8 @@ const LoginPage: FC = () => {
             width: '100%',
           }}
         >
-          <Typography component="h1" variant="h2">
-            Login
+          <Typography component="h1" variant="h3">
+            Sign In
           </Typography>
         </Box>
         <Box

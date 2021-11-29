@@ -10,7 +10,7 @@ import {
   RegisterPage,
   ResetPasswordPage,
 } from '../pages'
-import { PREFIX_APP_VERSION } from '../utils/constants'
+import { ROUTES } from '../utils/constants'
 import { MainLayout } from '../layouts'
 
 const routes = (isLoggedIn: boolean): RouteObject[] => [
@@ -22,6 +22,22 @@ const routes = (isLoggedIn: boolean): RouteObject[] => [
         path: 'v2',
         element: <MainLayout />,
         children: [
+          {
+            path: 'signin',
+            element: !isLoggedIn ? <LoginPage /> : <Navigate to={ROUTES.HOME} />,
+          },
+          {
+            path: 'register',
+            element: !isLoggedIn ? <RegisterPage /> : <Navigate to={ROUTES.HOME} />,
+          },
+          {
+            path: 'forgot-password',
+            element: !isLoggedIn ? <ForgotPasswordPage /> : <Navigate to={ROUTES.HOME} />,
+          },
+          {
+            path: 'reset-password',
+            element: !isLoggedIn ? <ResetPasswordPage /> : <Navigate to={ROUTES.HOME} />,
+          },
           {
             path: 'phrasebook',
             element: <PhrasebookPage />,
@@ -38,22 +54,6 @@ const routes = (isLoggedIn: boolean): RouteObject[] => [
     path: '/',
     element: <Outlet />,
     children: [
-      {
-        path: 'signin',
-        element: !isLoggedIn ? <LoginPage /> : <Navigate to={PREFIX_APP_VERSION} />,
-      },
-      {
-        path: 'register',
-        element: !isLoggedIn ? <RegisterPage /> : <Navigate to={PREFIX_APP_VERSION} />,
-      },
-      {
-        path: 'forgot-password',
-        element: !isLoggedIn ? <ForgotPasswordPage /> : <Navigate to={PREFIX_APP_VERSION} />,
-      },
-      {
-        path: 'reset-password',
-        element: !isLoggedIn ? <ResetPasswordPage /> : <Navigate to={PREFIX_APP_VERSION} />,
-      },
       {
         path: '/',
         element: <LandingPage />,

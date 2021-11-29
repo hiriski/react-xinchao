@@ -5,6 +5,7 @@ import { heroBackgroundImage } from './bg'
 import CustomButton from '../../components/common/custom-button'
 import { PREFIX_APP_VERSION } from '../../utils/constants'
 import Footer from '../../components/footer'
+import { LandingNavigation } from '../../components/landing'
 
 const BackgroundImage: FC = () => (
   <>
@@ -42,65 +43,68 @@ const LandingPage: FC = () => {
   const navigate = useNavigate()
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}
-    >
-      <BackgroundImage />
+    <>
+      <LandingNavigation />
       <Box
         sx={{
-          flex: 1,
           display: 'flex',
-          position: 'relative',
+          minHeight: '100vh',
           alignItems: 'center',
-          justifyContent: 'center',
           flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
+        <BackgroundImage />
         <Box
           sx={{
-            mb: 2,
-            '& img': {
-              width: 162,
-              height: 'auto',
-            },
+            flex: 1,
+            display: 'flex',
+            position: 'relative',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
           }}
         >
-          <img src="/static/images/logo-secondary-with-text.png" alt="Logo" />
-        </Box>
+          <Box
+            sx={{
+              mb: 2,
+              '& img': {
+                width: 162,
+                height: 'auto',
+              },
+            }}
+          >
+            <img src="/static/images/logo-secondary-with-text.png" alt="Logo" />
+          </Box>
 
-        <Box display="flex" alignItems="center">
-          <Typography sx={{ fontWeight: '700' }} component="p" variant="h2">
-            Speak Vietnamese
-          </Typography>
-        </Box>
-        <Box mt={1} display="flex" alignItems="center">
-          <Box mr={1}>
-            <Typography sx={{ fontWeight: '700' }} component="span" variant="h2">
-              with
+          <Box display="flex" alignItems="center">
+            <Typography sx={{ fontWeight: '700' }} component="p" variant="h2">
+              Speak Vietnamese
             </Typography>
           </Box>
-          <Box>
-            <Typography sx={{ fontWeight: '700' }} component="span" variant="h2">
-              Confidence
-            </Typography>
+          <Box mt={1} display="flex" alignItems="center">
+            <Box mr={1}>
+              <Typography sx={{ fontWeight: '700' }} component="span" variant="h2">
+                with
+              </Typography>
+            </Box>
+            <Box>
+              <Typography sx={{ fontWeight: '700' }} component="span" variant="h2">
+                Confidence
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box mt={4}>
+            <CustomButton onClick={() => navigate(PREFIX_APP_VERSION)}>Get Started</CustomButton>
           </Box>
         </Box>
 
-        <Box mt={4}>
-          <CustomButton onClick={() => navigate(PREFIX_APP_VERSION)}>Get Started</CustomButton>
+        <Box position="relative">
+          <Footer logo={false} />
         </Box>
       </Box>
-
-      <Box position="relative">
-        <Footer logo={false} />
-      </Box>
-    </Box>
+    </>
   )
 }
 
