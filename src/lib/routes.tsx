@@ -39,7 +39,7 @@ const routes = (isLoggedIn: boolean): RouteObject[] => [
             element: !isLoggedIn ? <ResetPasswordPage /> : <Navigate to={ROUTES.HOME} />,
           },
           {
-            path: 'phrasebook',
+            path: 'phrasebook/:category',
             element: <PhrasebookPage />,
           },
           {

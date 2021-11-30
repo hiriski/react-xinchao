@@ -18,7 +18,7 @@ const PhrasebookCategoryItem: FC<Props> = ({ id, slug, text, color, phrasesCount
   const navigate = useNavigate()
 
   const handleClick = (): void => {
-    navigate(`${ROUTES.PHRASEBOOK}?category=${slug}`)
+    navigate(`${ROUTES.PHRASEBOOK}/${slug}`)
   }
 
   return (
@@ -26,10 +26,12 @@ const PhrasebookCategoryItem: FC<Props> = ({ id, slug, text, color, phrasesCount
       onClick={handleClick}
       sx={{
         borderRadius: 2,
+        cursor: 'pointer',
         backgroundColor: 'background.paper',
         boxShadow: '0 12px 32px 0 rgb(10 10 10 / 4%)',
         '&:hover': {
-          backgroundColor: '#fbfbfb',
+          // backgroundColor: '#fbfbfb',
+          boxShadow: '0 12px 32px 0 rgb(10 10 10 / 8%)',
         },
       }}
     >
@@ -42,9 +44,13 @@ const PhrasebookCategoryItem: FC<Props> = ({ id, slug, text, color, phrasesCount
             {en}
           </Typography>
           {phrasesCount > 0 ? (
-            <Typography variant="subtitle2">{phrasesCount} phrases</Typography>
+            <Typography variant="subtitle2" color="text.secondary">
+              {phrasesCount} phrases
+            </Typography>
           ) : (
-            <Typography variant="subtitle2">No phrases</Typography>
+            <Typography variant="subtitle2" color="text.secondary">
+              0 phrases
+            </Typography>
           )}
         </Box>
       </Box>

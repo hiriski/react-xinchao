@@ -3,12 +3,14 @@ import authReducer, { AuthState } from './auth/reducer'
 import sampleReducer, { SampleState } from './sample/reducer'
 import alertReducer, { AlertState } from './alert/reducer'
 import phrasebookCategoryReducer, { PhrasebookCategoryState } from './phrasebook-category/reducer'
+import phrasebookReducer, { PhrasebookState } from './phrasebook/reducer'
 
 export interface RootState {
   sample: SampleState
   auth: AuthState
   alert: AlertState
   phrasebookCategory: PhrasebookCategoryState
+  phrasebook: PhrasebookState
 }
 
 export default combineReducers<RootState>({
@@ -16,4 +18,5 @@ export default combineReducers<RootState>({
   auth: authReducer,
   alert: alertReducer,
   phrasebookCategory: phrasebookCategoryReducer,
+  phrasebook: phrasebookReducer,
 })

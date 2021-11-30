@@ -18,6 +18,13 @@ type TUserRole = {
   }
 }
 
+export type TUserSocialAccount = {
+  social_id: string
+  social_name: string
+  social_provider: string
+  social_photo_url: string
+}
+
 export type TUser = {
   id: number
   name: string
@@ -25,7 +32,7 @@ export type TUser = {
   username: string
   photo_url?: string
   cover_photo_url?: string
-  social_account?: string
+  social_account?: TUserSocialAccount
   level?: TUserLevel
   role?: TUserRole
   gender?: string

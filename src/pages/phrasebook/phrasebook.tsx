@@ -1,16 +1,20 @@
 import React, { FC, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { fetchPhrasebookCategories } from '../../store/phrasebook-category/actions'
+import { useParams } from 'react-router'
 import { useAppSelector } from '../../store/hook'
-import { PhrasebookCategoryList } from '../../components/phrasebook-categories'
+import { PhrasebookHeader, PhraseList } from '../../components/phrasebook'
+import { fetchPhrasebook } from '../../store/phrasebook/actions'
+
+const HEADER_HEIGHT = '110px'
 
 const PhrasebookPage: FC = () => {
   const dispatch = useDispatch()
-  const { categories } = useAppSelector((state) => state.phrasebookCategory)
+  const { category } = useParams()
+  const { phrases } = useAppSelector((state) => state.phrasebook)
 
   useEffect(() => {
-    dispatch(fetchPhrasebookCategories())
+    dispatch(fetchPhrasebook(category))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -18,12 +22,12 @@ const PhrasebookPage: FC = () => {
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'center',
         flexDirection: 'column',
-        justifyContent: 'center',
       }}
     >
-      <h1>Phrasaebook Page</h1>
+      <PhrasebookHeader HEADER_HEIGHT={HEADER_HEIGHT} />
+      <PhraseList HEADER_HEIGHT={HEADER_HEIGHT} items={phrases} />
+
       {/* <PhrasebookCategoryList items={categories} /> */}
     </Box>
   )

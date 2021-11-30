@@ -20,6 +20,6 @@ export const ROUTES = {
   SIGNIN: createPath('signin'),
   REGISTER: createPath('register'),
   FORGOT_PASSWORD: createPath('forgot-password'),
-  RESET_PASSWORD: createPath('/reset-password'),
-  PHRASEBOOK: createPath('/phrasebook'),
+  RESET_PASSWORD: createPath('reset-password'),
+  PHRASEBOOK: createPath('phrasebook'),
 }
