@@ -27,28 +27,27 @@ const updatePhraseItem = (phrases: TPhrase[], id: number, updatedPhrase: TPhrase
     },
     ...phrases.slice(index + 1), // everything after current phrase
   ]
-
-  // item = newPhrase
-  // return [...phrases, item]
 }
 
 const phrasebookReducer = (state: PhrasebookState = initialState, action: PhrasebookAction): PhrasebookState => {
   switch (action.type) {
-    case ActionTypes.FETCHING_PHRASEBOOK_FAILURE:
-      return {
-        ...state,
-        isError: action.payload,
-        isFetching: false,
-      }
     case ActionTypes.FETCHING_PHRASEBOOK_LOADING:
       return {
         ...state,
         isError: false,
-        isFetching: action.payload,
+        isFetching: true,
+      }
+    case ActionTypes.FETCHING_PHRASEBOOK_FAILURE:
+      return {
+        ...state,
+        isError: true,
+        isFetching: false,
       }
     case ActionTypes.FETCHING_PHRASEBOOK_SUCCESS:
       return {
         ...state,
+        isError: false,
+        isFetching: false,
         phrases: action.payload.phrases,
         category: action.payload.category,
       }

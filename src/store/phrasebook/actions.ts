@@ -10,11 +10,9 @@ interface TFetchingPhrasebook {
 }
 interface IFetchingPhrasebookLoading {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_LOADING
-  payload: boolean
 }
 interface IFetchingPhrasebookFailure {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_FAILURE
-  payload: boolean
 }
 interface IFetchingPhrasebookSuccess {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_SUCCESS
@@ -45,7 +43,7 @@ export const fetchPhrasebook = (category: string): TFetchingPhrasebook | AnyActi
   payload: category,
 })
 
-export const setPhrasebook = (
+export const fetchingPhrasebookSuccess = (
   category: TPhrasebookCategory,
   phrases: TPhrase[]
 ): Required<IFetchingPhrasebookSuccess> => ({

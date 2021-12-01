@@ -5,14 +5,12 @@ import { TPhrasebookCategory } from '../../types/phrasebookCategory'
 // Actions definiition
 interface IFetchingPhrasebookCategoriesLoading {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_LOADING
-  payload: boolean
 }
 interface IFetchingPhrasebookCategoriesFailure {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_FAILURE
-  payload: boolean
 }
-interface ISetListPhrasebookCategories {
-  type: typeof ActionTypes.SET_PHRASEBOOK_CATEGORIES
+interface IFetchingPhrasebookCategorySuccess {
+  type: typeof ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_SUCCESS
   payload: TPhrasebookCategory[]
 }
 
@@ -20,9 +18,16 @@ interface ISetListPhrasebookCategories {
 export type PhrasebookCategoryAction =
   | IFetchingPhrasebookCategoriesLoading
   | IFetchingPhrasebookCategoriesFailure
-  | ISetListPhrasebookCategories
+  | IFetchingPhrasebookCategorySuccess
 
 // Actions creator.
 export const fetchPhrasebookCategories = (): AnyAction => ({
   type: ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_REQUESTED,
+})
+
+export const fetchingPhrasebookCategorySuccess = (
+  payload: TPhrasebookCategory[]
+): IFetchingPhrasebookCategorySuccess => ({
+  type: ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_SUCCESS,
+  payload,
 })

@@ -9,9 +9,10 @@ type Props = {
   title?: string
   phrasesCount?: number
   HEADER_HEIGHT: string
+  isFetching: boolean
 }
 
-const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT }: Props) => {
+const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT, isFetching }: Props) => {
   const { category } = useAppSelector((state) => state.phrasebook)
   const [breadcrumbs, setBreadcrummns] = useState<string[]>(['Phrasesbook'])
 
@@ -21,7 +22,7 @@ const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT }: Pro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category])
 
-  console.log('category', category)
+  // console.log('isFetching', isFetching)
 
   return (
     <Box

@@ -19,21 +19,23 @@ const phrasebookCategoryReducer = (
   action: PhrasebookCategoryAction
 ): PhrasebookCategoryState => {
   switch (action.type) {
-    case ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_FAILURE:
-      return {
-        ...state,
-        isError: action.payload,
-        isFetching: false,
-      }
     case ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_LOADING:
       return {
         ...state,
         isError: false,
-        isFetching: action.payload,
+        isFetching: true,
       }
-    case ActionTypes.SET_PHRASEBOOK_CATEGORIES:
+    case ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_FAILURE:
       return {
         ...state,
+        isError: true,
+        isFetching: false,
+      }
+    case ActionTypes.FETCHING_PHRASEBOOK_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        isError: false,
+        isFetching: false,
         categories: action.payload,
       }
 

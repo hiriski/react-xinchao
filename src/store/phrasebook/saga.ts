@@ -4,7 +4,7 @@ import * as ActionTypes from './constants'
 
 import PhrasebookAPI from './api'
 import { httpResponseOK } from '../../utils/http'
-import { setPhrasebook } from './actions'
+import { fetchingPhrasebookSuccess } from './actions'
 
 // Type definitions of return of result.
 type APIResponsePhrasebook = SagaReturnType<typeof PhrasebookAPI.findAllByCategory>
@@ -15,7 +15,7 @@ function* fetchPhrases({ payload }: Effect<string>): SagaIterator {
     const response: APIResponsePhrasebook = yield call(PhrasebookAPI.findAllByCategory, payload)
     if (httpResponseOK(response.status)) {
       const { category, phrases } = response.data
-      yield put(setPhrasebook(category, phrases))
+      yield put(fetchingPhrasebookSuccess(category, phrases))
     }
   } catch (error) {
     yield put({ type: ActionTypes.FETCHING_PHRASEBOOK_FAILURE })
