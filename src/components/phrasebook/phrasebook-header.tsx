@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Button, Container, Typography, Skeleton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import { useAppSelector } from '../../store/hook'
@@ -9,20 +9,16 @@ type Props = {
   title?: string
   phrasesCount?: number
   HEADER_HEIGHT: string
-  isFetching: boolean
 }
 
-const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT, isFetching }: Props) => {
-  const { category } = useAppSelector((state) => state.phrasebook)
+const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT }: Props) => {
+  const { category, isFetching } = useAppSelector((state) => state.phrasebook)
   const [breadcrumbs, setBreadcrummns] = useState<string[]>(['Phrasesbook'])
 
   useEffect(() => {
-    // if (category) setBreadcrummns((prevState) => [...prevState, category.text.en])
     if (category) setBreadcrummns(['Phrasebook', category.text.en])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category])
-
-  // console.log('isFetching', isFetching)
 
   return (
     <Box
@@ -36,6 +32,7 @@ const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT, isFet
         display: 'flex',
         width: '100%',
         top: 0,
+        zIndex: 1100, // zIndex.appBar
       }}
     >
       <Container>
@@ -51,7 +48,11 @@ const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT, isFet
             <Box
               sx={{ lineHeight: 0, mr: 1, color: category && category.color !== null ? category.color.value : null }}
             >
-              <BookmarkBorderIcon sx={{ fontSize: 48 }} />
+              {isFetching ? (
+                <Skeleton variant="circular" width={40} height={40} />
+              ) : (
+                <BookmarkBorderIcon sx={{ fontSize: 48 }} />
+              )}
             </Box>
             <Box>
               <Typography
@@ -65,11 +66,19 @@ const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT, isFet
                   },
                 }}
               >
-                {category ? category.text.en : title}
+                {/* eslint-disable-next-line */}
+                {isFetching ? <Skeleton variant="text" width={135} /> : category ? category.text.en : title}
               </Typography>
 
               <Typography component="h6" variant="subtitle2" color="text.secondary">
-                {category ? category.phrases_count : phrasesCount} Phrases
+                {/* eslint-disable-next-line */}
+                {isFetching ? (
+                  <Skeleton variant="text" width={135} />
+                ) : category ? (
+                  `${category.phrases_count} Phrases`
+                ) : (
+                  `${phrasesCount}`
+                )}
               </Typography>
             </Box>
             <Box sx={{ ml: 'auto', display: { xs: 'none', sm: 'block' } }}>

@@ -11,7 +11,7 @@ const HEADER_HEIGHT = '110px'
 const PhrasebookPage: FC = () => {
   const dispatch = useDispatch()
   const { category } = useParams()
-  const { phrases, isFetching } = useAppSelector((state) => state.phrasebook)
+  const { phrases } = useAppSelector((state) => state.phrasebook)
 
   useEffect(() => {
     dispatch(fetchPhrasebook(category))
@@ -25,10 +25,8 @@ const PhrasebookPage: FC = () => {
         flexDirection: 'column',
       }}
     >
-      <PhrasebookHeader isFetching={isFetching} HEADER_HEIGHT={HEADER_HEIGHT} />
+      <PhrasebookHeader HEADER_HEIGHT={HEADER_HEIGHT} />
       <PhraseList HEADER_HEIGHT={HEADER_HEIGHT} items={phrases} />
-
-      {/* <PhrasebookCategoryList items={categories} /> */}
     </Box>
   )
 }

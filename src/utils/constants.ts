@@ -7,7 +7,7 @@ export const API_BASE_URL = __DEV__
 
 export const APP_NAME = 'Xin Chào'
 export const ACCESS_TOKEN = '@accessToken'
-export const LIMIT = 20
+export const LIMIT = 24
 export const PREFIX_APP_VERSION: string = process.env.REACT_APP_PREFIX_APP_VERSION
 
 export const createPath = (path: string): string => {
