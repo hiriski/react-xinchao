@@ -14,6 +14,7 @@ export interface AuthState {
   loginLoading: boolean
   loginError?: IStateFailure
   user?: TUser | null
+  provider: string | null
 
   registerLoading: boolean
   registerError?: IStateFailure
@@ -25,6 +26,7 @@ const initialState = {
   loginError: initialStateError,
   isAuthenticated: false,
   user: null,
+  provider: null,
 
   registerLoading: false,
   registerError: initialStateError,
@@ -76,6 +78,29 @@ const authReducer = (state: AuthState = initialState, action: AuthAction): AuthS
         user: null,
         registerError: action.payload ?? /* coming from saga --> */ { ...state.loginError, status: true },
         loginLoading: false,
+      }
+
+    case ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_LOADING:
+      return {
+        ...state,
+        user: null,
+        loginLoading: true,
+        provider: null,
+        isAuthenticated: false,
+      }
+    case ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_FAILURE:
+      return {
+        ...state,
+        user: null,
+        loginError: action.payload ?? /* coming from saga --> */ { ...state.loginError, status: true },
+        loginLoading: false,
+      }
+    case ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        provider: action.payload.provider,
+        user: action.payload.user,
+        isAuthenticated: true,
       }
     default:
       return state

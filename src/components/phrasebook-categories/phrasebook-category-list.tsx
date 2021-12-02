@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 import { TPhrasebookCategory } from '../../types/phrasebookCategory'
 import { PhrasebookCategoryEmpty, PhrasebookCategoryItem, PhrasebookCategoryItemSkeleton } from '.'
 import { useAppSelector } from '../../store/hook'
@@ -22,7 +22,7 @@ const PhrasebookCategoryList: FC<Props> = ({ items }: Props) => {
               ))
             : items.map(({ id, slug, text, phrases_count, color }) => (
                 <Grid key={String(id)} item xs={12} sm={6} md={4}>
-                  <PhrasebookCategoryItem id={id} slug={slug} text={text} phrasesCount={phrases_count} color={color} />
+                  <PhrasebookCategoryItem slug={slug} text={text} phrasesCount={phrases_count} color={color} />
                 </Grid>
               ))}
         </Grid>

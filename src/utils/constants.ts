@@ -9,6 +9,8 @@ export const APP_NAME = 'Xin Chào'
 export const ACCESS_TOKEN = '@accessToken'
 export const LIMIT = 24
 export const PREFIX_APP_VERSION: string = process.env.REACT_APP_PREFIX_APP_VERSION
+export const GOOGLE_AUTH_CLIENT_ID = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID
+export const GOOGLE_AUTH_CLIENT_SECRET = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_SECRET
 
 export const createPath = (path: string): string => {
   if (!PREFIX_APP_VERSION) return path

@@ -1,5 +1,6 @@
+import { string } from 'prop-types'
 import * as ActionTypes from './constants'
-import { TRequestLogin, TRequestRegister } from '../../types/auth'
+import { TRequestLoginWithSocialAccount, TRequestLogin, TRequestRegister } from '../../types/auth'
 import { TUser } from '../../types/user'
 import { IStateFailure } from '../../types/common'
 
@@ -36,6 +37,23 @@ interface RegisterSuccess {
   type: typeof ActionTypes.REGISTER_SUCCESS
   payload: TUser | null
 }
+interface LoginWithSocialAccountRequested {
+  type: typeof ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_REQUESTED
+  payload: TRequestLoginWithSocialAccount
+}
+
+interface LoginWithSocialAccountLoading {
+  type: typeof ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_LOADING
+}
+
+interface LoginWithSocialAccountFailure {
+  type: typeof ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_FAILURE
+  payload: IStateFailure
+}
+interface LoginWithSocialAccountSuccess {
+  type: typeof ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_SUCCESS
+  payload: { provider: string; user: TUser }
+}
 
 // Union action types
 export type AuthAction =
@@ -47,6 +65,10 @@ export type AuthAction =
   | RegisterLoading
   | RegisterFailure
   | RegisterSuccess
+  | LoginWithSocialAccountRequested
+  | LoginWithSocialAccountLoading
+  | LoginWithSocialAccountFailure
+  | LoginWithSocialAccountSuccess
 
 // Actions creators.
 
@@ -68,4 +90,20 @@ export const register = (payload: TRequestRegister): RegisterRequested => ({
 export const setRegisterError = (payload: IStateFailure): RegisterFailure => ({
   type: ActionTypes.REGISTER_FAILURE,
   payload,
+})
+
+// Login with social account.
+export const loginWithSocialAccount = (payload: TRequestLoginWithSocialAccount): LoginWithSocialAccountRequested => ({
+  type: ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_REQUESTED,
+  payload,
+})
+
+export const setLoginWithSocialAccountError = (payload: IStateFailure): LoginWithSocialAccountFailure => ({
+  type: ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_FAILURE,
+  payload,
+})
+
+export const loginWithSocialAccountSuccess = (provider: string, user: TUser): LoginWithSocialAccountSuccess => ({
+  type: ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_SUCCESS,
+  payload: { provider, user },
 })

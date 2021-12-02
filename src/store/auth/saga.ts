@@ -1,20 +1,21 @@
 import type { Effect, SagaIterator } from '@redux-saga/types'
 import { AxiosError } from 'axios'
-import { SagaReturnType, put, call, takeEvery, takeLatest } from 'redux-saga/effects'
+import { SagaReturnType, put, call, takeLatest } from 'redux-saga/effects'
 import * as ActionTypes from './constants'
-import { TRequestLogin, TRequestRegister } from '../../types/auth'
+import { TRequestLogin, TRequestLoginWithSocialAccount, TRequestRegister } from '../../types/auth'
 import { IApiResponseError } from '../../types/common'
 import { httpResponseCreated, httpResponseOK, httpResponseUnprocessableEntity } from '../../utils/http'
 import { saveToken } from '../../utils/tokens'
 import AuthAPI from './api'
 import { setAlert } from '../alert/actions'
-import { setLoginError, setRegisterError } from './actions'
+import { loginWithSocialAccountSuccess, setLoginError, setRegisterError } from './actions'
 
 // Type definitions of return of result.
 type ApiLoginResponse = SagaReturnType<typeof AuthAPI.login>
 type ApiRegisterReponse = SagaReturnType<typeof AuthAPI.register>
+type ApiLoginWithSocialAccountResponse = SagaReturnType<typeof AuthAPI.loginWithSocialAcccount>
 
-export function* login({ payload }: Effect<TRequestLogin>): SagaIterator {
+function* login({ payload }: Effect<TRequestLogin>): SagaIterator {
   yield put({ type: ActionTypes.LOGIN_LOADING })
   try {
     const response: ApiLoginResponse = yield call(AuthAPI.login, payload)
@@ -34,6 +35,21 @@ export function* login({ payload }: Effect<TRequestLogin>): SagaIterator {
       // another server error.
       yield put({ type: ActionTypes.LOGIN_FAILURE })
     }
+  }
+}
+
+function* loginWithSocialAccount({ payload }: Effect<TRequestLoginWithSocialAccount>): SagaIterator {
+  yield put({ type: ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_LOADING })
+  try {
+    const response: ApiLoginWithSocialAccountResponse = yield call(AuthAPI.loginWithSocialAcccount, payload)
+    if (httpResponseOK(response.status)) {
+      saveToken(response.data.token)
+      yield put(loginWithSocialAccountSuccess(response.data.provider, response.data.user))
+    }
+  } catch (reason) {
+    // const error = reason as AxiosError<IApiResponseError>
+    yield put(setAlert({ open: true, message: 'Login failed', severity: 'error', autoHideDuration: 5000 }))
+    yield put({ type: ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_FAILURE })
   }
 }
 
@@ -61,4 +77,5 @@ function* register({ payload }: Effect<TRequestRegister>): SagaIterator {
 export default function* authSaga(): SagaIterator {
   yield takeLatest(ActionTypes.LOGIN_REQUESTED, login)
   yield takeLatest(ActionTypes.REGISTER_REQUESTED, register)
+  yield takeLatest(ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_REQUESTED, loginWithSocialAccount)
 }

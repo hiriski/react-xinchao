@@ -6,14 +6,13 @@ import { TPhrasebookCategoryColor, TPhrasebookCategoryText } from '../../types/p
 import { ROUTES } from '../../utils/constants'
 
 type Props = {
-  id: number
   slug: string
   color: TPhrasebookCategoryColor
   text: TPhrasebookCategoryText
   phrasesCount: number
 }
 
-const PhrasebookCategoryItem: FC<Props> = ({ id, slug, text, color, phrasesCount }: Props) => {
+const PhrasebookCategoryItem: FC<Props> = ({ slug, text, color, phrasesCount }: Props) => {
   const { en } = text
   const navigate = useNavigate()
 

@@ -1,6 +1,13 @@
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import api from '../../utils/http'
-import { TLoginUser, TRegisterUser, TRequestLogin, TRequestRegister } from '../../types/auth'
+import {
+  TLoginUser,
+  TRequestLoginWithSocialAccount,
+  TRegisterUser,
+  TRequestLogin,
+  TRequestRegister,
+  TLoginWithSocialAccount,
+} from '../../types/auth'
 
 const AuthAPI = {
   register: (data: TRequestRegister): Promise<AxiosResponse<TRegisterUser>> => {
@@ -19,8 +26,8 @@ const AuthAPI = {
     return api.get('/auth/user')
   },
 
-  unlock: (pin: string): Promise<AxiosResponse<TLoginUser>> => {
-    return axios.post('/auth/unlock', pin)
+  loginWithSocialAcccount: (data: TRequestLoginWithSocialAccount): Promise<AxiosResponse<TLoginWithSocialAccount>> => {
+    return api.post('/auth/social', data)
   },
 }
 

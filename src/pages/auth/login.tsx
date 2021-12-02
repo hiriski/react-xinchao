@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux'
 import { Button, Box, TextField, Typography, Link } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
-import { useSnackbar } from 'notistack'
+import { GoogleLogin, GoogleLoginResponse } from 'react-google-login'
 import { AuthLayout } from '../../layouts'
 import { TRequestLogin } from '../../types/auth'
-import { login } from '../../store/auth/actions'
+import { login, loginWithSocialAccount } from '../../store/auth/actions'
 import { useAppSelector } from '../../store/hook'
-import { ROUTES } from '../../utils/constants'
+import { GOOGLE_AUTH_CLIENT_ID, ROUTES } from '../../utils/constants'
 
 type TInputs = TRequestLogin
 
@@ -21,10 +21,9 @@ const LoginPage: FC = () => {
   const { control, handleSubmit } = useForm({
     defaultValues,
   })
-  const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isAuthenticated, loginError } = useAppSelector((state) => state.auth)
+  const { isAuthenticated } = useAppSelector((state) => state.auth)
 
   const onSubmit: SubmitHandler<TInputs> = (values) => {
     dispatch(login(values))
@@ -36,6 +35,24 @@ const LoginPage: FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
+
+  const onSuccess = (res: Partial<GoogleLoginResponse>): void => {
+    const { googleId, name, email, imageUrl } = res.profileObj
+    const photoUrl = imageUrl.includes('=s96-c') ? imageUrl.replace('=s96-c', '') : imageUrl
+    dispatch(
+      loginWithSocialAccount({
+        social_id: googleId,
+        social_name: name,
+        social_email: email,
+        social_photo_url: photoUrl,
+        social_provider: 'google',
+      })
+    )
+  }
+
+  const onFailure = (res): void => {
+    console.log('res', res)
+  }
 
   return (
     <AuthLayout>
@@ -64,6 +81,18 @@ const LoginPage: FC = () => {
           <Typography component="h1" variant="h3">
             Sign In
           </Typography>
+        </Box>
+
+        {/* Login with google */}
+        <Box>
+          <GoogleLogin
+            clientId={GOOGLE_AUTH_CLIENT_ID}
+            buttonText="Login with Google"
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy="single_host_origin"
+            isSignedIn={false}
+          />
         </Box>
         <Box
           sx={{

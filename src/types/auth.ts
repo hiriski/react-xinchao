@@ -9,6 +9,8 @@ export type TLoginUser = {
 
 export type TRegisterUser = TLoginUser
 
+export type TLoginWithSocialAccount = TLoginUser & { provider: string }
+
 export type TRequestLogin = {
   username_or_email: string
   email: string
@@ -19,4 +21,12 @@ export type TRequestRegister = {
   email: string
   password: string
   password_confirmation?: string
+}
+
+export type TRequestLoginWithSocialAccount = {
+  social_id: number | string
+  social_name: string
+  social_email: string
+  social_photo_url: string
+  social_provider: 'google' | 'facebook' | 'github' | 'twitter'
 }
