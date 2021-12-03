@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Box, TextField, Typography, Link } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useSnackbar } from 'notistack'
 import { AuthLayout } from '../../layouts'
 import { useAppSelector } from '../../store/hook'
@@ -71,7 +72,17 @@ const ForgotPasswordPage: FC = () => {
             width: '100%',
           }}
         >
-          <Typography sx={{ mb: 1 }} component="h1" variant="h3">
+          <Button
+            color="secondary"
+            sx={{ p: 0 }}
+            disableRipple
+            component={RouterLink}
+            to={ROUTES.HOME}
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
+          </Button>
+          <Typography sx={{ marginTop: 2 }} component="h1" variant="h3">
             Forgot your password?
           </Typography>
           <Typography>Please enter your email, and we will send you a link to reset your password.</Typography>

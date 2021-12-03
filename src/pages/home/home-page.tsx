@@ -5,6 +5,7 @@ import { HomeGreeting } from '../../components/home'
 import { fetchPhrasebookCategories } from '../../store/phrasebook-category/actions'
 import { useAppSelector } from '../../store/hook'
 import { PhrasebookCategoryList } from '../../components/phrasebook-categories'
+import { MainLayout } from '../../layouts'
 
 const HomePage: FC = () => {
   const dispatch = useDispatch()
@@ -16,17 +17,19 @@ const HomePage: FC = () => {
   }, [])
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}
-    >
-      <HomeGreeting />
-      <PhrasebookCategoryList items={categories} />
-    </Box>
+    <MainLayout>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <HomeGreeting />
+        <PhrasebookCategoryList items={categories} />
+      </Box>
+    </MainLayout>
   )
 }
 

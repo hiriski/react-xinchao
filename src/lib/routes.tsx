@@ -11,7 +11,6 @@ import {
   ResetPasswordPage,
 } from '../pages'
 import { ROUTES } from '../utils/constants'
-import { MainLayout } from '../layouts'
 
 const routes = (isLoggedIn: boolean): RouteObject[] => [
   {
@@ -20,7 +19,7 @@ const routes = (isLoggedIn: boolean): RouteObject[] => [
     children: [
       {
         path: 'v2',
-        element: <MainLayout />,
+        element: <Outlet />,
         children: [
           {
             path: 'signin',

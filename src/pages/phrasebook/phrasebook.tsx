@@ -5,6 +5,7 @@ import { useParams } from 'react-router'
 import { useAppSelector } from '../../store/hook'
 import { PhrasebookHeader, PhraseList } from '../../components/phrasebook'
 import { fetchPhrasebook } from '../../store/phrasebook/actions'
+import { MainLayout } from '../../layouts'
 
 const HEADER_HEIGHT = '110px'
 
@@ -19,15 +20,17 @@ const PhrasebookPage: FC = () => {
   }, [])
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <MainLayout>
       <PhrasebookHeader HEADER_HEIGHT={HEADER_HEIGHT} />
-      <PhraseList HEADER_HEIGHT={HEADER_HEIGHT} items={phrases} />
-    </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <PhraseList HEADER_HEIGHT={HEADER_HEIGHT} items={phrases} />
+      </Box>
+    </MainLayout>
   )
 }
 

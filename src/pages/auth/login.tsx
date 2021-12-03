@@ -4,6 +4,7 @@ import { Button, Box, TextField, Typography, Link } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { AuthLayout } from '../../layouts'
 import { TRequestLogin } from '../../types/auth'
 import { login, loginWithSocialAccount } from '../../store/auth/actions'
@@ -78,7 +79,17 @@ const LoginPage: FC = () => {
             width: '100%',
           }}
         >
-          <Typography component="h1" variant="h3">
+          <Button
+            color="secondary"
+            sx={{ p: 0 }}
+            disableRipple
+            component={RouterLink}
+            to={ROUTES.HOME}
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
+          </Button>
+          <Typography sx={{ marginTop: 2 }} component="h1" variant="h3">
             Sign In
           </Typography>
         </Box>
