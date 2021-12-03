@@ -1,0 +1,16 @@
+export const API_ENDPOINTS: Record<string, string> = {
+  PHRASES: 'phrases',
+  SETTINGS: 'settings',
+  CATEGORY: 'categories',
+  LOGIN: 'token',
+  SOCIAL_LOGIN: 'social-login-token',
+  SEND_OTP_CODE: 'send-otp-code',
+  VERIFY_OTP_CODE: 'verify-otp-code',
+  OTP_LOGIN: 'otp-login',
+  REGISTER: 'register',
+  FORGET_PASSWORD: 'forget-password',
+  LOGOUT: 'revoke-token',
+  CHANGE_PASSWORD: 'change-password',
+  RESET_PASSWORD: 'reset-password',
+  VERIFY_FORGET_PASSWORD: 'verify-forget-password-token',
+}

@@ -1,0 +1,2 @@
+export const SET_SAMPLE_MESSAGE = 'sample/SET_SAMPLE_MESSAGE'
+export const SET_SAMPLE_STATUS = 'sample/SET_SAMPLE_STATUS'
