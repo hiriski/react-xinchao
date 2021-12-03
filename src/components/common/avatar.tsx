@@ -7,7 +7,7 @@ type Props = {
   variant?: 'logoOnly' | 'withText'
 }
 // logo-primary.png
-const Logo: FC<Props> = ({ width, height, color, variant }: Props): JSX.Element => (
+const Avatar: FC<Props> = ({ width, height, color, variant }: Props): JSX.Element => (
   <img
     style={{ width, height }}
     src={
@@ -24,14 +24,14 @@ const Logo: FC<Props> = ({ width, height, color, variant }: Props): JSX.Element 
   />
 )
 
-Logo.defaultProps = {
+Avatar.defaultProps = {
   width: 180,
   height: 'auto',
 }
 
-Logo.defaultProps = {
+Avatar.defaultProps = {
   color: 'primary',
   variant: 'logoOnly',
 }
 
-export default Logo
+export default Avatar

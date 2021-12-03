@@ -3,6 +3,7 @@ import React, { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Box, TextField, Typography, Link } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AuthLayout } from '../../layouts'
@@ -76,7 +77,17 @@ const RegisterPage: FC = () => {
             width: '100%',
           }}
         >
-          <Typography component="h1" variant="h3">
+          <Button
+            color="secondary"
+            sx={{ p: 0 }}
+            disableRipple
+            component={RouterLink}
+            to={ROUTES.HOME}
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
+          </Button>
+          <Typography sx={{ marginTop: 2 }} component="h1" variant="h3">
             Create Account
           </Typography>
           <Typography sx={{ mt: 0.5 }}>
