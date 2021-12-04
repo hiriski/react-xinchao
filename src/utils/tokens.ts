@@ -11,3 +11,7 @@ export const getToken = (): string | null => {
   }
   return Cookies.get(ACCESS_TOKEN)
 }
+
+export const removeToken = (): void => {
+  Cookies.remove(ACCESS_TOKEN)
+}

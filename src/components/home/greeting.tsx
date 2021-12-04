@@ -1,22 +1,11 @@
 import React, { FC, ReactElement } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
-import { Box, Button, Container, Typography } from '@mui/material'
-import AccountCircle from '@mui/icons-material/AccountCircle'
+import { Box, Container, Typography } from '@mui/material'
 import { useAppSelector } from '../../store/hook'
 import { getProfilePhoto, hasProfilePhoto } from '../../utils/profile'
-import { ROUTES } from '../../utils/constants'
 
 const HomeGreeting: FC = () => {
   const AVATAR_SIZE = 46
   const { user, isAuthenticated } = useAppSelector((state) => state.auth)
-
-  const renderLoginButton = (): ReactElement => (
-    <Box sx={{ ml: 'auto' }}>
-      <Button startIcon={<AccountCircle />} component={RouterLink} to={ROUTES.SIGNIN}>
-        Sign In
-      </Button>
-    </Box>
-  )
 
   const renderProfilePhoto = (profilePhoto?: string, name?: string): ReactElement =>
     isAuthenticated &&
@@ -58,7 +47,6 @@ const HomeGreeting: FC = () => {
               {isAuthenticated && user ? user.name : 'Stranger'}
             </Typography>
           </Box>
-          {!isAuthenticated && renderLoginButton()}
         </Box>
       </Box>
     </Container>

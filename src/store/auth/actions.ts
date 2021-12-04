@@ -1,4 +1,5 @@
 import { string } from 'prop-types'
+import { AnyAction } from 'redux'
 import * as ActionTypes from './constants'
 import { TRequestLoginWithSocialAccount, TRequestLogin, TRequestRegister } from '../../types/auth'
 import { TUser } from '../../types/user'
@@ -54,6 +55,15 @@ interface LoginWithSocialAccountSuccess {
   type: typeof ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_SUCCESS
   payload: { provider: string; user: TUser }
 }
+interface RevokeTokenLoading {
+  type: typeof ActionTypes.REVOKE_TOKEN_LOADING
+}
+interface RevokeTokenFailure {
+  type: typeof ActionTypes.REVOKE_TOKEN_FAILURE
+}
+interface ResetAuthState {
+  type: typeof ActionTypes.RESET_AUTH_STATE
+}
 
 // Union action types
 export type AuthAction =
@@ -69,6 +79,9 @@ export type AuthAction =
   | LoginWithSocialAccountLoading
   | LoginWithSocialAccountFailure
   | LoginWithSocialAccountSuccess
+  | RevokeTokenLoading
+  | RevokeTokenFailure
+  | ResetAuthState
 
 // Actions creators.
 
@@ -106,4 +119,8 @@ export const setLoginWithSocialAccountError = (payload: IStateFailure): LoginWit
 export const loginWithSocialAccountSuccess = (provider: string, user: TUser): LoginWithSocialAccountSuccess => ({
   type: ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_SUCCESS,
   payload: { provider, user },
+})
+
+export const revokeToken = (): AnyAction => ({
+  type: ActionTypes.REVOKE_TOKEN_REQUESTED,
 })

@@ -102,6 +102,10 @@ const authReducer = (state: AuthState = initialState, action: AuthAction): AuthS
         user: action.payload.user,
         isAuthenticated: true,
       }
+
+    // (reset auth state)
+    case ActionTypes.RESET_AUTH_STATE:
+      return initialState
     default:
       return state
   }

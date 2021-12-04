@@ -1,11 +1,11 @@
 import type { Effect, SagaIterator } from '@redux-saga/types'
-import { AxiosError } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import { SagaReturnType, put, call, takeLatest } from 'redux-saga/effects'
 import * as ActionTypes from './constants'
 import { TRequestLogin, TRequestLoginWithSocialAccount, TRequestRegister } from '../../types/auth'
 import { IApiResponseError } from '../../types/common'
 import { httpResponseCreated, httpResponseOK, httpResponseUnprocessableEntity } from '../../utils/http'
-import { saveToken } from '../../utils/tokens'
+import { removeToken, saveToken } from '../../utils/tokens'
 import AuthAPI from './api'
 import { setAlert } from '../alert/actions'
 import { loginWithSocialAccountSuccess, setLoginError, setRegisterError } from './actions'
@@ -74,8 +74,26 @@ function* register({ payload }: Effect<TRequestRegister>): SagaIterator {
   }
 }
 
+function* revokeToken(): SagaIterator {
+  yield put({ type: ActionTypes.REVOKE_TOKEN_LOADING })
+  try {
+    const response: AxiosResponse = yield call(AuthAPI.revokeToken)
+    if (httpResponseOK(response.status)) {
+      removeToken()
+      yield put({ type: ActionTypes.REVOKE_TOKEN_SUCCESS })
+      yield put({ type: ActionTypes.RESET_AUTH_STATE })
+    }
+  } catch (reason) {
+    removeToken()
+    // const error = reason as AxiosError<IApiResponseError>
+    yield put({ type: ActionTypes.REVOKE_TOKEN_FAILURE })
+    yield put({ type: ActionTypes.RESET_AUTH_STATE })
+  }
+}
+
 export default function* authSaga(): SagaIterator {
   yield takeLatest(ActionTypes.LOGIN_REQUESTED, login)
   yield takeLatest(ActionTypes.REGISTER_REQUESTED, register)
   yield takeLatest(ActionTypes.LOGIN_WITH_SOCIAL_ACCOUNT_REQUESTED, loginWithSocialAccount)
+  yield takeLatest(ActionTypes.REVOKE_TOKEN_REQUESTED, revokeToken)
 }

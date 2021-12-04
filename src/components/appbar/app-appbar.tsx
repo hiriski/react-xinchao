@@ -1,22 +1,34 @@
 import React, { FC, ReactElement, useState } from 'react'
 import Box from '@mui/material/Box'
 import Slide from '@mui/material/Slide'
+import Button from '@mui/material/Button'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Container from '@mui/material/Container'
 import InputBase from '@mui/material/InputBase'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 import SearchIcon from '@mui/icons-material/Search'
-import MoreIcon from '@mui/icons-material/MoreVert'
 import { styled, alpha } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import GridViewIcon from '@mui/icons-material/GridView'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-import { APP_NAME, ROUTES } from '../../utils/constants'
+import { useDispatch } from 'react-redux'
+import { useGoogleLogout, UseGoogleLogoutResponse } from 'react-google-login'
+import { APP_NAME, ROUTES, GOOGLE_AUTH_CLIENT_ID } from '../../utils/constants'
 import { Logo } from '../common'
+import { useAppSelector } from '../../store/hook'
+import { getProfilePhoto, hasProfilePhoto } from '../../utils/profile'
+import { revokeToken } from '../../store/auth/actions'
+
+const AVATAR_SIZE = 26
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -72,33 +84,105 @@ const HideOnScroll: FC<HideOnScrollProps> = ({ children }: HideOnScrollProps) =>
 }
 
 const AppAppBar: FC = () => {
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null)
   const [isHoverLogo, setIsHoverLogo] = useState<boolean>(false)
+  const { user, isAuthenticated, provider } = useAppSelector((state) => state.auth)
+
+  const onLogoutSuccess = (): void => {
+    // eslint-disable-next-line no-console
+    console.log('Logout Gogole Success')
+  }
+
+  const onFailure = (): void => {
+    // eslint-disable-next-line no-console
+    console.log('Logout google failure')
+  }
+
+  const { signOut }: UseGoogleLogoutResponse = useGoogleLogout({
+    clientId: GOOGLE_AUTH_CLIENT_ID,
+    onLogoutSuccess,
+    onFailure,
+  })
 
   const isMenuOpen = Boolean(anchorEl)
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleMobileMenuClose = (): void => {
-    setMobileMoreAnchorEl(null)
-  }
-
   const handleMenuClose = (): void => {
     setAnchorEl(null)
-    handleMobileMenuClose()
   }
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
-    setMobileMoreAnchorEl(event.currentTarget)
+  const handleLogout = (): void => {
+    dispatch(revokeToken())
+
+    // Close menu
+    handleMenuClose()
+
+    if (provider === 'google') signOut()
   }
 
+  // Profile menu
   const menuId = 'primary-search-account-menu'
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem>
+        <ListItemIcon>
+          <AccountCircleIcon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Profile</ListItemText>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+        <ListItemIcon>
+          <ExitToAppIcon sx={{ color: 'red' }} fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Log Out</ListItemText>
+      </MenuItem>
+    </Menu>
+  )
 
-  const mobileMenuId = 'primary-search-account-menu-mobile'
+  const renderProfilePhoto = (profilePhoto?: string, name?: string): ReactElement =>
+    isAuthenticated &&
+    user && (
+      <Box
+        sx={{
+          width: AVATAR_SIZE,
+          height: AVATAR_SIZE,
+          borderRadius: AVATAR_SIZE,
+          overflow: 'hidden',
+          '& img': {
+            width: '100%',
+            height: 'auto',
+          },
+        }}
+      >
+        {!profilePhoto ? <img src="/static/images/user.png" alt={name} /> : <img src={profilePhoto} alt={name} />}
+      </Box>
+    )
+
+  const renderLoginButton = (
+    <Box sx={{ ml: 'auto' }}>
+      <Button startIcon={<AccountCircleIcon />} component={RouterLink} to={ROUTES.SIGNIN}>
+        Sign In
+      </Button>
+    </Box>
+  )
 
   return (
     <>
@@ -143,35 +227,40 @@ const AppAppBar: FC = () => {
                 <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
               </Search>
               <Box sx={{ flexGrow: 1 }} />
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <IconButton
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              </Box>
               <Box sx={{ display: { xs: 'flex' } }}>
-                <IconButton
-                  size="large"
-                  aria-label="show more"
-                  aria-controls={mobileMenuId}
-                  aria-haspopup="true"
-                  onClick={handleMobileMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
+                {isAuthenticated ? (
+                  <Button
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                    sx={{ borderRadius: 6, px: 1.6, textTransform: 'none' }}
+                    startIcon={
+                      hasProfilePhoto(user)
+                        ? renderProfilePhoto(getProfilePhoto(user), user.name)
+                        : renderProfilePhoto(null)
+                    }
+                  >
+                    <Typography
+                      variant="subtitle2"
+                      component="h6"
+                      sx={{
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {user.name}
+                    </Typography>
+                  </Button>
+                ) : (
+                  renderLoginButton
+                )}
               </Box>
             </Toolbar>
           </Container>
         </AppBar>
       </HideOnScroll>
+      {renderMenu}
     </>
   )
 }
