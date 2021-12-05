@@ -10,6 +10,7 @@ import {
   RegisterPage,
   ResetPasswordPage,
 } from '../pages'
+import { ProfileAccountScreen } from '../pages/account'
 import { ROUTES } from '../utils/constants'
 
 const routes = (isLoggedIn: boolean): RouteObject[] => [
@@ -40,6 +41,10 @@ const routes = (isLoggedIn: boolean): RouteObject[] => [
           {
             path: 'phrasebook/:category',
             element: <PhrasebookPage />,
+          },
+          {
+            path: 'account',
+            element: !isLoggedIn ? <Navigate to={ROUTES.SIGNIN} /> : <ProfileAccountScreen />,
           },
           {
             path: '',

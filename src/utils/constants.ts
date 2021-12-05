@@ -21,6 +21,7 @@ export const ROUTES = {
   HOME: createPath(''),
   SIGNIN: createPath('signin'),
   REGISTER: createPath('register'),
+  ACCOUNT: createPath('account'),
   FORGOT_PASSWORD: createPath('forgot-password'),
   RESET_PASSWORD: createPath('reset-password'),
   PHRASEBOOK: createPath('phrasebook'),

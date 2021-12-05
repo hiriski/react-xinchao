@@ -142,7 +142,7 @@ const AppAppBar: FC = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>
+      <MenuItem component={RouterLink} to={ROUTES.ACCOUNT}>
         <ListItemIcon>
           <AccountCircleIcon fontSize="small" />
         </ListItemIcon>
@@ -220,12 +220,21 @@ const AppAppBar: FC = () => {
                   {APP_NAME}
                 </Typography>
               </Box>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-              </Search>
+              <Box
+                sx={{
+                  display: {
+                    xs: 'none',
+                    md: 'flex',
+                  },
+                }}
+              >
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                </Search>
+              </Box>
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: 'flex' } }}>
                 {isAuthenticated ? (
@@ -235,7 +244,7 @@ const AppAppBar: FC = () => {
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
                     color="inherit"
-                    sx={{ borderRadius: 6, px: 1.6, textTransform: 'none' }}
+                    sx={{ borderRadius: 6, px: 1.6, textTransform: 'none', mr: -1.5 /* it's same with edge="end" */ }}
                     startIcon={
                       hasProfilePhoto(user)
                         ? renderProfilePhoto(getProfilePhoto(user), user.name)

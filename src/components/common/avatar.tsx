@@ -1,37 +1,23 @@
 import React, { FC } from 'react'
+import { Avatar as MUIAvatar } from '@mui/material'
 
 type Props = {
-  width?: number | string
-  height?: number | string
-  color?: 'primary' | 'secondary'
-  variant?: 'logoOnly' | 'withText'
+  source: string | null
+  name: string
+  color: string
+  size?: number
 }
-// logo-primary.png
-const Avatar: FC<Props> = ({ width, height, color, variant }: Props): JSX.Element => (
-  <img
-    style={{ width, height }}
-    src={
-      // eslint-disable-next-line no-nested-ternary
-      variant === 'withText'
-        ? color === 'primary'
-          ? '/static/images/logo-primary-with-text.png'
-          : '/static/images/logo-secondary-with-text.png'
-        : color === 'primary'
-        ? '/static/images/logo-primary.png'
-        : '/static/images/logo-secondary.png'
-    }
-    alt="Logo"
-  />
-)
 
-Avatar.defaultProps = {
-  width: 180,
-  height: 'auto',
+const Avatar: FC<Props> = ({ source, name, color, size }: Props): JSX.Element => {
+  return !source ? (
+    <MUIAvatar sx={{ backgroundColor: color || 'primary.main', width: size, height: size }}>{name.charAt(0)}</MUIAvatar>
+  ) : (
+    <MUIAvatar sx={{ width: size, height: size }} src={source} alt={name} />
+  )
 }
 
 Avatar.defaultProps = {
-  color: 'primary',
-  variant: 'logoOnly',
+  size: 44,
 }
 
 export default Avatar
