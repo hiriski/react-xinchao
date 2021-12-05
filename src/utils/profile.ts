@@ -1,4 +1,4 @@
-import { TUser } from '../types/user'
+import { TUser, TUserCountry } from '../types/user'
 
 const FALLBACK_INITIALS_NAME = 'A'
 
@@ -26,4 +26,11 @@ export const getProfileInitialsName = (name: string): string => {
     .map((str) => str[0])
     .join('')
     .toUpperCase()
+}
+
+export const getNationalFlag = (country: TUserCountry): string | null => {
+  const pathImgFlag = '/static/images/flags/'
+  const extension = '.png'
+  if (!country) return null
+  return pathImgFlag + country.code + extension
 }

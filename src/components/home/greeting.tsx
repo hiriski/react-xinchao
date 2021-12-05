@@ -1,7 +1,9 @@
 import React, { FC, ReactElement } from 'react'
 import { Box, Container, Typography } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
 import { useAppSelector } from '../../store/hook'
 import { getProfilePhoto, hasProfilePhoto } from '../../utils/profile'
+import { ROUTES } from '../../utils/constants'
 
 const HomeGreeting: FC = () => {
   const AVATAR_SIZE = 46
@@ -11,6 +13,8 @@ const HomeGreeting: FC = () => {
     isAuthenticated &&
     user && (
       <Box
+        component={RouterLink}
+        to={ROUTES.ACCOUNT}
         sx={{
           mr: 3,
           width: AVATAR_SIZE,

@@ -3,8 +3,13 @@ import { Box, Container, Grid } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../store/hook'
 import { MainLayout } from '../../layouts'
-import { fetchProfile } from '../../store/account/actions'
-import { ProfileInfo } from '../../components/account/profile'
+import { fetchProfile, fetchPhrasesByMe } from '../../store/account/actions'
+import { ProfileInfo, ProfilePhrasesList } from '../../components/account/profile'
+
+const PROFILE_INFO_HEIGHT = {
+  xs: 380,
+  md: 300,
+}
 
 const ProfileAccountScreen: FC = () => {
   const dispatch = useDispatch()
@@ -13,28 +18,25 @@ const ProfileAccountScreen: FC = () => {
 
   useEffect(() => {
     dispatch(fetchProfile())
+    dispatch(fetchPhrasesByMe())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <MainLayout>
-      <Container>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={5}>
-              {!isFetching && profile !== null && <ProfileInfo profile={profile} />}
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <h3>Another section</h3>
-            </Grid>
-          </Grid>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {!isFetching && profile !== null && <ProfileInfo profile={profile} />}
+        <Box sx={{ mt: '375px' }}>
+          <Container>
+            <ProfilePhrasesList />
+          </Container>
         </Box>
-      </Container>
+      </Box>
     </MainLayout>
   )
 }

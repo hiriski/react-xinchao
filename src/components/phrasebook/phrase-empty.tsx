@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add'
 
 type Props = {
   text?: string
-  HEADER_HEIGHT: string
+  HEADER_HEIGHT?: string
 }
 
 const PhraseEmpty: FC<Props> = ({ text, HEADER_HEIGHT }: Props) => {
@@ -38,6 +38,7 @@ const PhraseEmpty: FC<Props> = ({ text, HEADER_HEIGHT }: Props) => {
 
 PhraseEmpty.defaultProps = {
   text: 'Nothing to see here..',
+  HEADER_HEIGHT: '0px',
 }
 
 export default PhraseEmpty

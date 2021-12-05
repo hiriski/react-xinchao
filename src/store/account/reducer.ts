@@ -2,6 +2,7 @@ import * as ActionTypes from './constants'
 import { AccountAction } from './actions'
 import { IStateFailure } from '../../types/common'
 import { TProfileUser } from '../../types/account'
+import { TPhrase } from '../../types/phrasebook'
 
 const initialStateError: IStateFailure = {
   status: false,
@@ -13,12 +14,22 @@ export interface AccountState {
   isFetching: boolean
   isError?: IStateFailure
   profile: TProfileUser | null
+  phrases: {
+    isFetching: boolean
+    isError: boolean
+    data: TPhrase[]
+  }
 }
 
 const initialState = {
   isFetching: false,
   isError: initialStateError,
   profile: null,
+  phrases: {
+    isFetching: false,
+    isError: false,
+    data: [],
+  },
 }
 
 const accountReducer = (state: AccountState = initialState, action: AccountAction): AccountState => {
@@ -36,6 +47,26 @@ const accountReducer = (state: AccountState = initialState, action: AccountActio
         profile: action.payload,
         isFetching: false,
         isError: initialStateError,
+      }
+
+    // Phrases by me
+    case ActionTypes.FETCHING_PHRASES_BY_ME_LOADING:
+      return {
+        ...state,
+        phrases: {
+          isFetching: true,
+          isError: false,
+          data: [],
+        },
+      }
+    case ActionTypes.FETCHING_PHRASES_BY_ME_SUCCESS:
+      return {
+        ...state,
+        phrases: {
+          isFetching: false,
+          isError: false,
+          data: action.payload,
+        },
       }
 
     default:
