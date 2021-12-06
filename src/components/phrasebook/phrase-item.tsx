@@ -1,10 +1,13 @@
 import React, { FC } from 'react'
-import { Box, IconButton, Typography } from '@mui/material'
-import FavoriteIcon from '@mui/icons-material/Favorite'
+import Box from '@mui/material/Box'
 import { useDispatch } from 'react-redux'
+import EditIcon from '@mui/icons-material/Edit'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import { TPhrase } from '../../types/phrasebook'
 import { getProfilePhoto, hasProfilePhoto } from '../../utils/profile'
-import { updatePhraseItem } from '../../store/phrasebook/actions'
+import { updatePhraseItem, setDrawerAddEditPhrase } from '../../store/phrasebook/actions'
 
 type Props = {
   item: TPhrase
@@ -21,6 +24,10 @@ const PhraseItem: FC<Props> = ({ item }: Props) => {
     dispatch(updatePhraseItem(_id, itemWillUpdate))
   }
 
+  const onEdit = (phraseId: number): void => {
+    dispatch(setDrawerAddEditPhrase(true, phraseId))
+  }
+
   return (
     <Box
       sx={{
@@ -34,6 +41,12 @@ const PhraseItem: FC<Props> = ({ item }: Props) => {
         },
       }}
     >
+      <Box sx={{ position: 'absolute', bottom: 10, right: 10 }}>
+        <IconButton onClick={() => onEdit(id)} size="small">
+          <EditIcon sx={{ fontSize: 16, color: 'text.disabled' }} />
+        </IconButton>
+      </Box>
+
       <Box
         sx={{
           display: 'flex',

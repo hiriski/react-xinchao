@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { useAppSelector } from '../../store/hook'
-import { PhrasebookHeader, PhraseList } from '../../components/phrasebook'
+import { DrawerAddEditPhrase, PhrasebookHeader, PhraseList } from '../../components/phrasebook'
 import { fetchPhrasebook } from '../../store/phrasebook/actions'
 import { MainLayout } from '../../layouts'
 
@@ -21,6 +21,7 @@ const PhrasebookPage: FC = () => {
 
   return (
     <MainLayout>
+      <DrawerAddEditPhrase />
       <PhrasebookHeader HEADER_HEIGHT={HEADER_HEIGHT} />
       <Box
         sx={{

@@ -178,22 +178,24 @@ const ProfileInfo: FC<Props> = ({ profile }: Props) => {
                 {profile.role.text.en}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                mt: {
-                  xs: 0.5,
-                  md: 0,
-                },
-                '& img': { width: 15, height: 'auto', mr: 1 },
-              }}
-            >
-              <img src={getNationalFlag(profile.country)} alt={profile.country.name} />
-              <Typography variant="subtitle2" component="h6">
-                {profile.country ? profile.country.name : ''}
-              </Typography>
-            </Box>
+            {profile.country && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  mt: {
+                    xs: 0.5,
+                    md: 0,
+                  },
+                  '& img': { width: 15, height: 'auto', mr: 1 },
+                }}
+              >
+                <img src={getNationalFlag(profile.country)} alt={profile.country.name} />
+                <Typography variant="subtitle2" component="h6">
+                  {profile.country.name}
+                </Typography>
+              </Box>
+            )}
           </Box>
         </Box>
         {/* ===== */}

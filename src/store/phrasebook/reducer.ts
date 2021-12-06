@@ -8,6 +8,18 @@ export interface PhrasebookState {
   isError: boolean
   phrases: TPhrase[] | null
   category: TPhrasebookCategory | null
+  drawerAddEditPhrase: {
+    status: boolean
+    id?: number | null
+  }
+
+  createLoading: boolean
+  createError: boolean
+  createSuccess: boolean
+
+  updateLoading: boolean
+  updateError: boolean
+  updateSuccess: boolean
 }
 
 const initialState = {
@@ -15,6 +27,19 @@ const initialState = {
   isError: false,
   phrases: [],
   category: null,
+
+  drawerAddEditPhrase: {
+    status: false,
+    id: null,
+  },
+
+  createLoading: false,
+  createError: false,
+  createSuccess: false,
+
+  updateLoading: false,
+  updateError: false,
+  updateSuccess: false,
 }
 
 const updatePhraseItem = (phrases: TPhrase[], id: number, updatedPhrase: TPhrase): TPhrase[] => {
@@ -51,10 +76,64 @@ const phrasebookReducer = (state: PhrasebookState = initialState, action: Phrase
         phrases: action.payload.phrases,
         category: action.payload.category,
       }
+
     case ActionTypes.UPDATE_PHRASE_ITEM:
       return {
         ...state,
         phrases: updatePhraseItem(state.phrases, action.payload.id, action.payload.updatedPhrase),
+      }
+
+    case ActionTypes.SET_DRAWER_ADD_EDIT_PHRASE:
+      return {
+        ...state,
+        drawerAddEditPhrase: {
+          status: action.payload.status,
+          id: action.payload.id,
+        },
+      }
+
+    case ActionTypes.CREATE_PHRASE_LOADING:
+      return {
+        ...state,
+        createLoading: true,
+        createError: false,
+        createSuccess: false,
+      }
+    case ActionTypes.CREATE_PHRASE_FAILURE:
+      return {
+        ...state,
+        createLoading: false,
+        createError: true,
+        createSuccess: false,
+      }
+    case ActionTypes.CREATE_PHRASE_SUCCESS:
+      return {
+        ...state,
+        createLoading: false,
+        createError: false,
+        createSuccess: true,
+      }
+
+    case ActionTypes.UPDATE_PHRASE_LOADING:
+      return {
+        ...state,
+        updateLoading: true,
+        updateError: false,
+        updateSuccess: false,
+      }
+    case ActionTypes.UPDATE_PHRASE_FAILURE:
+      return {
+        ...state,
+        updateLoading: false,
+        updateError: true,
+        updateSuccess: false,
+      }
+    case ActionTypes.UPDATE_PHRASE_SUCCESS:
+      return {
+        ...state,
+        updateLoading: false,
+        updateError: false,
+        updateSuccess: true,
       }
 
     default:

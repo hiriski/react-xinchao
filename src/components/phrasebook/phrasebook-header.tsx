@@ -2,10 +2,13 @@ import React, { FC, ReactElement, useState, useEffect } from 'react'
 import { Box, Button, Container, Typography, Skeleton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
-// import Slide from '@mui/material/Slide'
+import { useNavigate } from 'react-router'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
+import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../store/hook'
 import { PhraseBreadcrumbs } from '.'
+import { setDrawerAddEditPhrase } from '../../store/phrasebook/actions'
+import { ROUTES } from '../../utils/constants'
 
 type Props = {
   title?: string
@@ -47,8 +50,18 @@ const SlideOnScroll: FC<SlideOnScrollProps> = ({ HEADER_HEIGHT, children }: Slid
 }
 
 const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT }: Props) => {
+  const navigate = useNavigate()
+
   const { category, isFetching } = useAppSelector((state) => state.phrasebook)
+  const { isAuthenticated } = useAppSelector((state) => state.auth)
+
   const [breadcrumbs, setBreadcrummns] = useState<string[]>(['Phrasesbook'])
+  const dispatch = useDispatch()
+
+  const onAddPhrase = (): void => {
+    if (isAuthenticated) dispatch(setDrawerAddEditPhrase(true, null))
+    else navigate(ROUTES.SIGNIN)
+  }
 
   useEffect(() => {
     if (category) setBreadcrummns(['Phrasebook', category.text.en])
@@ -105,7 +118,7 @@ const PhrasebookHeader: FC<Props> = ({ title, phrasesCount, HEADER_HEIGHT }: Pro
                 </Typography>
               </Box>
               <Box sx={{ ml: 'auto', display: { xs: 'none', sm: 'block' } }}>
-                <Button startIcon={<AddIcon />} variant="text" size="small" color="secondary">
+                <Button onClick={onAddPhrase} startIcon={<AddIcon />} variant="text" size="small" color="secondary">
                   Add New
                 </Button>
               </Box>

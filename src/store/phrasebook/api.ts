@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import api from '../../utils/http'
 
-import { TPhrase } from '../../types/phrasebook'
+import { TPhrase, TCreatePhrase } from '../../types/phrasebook'
 import { TPhrasebookCategory } from '../../types/phrasebookCategory'
 
 export interface IResponsePhrasebook {
@@ -13,6 +13,12 @@ const PhrasebookAPI = {
   findAllByCategory: async (category: string): Promise<AxiosResponse<IResponsePhrasebook>> => {
     const params = { category }
     return api.get(`/phrasebook`, { params })
+  },
+  create: async (body: TCreatePhrase): Promise<AxiosResponse<TPhrase>> => {
+    return api.post(`/phrasebook`, body)
+  },
+  update: async (id: number, body: TCreatePhrase): Promise<AxiosResponse<TPhrase>> => {
+    return api.put(`/phrasebook/${id}`, body)
   },
 }
 
