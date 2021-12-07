@@ -5,11 +5,7 @@ import { useAppSelector } from '../../store/hook'
 import { MainLayout } from '../../layouts'
 import { fetchProfile, fetchPhrasesByMe } from '../../store/account/actions'
 import { ProfileInfo, ProfilePhrasesList } from '../../components/account/profile'
-
-const PROFILE_INFO_HEIGHT = {
-  xs: 380,
-  md: 300,
-}
+import { DrawerAddEditPhrase } from '../../components/phrasebook'
 
 const ProfileAccountScreen: FC = () => {
   const dispatch = useDispatch()
@@ -24,6 +20,7 @@ const ProfileAccountScreen: FC = () => {
 
   return (
     <MainLayout>
+      <DrawerAddEditPhrase />
       <Box
         sx={{
           display: 'flex',

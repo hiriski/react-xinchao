@@ -17,6 +17,9 @@ const PhrasebookAPI = {
   create: async (body: TCreatePhrase): Promise<AxiosResponse<TPhrase>> => {
     return api.post(`/phrasebook`, body)
   },
+  find: async (id: number): Promise<AxiosResponse<TPhrase>> => {
+    return api.get(`/phrasebook/${id}`)
+  },
   update: async (id: number, body: TCreatePhrase): Promise<AxiosResponse<TPhrase>> => {
     return api.put(`/phrasebook/${id}`, body)
   },

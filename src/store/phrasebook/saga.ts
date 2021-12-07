@@ -1,10 +1,15 @@
 import type { Effect, SagaIterator } from '@redux-saga/types'
-import { SagaReturnType, put, call, takeEvery } from 'redux-saga/effects'
+import { SagaReturnType, put, call, takeEvery, takeLatest } from 'redux-saga/effects'
 import * as ActionTypes from './constants'
 
 import PhrasebookAPI from './api'
 import { httpResponseCreated, httpResponseOK } from '../../utils/http'
-import { createPhraseSuccess, fetchingPhrasebookSuccess } from './actions'
+import {
+  createPhraseSuccess,
+  fetchingPhrasebookSuccess,
+  fetchingPhraseByIdSuccess,
+  udpatePhraseSuccess,
+} from './actions'
 import { TCreatePhrase, TUpdatePhrase } from '../../types/phrasebook'
 import { setAlert } from '../alert/actions'
 
@@ -12,8 +17,9 @@ import { setAlert } from '../alert/actions'
 type APIResponsePhrasebook = SagaReturnType<typeof PhrasebookAPI.findAllByCategory>
 type APIResponseCreatePhrase = SagaReturnType<typeof PhrasebookAPI.create>
 type APIResponseUpdatePhrase = SagaReturnType<typeof PhrasebookAPI.update>
+type APIResponsePhraseById = SagaReturnType<typeof PhrasebookAPI.find>
 
-function* fetchPhrases({ payload }: Effect<string>): SagaIterator {
+function* fetchPhraseList({ payload }: Effect<string>): SagaIterator {
   yield put({ type: ActionTypes.FETCHING_PHRASEBOOK_LOADING })
   try {
     const response: APIResponsePhrasebook = yield call(PhrasebookAPI.findAllByCategory, payload)
@@ -40,24 +46,35 @@ function* createPhrase({ payload }: Effect<TCreatePhrase>): SagaIterator {
   }
 }
 
+function* fetchPhrase({ payload }: Effect<string>): SagaIterator {
+  yield put({ type: ActionTypes.FETCHING_PHRASE_BY_ID_LOADING })
+  try {
+    const response: APIResponsePhraseById = yield call(PhrasebookAPI.find, payload)
+    if (httpResponseOK(response.status)) {
+      yield put(fetchingPhraseByIdSuccess(response.data))
+    }
+  } catch (error) {
+    yield put({ type: ActionTypes.FETCHING_PHRASEBOOK_FAILURE })
+  }
+}
+
 function* updatePhrase({ payload }: Effect<TUpdatePhrase>): SagaIterator {
   yield put({ type: ActionTypes.UPDATE_PHRASE_LOADING })
-
-  console.log('payload', payload)
-
-  // try {
-  //   const response: APIResponseUpdatePhrase = yield call(PhrasebookAPI.update, payload., body)
-  //   if (httpResponseOK(response.status)) {
-  //     yield put(createPhraseSuccess(response.data))
-  //     yield put(setAlert({ open: true, message: 'Phrase has been saved.', severity: 'success' }))
-  //   }
-  // } catch (e) {
-  //   yield put({ type: ActionTypes.UPDATE_PHRASE_FAILURE })
-  // }
+  try {
+    const { id, body } = payload
+    const response: APIResponseUpdatePhrase = yield call(PhrasebookAPI.update, id, body)
+    if (httpResponseOK(response.status)) {
+      yield put(udpatePhraseSuccess(response.data))
+      yield put(setAlert({ open: true, message: 'Phrase has been update.', severity: 'success' }))
+    }
+  } catch (e) {
+    yield put({ type: ActionTypes.UPDATE_PHRASE_FAILURE })
+  }
 }
 
 export default function* phrasebookSaga(): SagaIterator {
-  yield takeEvery(ActionTypes.FETCHING_PHRASEBOOK_REQUESTED, fetchPhrases)
-  yield takeEvery(ActionTypes.CREATE_PHRASE_REQUESTED, createPhrase)
-  yield takeEvery(ActionTypes.UPDATE_PHRASE_REQUESTED, updatePhrase)
+  yield takeEvery(ActionTypes.FETCHING_PHRASEBOOK_REQUESTED, fetchPhraseList)
+  yield takeEvery(ActionTypes.FETCHING_PHRASE_BY_ID_REQUESTED, fetchPhrase)
+  yield takeLatest(ActionTypes.CREATE_PHRASE_REQUESTED, createPhrase)
+  yield takeLatest(ActionTypes.UPDATE_PHRASE_REQUESTED, updatePhrase)
 }

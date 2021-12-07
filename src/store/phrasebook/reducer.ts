@@ -7,6 +7,7 @@ export interface PhrasebookState {
   isFetching: boolean
   isError: boolean
   phrases: TPhrase[] | null
+  phrase: TPhrase | null
   category: TPhrasebookCategory | null
   drawerAddEditPhrase: {
     status: boolean
@@ -26,6 +27,7 @@ const initialState = {
   isFetching: false,
   isError: false,
   phrases: [],
+  phrase: null,
   category: null,
 
   drawerAddEditPhrase: {
@@ -134,6 +136,28 @@ const phrasebookReducer = (state: PhrasebookState = initialState, action: Phrase
         updateLoading: false,
         updateError: false,
         updateSuccess: true,
+      }
+
+    case ActionTypes.FETCHING_PHRASE_BY_ID_LOADING:
+      return {
+        ...state,
+        isError: false,
+        isFetching: true,
+        phrase: null,
+      }
+    case ActionTypes.FETCHING_PHRASE_BY_ID_FAILURE:
+      return {
+        ...state,
+        isError: true,
+        isFetching: false,
+        phrase: null,
+      }
+    case ActionTypes.FETCHING_PHRASE_BY_ID_SUCCESS:
+      return {
+        ...state,
+        isError: false,
+        isFetching: false,
+        phrase: action.payload,
       }
 
     default:

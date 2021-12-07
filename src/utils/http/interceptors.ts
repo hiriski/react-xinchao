@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie'
-import { ACCESS_TOKEN } from '../constants'
+import { ACCESS_TOKEN, __DEV__ } from '../constants'
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const accessToken = Cookies.get(ACCESS_TOKEN)
@@ -12,7 +12,7 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 }
 
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (__DEV__) {
     // eslint-disable-next-line no-console
     console.error(`[request error] [${JSON.stringify(error)}]`)
   }
@@ -20,22 +20,22 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 }
 
 const onResponse = (response: AxiosResponse): AxiosResponse => {
-  if (process.env.NODE_ENV === 'development') {
+  if (__DEV__) {
     // eslint-disable-next-line no-console
-    console.log('Response success ====>', response)
+    console.log('⚡⚡⚡Response success -->', response)
   }
   return response
 }
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (__DEV__) {
     // eslint-disable-next-line no-console
     console.error(`[response error] [${JSON.stringify(error)}]`)
   }
   // Check if network disconnected
   if (error.code === 'ECONNABORTED') {
     // eslint-disable-next-line no-console
-    console.error('Response error ====>', 'Something when wrong with your connection')
+    console.error('❌❌❌ Response error -->', 'Something when wrong with your connection')
   }
   return Promise.reject(error)
 }

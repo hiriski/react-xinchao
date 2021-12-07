@@ -5,7 +5,7 @@ import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAppSelector } from '../../store/hook'
-import { setDrawerAddEditPhrase } from '../../store/phrasebook/actions'
+import { fetchPhraseById, setDrawerAddEditPhrase } from '../../store/phrasebook/actions'
 import { fetchPhrasebookCategories } from '../../store/phrasebook-category/actions'
 import { PhraseForm } from '.'
 
@@ -19,9 +19,14 @@ const DrawerAddEditPhrase: FC = () => {
   }
 
   useEffect(() => {
-    if (drawerAddEditPhrase.status) dispatch(fetchPhrasebookCategories())
+    if (drawerAddEditPhrase.id) {
+      dispatch(fetchPhraseById(drawerAddEditPhrase.id))
+    }
+    if (drawerAddEditPhrase.status) {
+      dispatch(fetchPhrasebookCategories())
+    }
     //   eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drawerAddEditPhrase.status])
+  }, [drawerAddEditPhrase.status, drawerAddEditPhrase.id])
 
   return (
     <Drawer

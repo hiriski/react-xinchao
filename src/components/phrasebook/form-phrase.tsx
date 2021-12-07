@@ -1,3 +1,4 @@
+import React, { FC, useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { SxProps } from '@mui/system'
 import Box from '@mui/material/Box'
@@ -11,7 +12,6 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import FormHelperText from '@mui/material/FormHelperText'
 import { yupResolver } from '@hookform/resolvers/yup'
-import React, { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useAppSelector } from '../../store/hook'
 import { TCreatePhrase } from '../../types/phrasebook'
@@ -50,17 +50,18 @@ const schema = yup.object().shape({
 })
 
 const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
+  const dispatch = useDispatch()
+  const { createLoading, updateLoading, isFetching, phrase } = useAppSelector((state) => state.phrasebook)
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   })
-
-  const dispatch = useDispatch()
-  const { createLoading, updateLoading } = useAppSelector((state) => state.phrasebook)
 
   const [source, setSource] = useState({
     categories,
@@ -76,16 +77,29 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
     //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories])
 
+  useEffect(() => {
+    if (id && phrase) {
+      setValue('id_ID', phrase.text.id)
+      setValue('vi_VN', phrase.text.vi)
+      setValue('en_US', phrase.text.en)
+      setValue('notes', phrase.text.notes)
+      setValue('category_id', phrase.category_id)
+    } else {
+      reset(defaultValues)
+    }
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, phrase])
+
   return (
     <Box sx={sx}>
       <Box
         sx={{
-          mb: 2,
+          mb: 3,
           width: '100%',
         }}
       >
         <Typography component="h2" variant="h5">
-          Add New Phrase
+          {!id ? 'Add New Phrase' : 'Update New Phrase'}
         </Typography>
       </Box>
       <Box
@@ -112,7 +126,8 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
                 id="select-category"
                 label="Select Category"
                 MenuProps={MenuProps}
-                disabled={source.categories.length < 1}
+                disabled={isFetching || source.categories.length < 1}
+                defaultValue={phrase ? phrase.category_id : ''}
               >
                 {source.categories.length > 0 &&
                   source.categories.map(({ id: categoryId, text }) => (
@@ -134,6 +149,7 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
             <TextField
               {...field}
               fullWidth
+              disabled={isFetching}
               margin="normal"
               size="small"
               label="Tiếng việt"
@@ -149,6 +165,7 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
             <TextField
               {...field}
               fullWidth
+              disabled={isFetching}
               margin="normal"
               size="small"
               label="Bhs Indonesia"
@@ -164,6 +181,7 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
             <TextField
               {...field}
               fullWidth
+              disabled={isFetching}
               margin="normal"
               size="small"
               label="English"
@@ -180,6 +198,7 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
               {...field}
               multiline
               fullWidth
+              disabled={isFetching}
               rows={3}
               margin="normal"
               size="small"
@@ -191,7 +210,7 @@ const PhaseForm: FC<Props> = ({ id, categories, sx }: Props) => {
         />
         <Button
           sx={{ mt: 1 }}
-          disabled={createLoading || updateLoading}
+          disabled={isFetching || createLoading || updateLoading}
           type="submit"
           fullWidth
           variant="contained"

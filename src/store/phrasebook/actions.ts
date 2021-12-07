@@ -6,7 +6,7 @@ import { TPhrasebookCategory } from '../../types/phrasebookCategory'
 // Actions definiition
 interface TFetchingPhrasebook {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_REQUESTED
-  paylod: string
+  payload: string
 }
 interface IFetchingPhrasebookLoading {
   type: typeof ActionTypes.FETCHING_PHRASEBOOK_LOADING
@@ -67,6 +67,21 @@ interface UpdatePhraseSuccess {
   payload?: TPhrase
 }
 
+interface FetchingPhraseById {
+  type: typeof ActionTypes.FETCHING_PHRASE_BY_ID_REQUESTED
+  payload: number
+}
+interface FetchingPhraseByIdLoading {
+  type: typeof ActionTypes.FETCHING_PHRASE_BY_ID_LOADING
+}
+interface FetchingPhraseByIdFailure {
+  type: typeof ActionTypes.FETCHING_PHRASE_BY_ID_FAILURE
+}
+interface FetchingPhraseByIdSuccess {
+  type: typeof ActionTypes.FETCHING_PHRASE_BY_ID_SUCCESS
+  payload: TPhrase
+}
+
 // Union action types
 export type PhrasebookAction =
   | TFetchingPhrasebook
@@ -83,6 +98,10 @@ export type PhrasebookAction =
   | UpdatePhraseFailure
   | UpdatePhraseLoading
   | UpdatePhraseSuccess
+  | FetchingPhraseById
+  | FetchingPhraseByIdLoading
+  | FetchingPhraseByIdFailure
+  | FetchingPhraseByIdSuccess
 
 // Actions creator.
 export const fetchPhrasebook = (category: string): TFetchingPhrasebook | AnyAction => ({
@@ -130,5 +149,15 @@ export const updatePhrase = (id: number, body: TCreatePhrase): UpdatePhrase => (
 
 export const udpatePhraseSuccess = (payload: TPhrase): UpdatePhraseSuccess => ({
   type: ActionTypes.UPDATE_PHRASE_SUCCESS,
+  payload,
+})
+
+export const fetchPhraseById = (payload: number): FetchingPhraseById => ({
+  type: ActionTypes.FETCHING_PHRASE_BY_ID_REQUESTED,
+  payload,
+})
+
+export const fetchingPhraseByIdSuccess = (payload: TPhrase): FetchingPhraseByIdSuccess => ({
+  type: ActionTypes.FETCHING_PHRASE_BY_ID_SUCCESS,
   payload,
 })
