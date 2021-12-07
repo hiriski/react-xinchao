@@ -17,3 +17,16 @@ export type TPhrase = {
   slug: string
   text: TPhraseText
 }
+
+export type TCreatePhrase = {
+  id_ID: string
+  vi_VN: string
+  en_US: string
+  notes: string
+  category_id: number
+}
+
+export type TUpdatePhrase = {
+  id: number
+  body: TCreatePhrase
+}

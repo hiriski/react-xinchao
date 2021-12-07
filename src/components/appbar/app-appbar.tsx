@@ -187,7 +187,13 @@ const AppAppBar: FC = () => {
   return (
     <>
       <HideOnScroll>
-        <AppBar position="fixed" variant="outlined" color="inherit" sx={{ border: 'none !important' }}>
+        <AppBar
+          elevation={0} /** <-- fix warning has no effect */
+          position="fixed"
+          variant="outlined"
+          color="inherit"
+          sx={{ border: 'none !important' }}
+        >
           <Container>
             <Toolbar disableGutters>
               <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
