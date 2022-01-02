@@ -14,7 +14,7 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
-    console.error(`[request error] [${JSON.stringify(error)}]`)
+    console.error(`❌❌❌ Request error -> ${JSON.stringify(error)}`)
   }
   return Promise.reject(error)
 }
@@ -22,7 +22,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 const onResponse = (response: AxiosResponse): AxiosResponse => {
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
-    console.log('Response success ====>', response)
+    console.log('💚💚💚 Response success ->', response)
   }
   return response
 }
@@ -30,12 +30,12 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
-    console.error(`[response error] [${JSON.stringify(error)}]`)
+    console.error(`❌❌❌ Response error -> ${JSON.stringify(error)}`)
   }
   // Check if network disconnected
   if (error.code === 'ECONNABORTED') {
     // eslint-disable-next-line no-console
-    console.error('Response error ====>', 'Something when wrong with your connection')
+    console.error('❌❌❌ Response error ->', 'Something when wrong with your connection')
   }
   return Promise.reject(error)
 }
